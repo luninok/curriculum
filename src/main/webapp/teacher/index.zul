@@ -1,0 +1,105 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
+<?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
+<vbox self="@define(content)" hflex="1" vflex="1" apply="org.edec.teacher.ctrl.IndexPageCtrl"
+      style="padding: 0px 10% 0px 10%;">
+    <tabbox hflex="1" vflex="1">
+        <tabs>
+            <tab label="Предметы"/>
+            <tab id="tabCommission" label="Комиссии"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel id="tpSubject">
+                <vbox hflex="1" vflex="1">
+                    <hbox height="50px" hflex="1" align="center">
+                        <hbox hflex="1" vflex="1">
+                            <vbox>
+                                <label value="Институт"/>
+                                <combobox id="cmbInst" placeholder="Институт" readonly="true"/>
+                            </vbox>
+                            <vbox>
+                                <label value="Форма обучения"/>
+                                <combobox id="cmbFormOfStudy" placeholder="Форма обучения" readonly="true"/>
+                            </vbox>
+                            <vbox>
+                                <label value="Семестр"/>
+                                <combobox id="cmbSem" placeholder="Семестр" readonly="true"/>
+                            </vbox>
+                            <separator width="8px"></separator>
+                            <vbox>
+                                <label value="Привязка ЭОК"/>
+                                <button id="btnCourseAutoBinding" label="Привязать"/>
+                            </vbox>
+                            <separator width="8px"></separator>
+                            <vbox style="margin-top: 24px;">
+                                <checkbox id="chRegisterOnlyUnsigned"  label=" Неподписанные ведомости"/>
+                            </vbox>
+                        </hbox>
+                    </hbox>
+                    <listbox id="lbSubject" mold="paging" autopaging="true" vflex="1" width="100%">
+                        <listhead>
+                            <listheader align="center" width="40px">
+                                <label sclass="cwf-listheader-label" value="#"/>
+                            </listheader>
+                            <listheader hflex="1">
+                                <label sclass="cwf-listheader-label" value="Дисциплина"/>
+                            </listheader>
+                            <listheader align="center" width="140px">
+                                <label sclass="cwf-listheader-label" value="Форма контроля"/>
+                            </listheader>
+                            <listheader align="center" width="140px">
+                                <label sclass="cwf-listheader-label" value="Группа"/>
+                            </listheader>
+                            <listheader align="center" width="110px">
+                                <label sclass="cwf-listheader-label" value="Ведомость"/>
+                            </listheader>
+                            <listheader align="center" width="130px">
+                                <label sclass="cwf-listheader-label" value="Отчет по группе"/>
+                            </listheader>
+                            <listheader align="center" width="180px">
+                                <label sclass="cwf-listheader-label" value="Электронные курсы"/>
+                            </listheader>
+                        </listhead>
+                    </listbox>
+                </vbox>
+            </tabpanel>
+            <tabpanel id="tbCommission" vflex="1">
+                <hbox height="80px">
+                    <vbox>
+                        <label value="Институт"/>
+                        <combobox id="cmbCommInst" placeholder="Институт" readonly="true"/>
+                    </vbox>
+                    <vbox>
+                        <label value="Форма обучения"/>
+                        <combobox id="cmbCommFormOfStudy" placeholder="Форма обучения" readonly="true"/>
+                    </vbox>
+                    <vbox>
+                        <label value="Семестр"/>
+                        <combobox id="cmbCommSem" placeholder="Семестр" readonly="true"/>
+                    </vbox>
+                    <vbox>
+                        <checkbox id="chShowSignComm" label="Показать подписанные"/>
+                        <hbox>
+                            <hbox style="width: 28px; height: 28px; border: 1px solid black; background: #99ff99;"/>
+                            <label value=" - подписано"/>
+                        </hbox>
+                    </vbox>
+                </hbox>
+                <listbox id="lbCommission" vflex="1" mold="paging"
+                         autopaging="true" emptyMessage="Комссионных ведомостей нет">
+                    <listhead>
+                        <listheader align="center" width="30px">
+                            <label sclass="cwf-listheader-label" value="#"/>
+                        </listheader>
+                        <listheader hflex="1">
+                            <label sclass="cwf-listheader-label" value="Форма контроля"/>
+                        </listheader>
+                        <listheader align="center" width="140px">
+                            <label sclass="cwf-listheader-label" value="Форма контроля"/>
+                        </listheader>
+                        <listheader align="center" width="60px"/>
+                    </listhead>
+                </listbox>
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+</vbox>

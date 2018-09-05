@@ -1,0 +1,34 @@
+<window id="winCreateSection" apply="org.edec.signEditor.ctrl.WinCreateSectionCtrl" closable="true">
+
+    <caption>
+        <label value="Создание секции приказа" style="font-weight: 700;"/>
+    </caption>
+    <vlayout hflex="1" vflex="1">
+
+        <label value="Опсиание секции"/>
+        <textbox id="tbDescriptionSection" placeholder="Описание" width="500px" height="100px"/>
+
+        <label value="Название секции"/>
+        <textbox id="tbNameSection" placeholder="Название секции" width="500px"/>
+
+        <label value="Основание"/>
+        <textbox id="tbFoundation" placeholder="Основание" width="500px"/>
+
+        <hbox>
+            <vbox>
+                <label value="Порядок отображения"/>
+                <textbox id="tbLayout" placeholder="Порядок отображения"/>
+            </vbox>
+
+            <vbox>
+                <label value="ID в шахтах"/>
+                <textbox id="tbOtherdbId" placeholder="Id в шахтах"/>
+            </vbox>
+
+        </hbox>
+
+
+        <button id="btnCreateSection" label="Записать"></button>
+
+    </vlayout>
+</window>

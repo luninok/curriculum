@@ -1,0 +1,20 @@
+<window id="winRegenerateDocuments" closable="true" apply="org.edec.newOrder.ctrl.WinRegenerateDocumentsCtrl">
+    <caption>
+        <label value="Документы" style="text-weight: 700;" />
+    </caption>
+    <vlayout vflex="1">
+        <listbox id="lbDocuments" width="350px" height="300px">
+            <listhead>
+                <listheader align="center" width="200px">
+                    <label sclass="cwf-listheader-label" value="Название"/>
+                </listheader>
+                <listheader align="center" width="150px">
+                    <label sclass="cwf-listheader-label" value=""/>
+                </listheader>
+            </listhead>
+        </listbox>
+        <hbox align="end" hflex="1">
+            <button id="btnRegenerateDocuments">Создать</button>
+        </hbox>
+    </vlayout>
+</window>

@@ -1,0 +1,47 @@
+<window id="winCreateOrderRule" apply="org.edec.signEditor.ctrl.WinCreateOrderRuleCtrl" closable="true">
+    <caption>
+        <label value="Создание типа приказа" style="font-weight: 700;"/>
+    </caption>
+    <vlayout hflex="1" vflex="1">
+
+        <label value="Название приказа"/>
+        <textbox id="tbNameOrderRule" placeholder="Название приказа" width="500px" height="100px"/>
+
+        <label value="Описание приказа"/>
+        <textbox id="tbDescription" placeholder="Заголовок (описание)" width="500px" height="100px"/>
+
+        <label value="Заголовок приказа"/>
+        <textbox id="tbHeadDescription" placeholder="Заголовок (название)" width="500px" height="100px"/>
+
+        <hbox>
+            <vbox>
+                <label value="Тип приказа"/>
+                <textbox id="tbTypeRule" placeholder="Тип приказа" width="120px"/>
+            </vbox>
+
+            <vbox>
+                <label value="Институт"/>
+                <textbox id="tbInst" placeholder="Институт" width="120px"/>
+            </vbox>
+
+            <vbox>
+                <label value="Форма контроля"/>
+                <listbox id="lbFK" rows="1" mold="select" width="120px">
+                    <listitem label="1" value="1" selected="true"></listitem>
+                    <listitem label="2" value="2"></listitem>
+                </listbox>
+            </vbox>
+
+            <vbox>
+                <label value="Автоматический"/>
+                <listbox id="lbIsAuto" rows="1" mold="select" width="120px">
+                    <listitem label="+" value="+" selected="true"></listitem>
+                    <listitem label="-" value="-"></listitem>
+                </listbox>
+            </vbox>
+        </hbox>
+
+        <button id="btnCreate" label="Записать"></button>
+
+    </vlayout>
+</window>

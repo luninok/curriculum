@@ -1,0 +1,7 @@
+<window id="winPdfViewer" mode="modal" closable="true" title="Просмотр документа" width="70%" height="100%"
+        apply="org.edec.utility.pdfViewer.ctrl.PdfViewerCtrl">
+    <vbox width="100%" height="100%">
+        <separator/>
+        <iframe id="iframePdfViwer" height="80%"/>
+    </vbox>
+</window>

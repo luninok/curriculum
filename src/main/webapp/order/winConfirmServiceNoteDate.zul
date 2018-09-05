@@ -1,0 +1,14 @@
+<window id="winConfirmServiceNoteDate" closable="true"
+        apply="org.edec.order.ctrl.WinConfirmServiceNoteDateCtrl">
+    <caption>
+        <label id="lblTitle" value="Сформировать служебную записку ЛАЗ" style="color: #000; font-size: 14px; font-weight: 700; margin-left: 5px;"/>
+    </caption>
+
+    <vbox>
+        <hbox>
+            <label>Дата документа </label>
+            <datebox id="dateServiceNote"></datebox>
+        </hbox>
+        <button id="btnCreateNewServiceNote" label="Создать"></button>
+    </vbox>
+</window>

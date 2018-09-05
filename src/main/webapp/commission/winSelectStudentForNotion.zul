@@ -1,0 +1,25 @@
+<window id="winCreateCommissionStudent" closable="true" apply="org.edec.commission.ctrl.WinSelectStudentForNotion"
+        position="center">
+    <caption>
+        <label id="lInfo" value="Студенты для представления" />
+    </caption>
+
+    <hbox>
+        <label value="Дата представления"></label>
+        <datebox id="dbDateNotion"></datebox>
+    </hbox>
+
+    <listbox id="lbStudents" style="maring-left: 10px; margin-top: 10px" width="600px" height="400px">
+        <listhead>
+            <listheader hflex="2">
+                <label sclass="cwf-listheader-label" value="ФИО" />
+            </listheader>
+            <listheader width="100px">
+                <label sclass="cwf-listheader-label" value="Группа" />
+            </listheader>
+            <listheader width="40px"/>
+        </listhead>
+    </listbox>
+
+    <button id="btnPrint" style="maring-left: 10px; margin-top: 10px" label="Готово"></button>
+</window>

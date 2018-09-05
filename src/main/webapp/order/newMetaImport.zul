@@ -1,0 +1,6 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
+<?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
+<vbox self="@define(content)" hflex="1" vflex="1" apply="org.edec.order.ctrl.OrderImportCtrl">
+    <combobox id="cmbOrder" width="400px"/>
+    <button id="btnImport">Импортировать</button>
+</vbox>

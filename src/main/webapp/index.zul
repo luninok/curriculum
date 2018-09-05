@@ -1,0 +1,52 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
+<?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
+<vbox self="@define(content)" hflex="1" vflex="1" apply="org.edec.profile.ctrl.IndexPageCtrl">
+	<label id="lFio" style="font: 16pt/14pt bold sans-serif; border-bottom: 1px solid #AFB9C3; width: 100%;" />
+	<listbox width="600px">
+		<listhead>
+			<listheader />
+			<listheader />
+		</listhead>
+		<listitem id="liBirthday">
+			<listcell>
+				<label value="День Рождения" style="font-weight: 700;" />
+			</listcell>
+			<listcell>
+				<label id="lBirthDay" />
+				<datebox id="dbBirthDay" format="dd.MM.yyyy" visible="false"/>
+				<button id="btnEditBirthDay" image="/imgs/edit.png" />
+				<button id="btnOkBirthDay" image="/imgs/okCLR.png" visible="false"/>
+			</listcell>
+		</listitem>
+		<listitem id="liEmail">
+			<listcell>
+				<label value="E-mail" style="font-weight: 700;" />
+			</listcell>
+			<listcell>
+				<hbox>
+					<label id="lEmail" />
+					<textbox id="tbEmail" visible="false"/>
+					<button id="btnEditEmail" image="/imgs/edit.png" />
+					<button id="btnOkEmail" image="/imgs/okCLR.png" visible="false"/>
+				</hbox>
+			</listcell>
+		</listitem>
+		<listitem id="liNotification">
+			<listcell>
+				<label value="Уведомление на почту" style="font-weight: 700;" />
+			</listcell>
+			<listcell>
+				<checkbox id="chNotification" label="Получать"/>
+			</listcell>
+		</listitem>
+		<listitem>
+			<listcell>
+				<label value="Начальная страница" style="font-weight: 700;" />
+			</listcell>
+			<listcell>
+				<label id="lStartPage" />
+				<button id="btnStartPage" image="/imgs/edit.png" />
+			</listcell>
+		</listitem>
+	</listbox>
+</vbox>

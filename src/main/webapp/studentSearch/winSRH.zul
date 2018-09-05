@@ -1,0 +1,48 @@
+<window id="winSRH" border="normal" width="80%" apply="org.edec.studentSearch.ctrl.WinSRHCtrl"
+        height="20%" style="min-width: 1000px; min-height: 650px;" position="center,center">
+    <vlayout hflex="10" vflex="10">
+        <tabbox id="tb" width="100px" vflex="10" hflex="10">
+            <tabs>
+                <tab id="tabName" label="Session Rating History"/>
+            </tabs>
+            <tabpanels>
+                <tabpanel style="width: 100%; height: 100%;">
+                    <listbox id="listSRH" hflex="7" style="float: left; overflow-y: scroll;" height="100%">
+                        <listhead>
+                            <listheader width="70px">
+                                <label sclass="cwf-listheader-label" value="idSRH"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="idRegister"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="Форма контроля"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="New Rating"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="Change Date Time"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="Sign Date"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="Retake Count"/>
+                            </listheader>
+                            <listheader>
+                                <label sclass="cwf-listheader-label" value="Status"/>
+                            </listheader>
+                        </listhead>
+                    </listbox>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+        <hbox id="footer" width="100%">
+            <hbox hflex="5">
+                <button id="report_close_btn" label="Закрыть" width="150px" height="50px" image="/imgs/cross.png"
+                        hoverImage="/imgs/crossCLR.png" style="font-weight: 700; font-size: 15px; float: right"/>
+            </hbox>
+        </hbox>
+    </vlayout>
+</window>

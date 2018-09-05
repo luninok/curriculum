@@ -1,0 +1,57 @@
+<window id="winIndCurrProtocol" closable="true"
+        apply="org.edec.contingentMovement.ctrl.WinIndCurrProtocol" width="60%">
+    <caption label="Печать протокола" />
+    <hbox hflex="1" vflex="1">
+        <vbox hflex="1" vflex="1">
+            <textbox id="tbIndCurrProtocolAgenda" multiline="true" rows="5" hflex="1"/>
+            <label value="Заголовок:" />
+            <label id="lIndCurrProtocolAgenda" hflex="1"/>
+        </vbox>
+        <vbox hflex="1" vflex="1">
+            <hbox hflex="1">
+                <button id="btnIndCurrProtocolPrint" label="Печать" />
+            </hbox>
+            <hbox hflex="1">
+                Номер протокола:
+                <intbox id="ibIndCurrProtocolNumber" hflex="1"/>
+            </hbox>
+            <hbox hflex="1">
+                Дата заседания комиссии:
+                <datebox id="dbIndCurrProtocolDateCommission" hflex="1"/>
+            </hbox>
+            <hbox hflex="1">
+                ФИО студента:
+                <textbox id="tbIndCurrProtocolFioStudent" hflex="1"/>
+            </hbox>
+            <hbox hflex="1">
+                Университет:
+                <textbox id="tbIndCurrProtocolUniversity" hflex="1" />
+            </hbox>
+            <hbox hflex="1">
+                Направление:
+                <textbox id="tbIndCurrProtocolDirection" hflex="1"/>
+            </hbox>
+            <hbox hflex="1">
+                Дата выдачи зачетки:
+                <datebox id="dbIndCurrProtocolRecordbook" hflex="1" />
+            </hbox>
+            <hbox hflex="1">
+                Зачетная книжка:
+                <textbox id="tbIndCurrProtocolRecordbook" hflex="1"/>
+            </hbox>
+            <hbox hflex="1">
+                ФИО председателя:
+                <textbox id="tbIndCurrChairman" hflex="1"/>
+            </hbox>
+            <hbox hflex="1">
+                <vbox id="vbIndCurrProtocolCommission">
+                    <hbox>
+                        <label value="Член комиссии: " />
+                        <textbox id="tbIndCurrProtocolCommission" hflex="1" placeholder="ФИО члена комиссии"/>
+                        <button id="btnIndCurrProtocolAddCommission" label="Добавить" />
+                    </hbox>
+                </vbox>
+            </hbox>
+        </vbox>
+    </hbox>
+</window>

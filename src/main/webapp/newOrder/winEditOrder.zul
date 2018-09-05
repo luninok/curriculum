@@ -1,0 +1,22 @@
+<window id="winEditOrder" closable="true" apply="org.edec.newOrder.ctrl.WinEditOrderCtrl" width="90%" height="100%">
+    <caption>
+        <label value="Редактирование приказа" style="text-weight: 700;" />
+    </caption>
+    <vlayout vflex="1">
+        <hlayout height="30px">
+            <label value="Описание приказа"/>
+            <textbox id="tbDescOrder" placeholder="Введите описание приказа" width="250px"/>
+            <button id="btnSaveDesc" label="Сохранить описание"/>
+        </hlayout>
+        <hlayout height="100px">
+            <button visible="true" hflex="1" vflex="1" id="btnDeleteSelectedStudents" label="Удалить выбр. студентов"/>
+            <button visible="true" hflex="1" vflex="1" id="btnAddStudents" label="Добавить студентов"/>
+            <button visible="true" hflex="1" vflex="1" id="btnShowPreviewPdf" label="Предпросмотр"/>
+            <button visible="true" hflex="1" vflex="1" id="btnAttachedFiles" label="Прикрепленные файлы"/>
+            <button visible="true" hflex="1" vflex="1" id="btnAttachNewFiles" label="Прикрепить файлы"/>
+            <button visible="false" hflex="1" vflex="1" id="btnRegenerateDocuments" label="Пересоздать документы"/>
+            <button visible="true" hflex="1" vflex="1" id="btnSendToServer" label="Отправить на согласование"/>
+        </hlayout>
+        <groupbox id="gbContent" height="100%" vflex="1" contentStyle="overflow:auto;"/>
+    </vlayout>
+</window>

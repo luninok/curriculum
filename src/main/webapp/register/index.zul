@@ -1,0 +1,459 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
+<?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
+
+<vbox style="margin: 0 auto" self="@define(content)" width="100%" vflex="1"
+      apply="org.edec.register.ctrl.IndexPageCtrl">
+    <style>
+        .filterElement{
+        margin-top: 12px;
+        }
+    </style>
+    <tabbox width="100%" sclass="nav_tabs" vflex="1">
+        <tabs>
+            <tab label="Просмотр ведомостей"/>
+            <tab label="Открыть пересдачу" id="tabRetake"/>
+            <tab label="Открыть пересдачу 2" id="tabOpenRetake" visible="false"/>
+            <tab label="Заявки на открытие" id="tabRegisterRequest"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel vflex="1">
+                <groupbox>
+                    <hbox style="padding-top: 3px">
+                        <combobox sclass="filterElement" placeholder="Институт" id="cmbInstituteShow"
+                                  readonly="true"/>
+                        <combobox sclass="filterElement" placeholder="Форма контроля" id="cmbFKShow"
+                                  readonly="true"/>
+                        <vbox>
+                        <combobox sclass="filterElement" placeholder="Семестр" id="cmbSemesterShow"
+                                  width="120px" style="margin: 0px"/>
+                        <textbox sclass="filterElement" placeholder="Группа" id="tbGroupShow" width="120px" style="margin: 0px"/>
+                        </vbox>
+                        <vbox>
+                        <textbox sclass="filterElement" placeholder="ФИО студента" id="tbFioStudent"
+                                 width="130px" style="margin: 0px"/>
+                        <textbox sclass="filterElement" placeholder="ФИО преподавателя" id="tbFioTeacher"
+                                 width="130px" style="margin: 0px"/>
+                        </vbox>
+                        <groupbox style="padding-top: 0px">
+                            <caption>Статус</caption>
+                            <hbox>
+                                <checkbox label="Неподписанные" id="chbOpened"/>
+                                <checkbox label="Подписанные" style="margin-left: 10px" id="chbClosed"/>
+                            </hbox>
+                            <hbox>
+                                <checkbox label="Просроченые" id="chbOutOfDate"/>
+                                <checkbox label="С номером" id="chbWithNumber"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox style="padding-top: 0px">
+                            <caption>Квалификация</caption>
+                            <hbox>
+                                <checkbox label="Бакалавры" id="chbBachelor"/>
+                                <checkbox label="Магистры" style="margin-left: 10px" id="chbMaster"/>
+                            </hbox>
+                            <hbox>
+                                <checkbox label="Специалисты" id="chbSpeciality"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox style="padding-top: 0px">
+                            <caption>Тип ведомости</caption>
+                            <hbox>
+                                <checkbox label="Осн. сдача" id="chbMain"/>
+                                <checkbox label="Общ. пересдача" style="margin-left: 10px" id="chbMainRetake"/>
+                            </hbox>
+                            <hbox>
+                                <checkbox label="Инд. пересдача" id="chbIndividualRetake"/>
+                                <checkbox label="Комиссия" id="chbCommission"/>
+                            </hbox>
+                        </groupbox>
+
+                        <groupbox style="padding-top: 0px">
+                            <caption>Дата подписи</caption>
+                            <datebox placeholder="С" id="dbRegisterBegin" width="100px"/>
+                            <datebox placeholder="По" id="dbRegisterEnd" width="100px" style="margin-left: 5px"/>
+                        </groupbox>
+
+                        <button sclass="filterElement" style="margin-left: 10px" id="btnSearchShow" label="Найти"/>
+                    </hbox>
+                </groupbox>
+                <listbox mold="paging" autopaging="true" vflex="1" id="listboxRetakes" emptyMessage="Список пуст">
+                    <auxhead>
+                        <auxheader>
+                            <textbox id="tbRegisterSubjectFilter" placeholder="Предмет.." hflex="1"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox id="tbRegisterGroupFilter" placeholder="Группа.." hflex="1"/>
+                        </auxheader>
+                        <auxheader>
+                            <textbox id="tbRegisterTeacherFilter" placeholder="Преподаватель.." hflex="1"/>
+                        </auxheader>
+                        <auxheader/>
+                        <auxheader>
+                            <combobox id="cmbRegisterFKFilter" placeholder="ФК.." hflex="1"/>
+                        </auxheader>
+                        <auxheader/>
+                        <auxheader id="ahDateRegisterRetake">
+                        </auxheader>
+                        <auxheader>
+                            <textbox id="tbRegisterNumberFilter" placeholder="Номер.." hflex="1"/>
+                        </auxheader>
+                        <auxheader>
+                            <combobox id="cmbSynchStatus" placeholder="Статус синх." hflex="1">
+                                <comboitem label="Не синх."/>
+                                <comboitem label="Синх."/>
+                                <comboitem label="Синх. част."/>
+                            </combobox>
+                        </auxheader>
+                        <auxheader/>
+                        <auxheader/>
+                    </auxhead>
+                    <listhead>
+                        <listheader align="center" id="lhSubj">
+                            <label sclass="cwf-listheader-label" value="Предмет"/>
+                        </listheader>
+                        <listheader align="center" id="lhGroup" width="80px" sort="auto">
+                            <label sclass="cwf-listheader-label" value="Группа"/>
+                        </listheader>
+                        <listheader align="center" id="lhFioTeacher" width="210px">
+                            <label sclass="cwf-listheader-label" value="Преподаватели"/>
+                        </listheader>
+                        <listheader align="center" id="lhFioStudent" width="150px">
+                            <label sclass="cwf-listheader-label" value="ФИО студ."/>
+                        </listheader>
+                        <listheader align="center" id="lhFC" width="80px">
+                            <label sclass="cwf-listheader-label" value="ФК"/>
+                        </listheader>
+                        <listheader align="center" id="lhTypeReg" width="100px">
+                            <label sclass="cwf-listheader-label" value="Вид"/>
+                        </listheader>
+                        <listheader align="center" id="lhDate" width="130px">
+                            <label sclass="cwf-listheader-label" value="Дата подписи"/>
+                        </listheader>
+                        <listheader align="center" id="lhNumber" width="80px" sort="auto">
+                            <label sclass="cwf-listheader-label" value="Номер"/>
+
+                        </listheader>
+                        <listheader align="center" id="lhrSynch" width="100px">
+                            <label sclass="cwf-listheader-label" value="Статус синх."/>
+                        </listheader>
+                        <listheader align="center" id="lhShow" width="60px">
+                            <label sclass="cwf-listheader-label" value=""/>
+                        </listheader>
+                        <listheader align="center" id="lhDelete" width="60px">
+                            <label sclass="cwf-listheader-label" value=""/>
+                        </listheader>
+                    </listhead>
+                </listbox>
+                <groupbox>
+                    <hbox>
+                        <button style="margin-top: 16px; margin-left: 5px" label="Реестр" image="/imgs/pdf.png"
+                                id="btnOpenWinGetRegisterReport" height="65px"/>
+                        <groupbox style="margin-left: 5px">
+                            <caption>Ведомость</caption>
+                            <hbox pack="center">
+                                <div style="width: 40px; height: 40px; background: #95FF82; border: 1px solid black"/>
+                                <label style="line-height: 40px" value="- подписана"/>
+                                <div style="width: 40px; height: 40px; background: #FF7373; border: 1px solid black; margin-left: 10px"/>
+                                <label style="line-height: 40px" value="- просрочена"/>
+                                <div style="width: 40px; height: 40px; background: white; border: 1px solid black; margin-left: 10px"/>
+                                <label style="line-height: 40px" value="- создана"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox>
+                            <caption>Статус синхронизации ведомости</caption>
+                            <hbox pack="center">
+                                <div style="width: 40px; height: 40px; background: #95FF82; border: 1px solid black"/>
+                                <label style="line-height: 40px" value="- Синхронизирована"/>
+                                <div style="width: 40px; height: 40px; background: #EEFC22; border: 1px solid black; margin-left: 10px"/>
+                                <label style="line-height: 40px" value="- Частично синхронизирована"/>
+                                <div style="width: 40px; height: 40px; background: #FF7373; border: 1px solid black; margin-left: 10px"/>
+                                <label style="line-height: 40px" value="- Не синхронизирована"/>
+                            </hbox>
+                        </groupbox>
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel vflex="1">
+                <hbox vflex="1">
+                    <vbox hflex="1" vflex="1">
+                        <groupbox>
+                            <vbox height="90px">
+                                <label value="Поиск предметов"/>
+                                <hbox>
+                                    <combobox sclass="filterElement" placeholder="Институт" id="cmbInstituteOpen"/>
+                                    <combobox sclass="filterElement" placeholder="Форма контроля" id="cmbFKOpen"/>
+                                    <combobox sclass="filterElement" placeholder="Семестр" id="cmbSemesterOpen"
+                                              width="130px"/>
+                                    <combobox sclass="filterElement" placeholder="Курс" id="cmbCourseOpen" width="80px">
+                                        <comboitem label="Все"/>
+                                        <comboitem label="1"/>
+                                        <comboitem label="2"/>
+                                        <comboitem label="3"/>
+                                        <comboitem label="4"/>
+                                        <comboitem label="5"/>
+                                        <comboitem label="6"/>
+                                    </combobox>
+                                </hbox>
+                                <hbox>
+                                    <separator spacing="10px"/>
+                                    <checkbox id="chbengineer" label="Инж" style="font-weight: 300;" checked="true"/>
+                                    <space spacing="10px"/>
+                                    <checkbox id="chbbachelor" label="Бак" style="font-weight: 300;" checked="true"/>
+                                    <space spacing="10px"/>
+                                    <checkbox id="chbmaster" label="Маг" style="font-weight: 300;" checked="true"/>
+                                </hbox>
+                                <hbox>
+                                    <textbox sclass="filterElement" placeholder="ФИО преподавателя"
+                                             id="tbFioTeacherOpen" style="margin: 3px; width: 130px"/>
+                                    <textbox sclass="filterElement" placeholder="Предмет" id="tbSubjectNameOpen"
+                                             style="margin: 3px; width: 130px"/>
+                                    <button sclass="filterElement" style="margin: 3px" id="btnSearchSubjects"
+                                            label="Найти"/>
+                                </hbox>
+                            </vbox>
+                        </groupbox>
+                        <listbox id="lbGroups" vflex="1" height="100%" multiple="true" checkmark="true">
+                            <auxhead>
+                                <auxheader>
+                                    <textbox id="tbGroupFilterGroupName" placeholder="Группа.." hflex="1"/>
+                                </auxheader>
+                            </auxhead>
+                            <listhead>
+                                <listheader hflex="1">
+                                    <label sclass="cwf-listheader-label" value="Группа"/>
+                                </listheader>
+                            </listhead>
+                        </listbox>
+                        <groupbox>
+                            <hbox align="center">
+                                <button style="margin-left: 10px" id="btnShowSubjects">Показать предметы
+                                </button>
+                            </hbox>
+                        </groupbox>
+                    </vbox>
+                    <vbox hflex="3" vflex="1">
+                        <listbox id="listboxSubjects" height="100%" hflex="2" vflex="1" multiple="true"
+                                 checkmark="true">
+                            <auxhead>
+                                <auxheader>
+                                    <textbox id="tbSubjectFilterSubjectName" placeholder="Предмет.." hflex="1"/>
+                                </auxheader>
+                                <auxheader>
+                                    <textbox id="tbSubjectFilterGroupName" placeholder="Группа.." hflex="1"/>
+                                </auxheader>
+                                <auxheader>
+                                    <textbox id="tbSubjectFilterFioTeacher" placeholder="ФИО преподавателя.."
+                                             hflex="1"/>
+                                </auxheader>
+                                <auxheader/>
+                            </auxhead>
+                            <listhead>
+                                <listheader hflex="3">
+                                    <label sclass="cwf-listheader-label" value="Предмет"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Группа"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Преподаватели"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Форма контроля"/>
+                                </listheader>
+                            </listhead>
+                        </listbox>
+                        <groupbox>
+                            <hbox align="center">
+                                <radiogroup id="rgRetakeType" onCheck="choice1.value = self.selectedItem.label"/>
+                                <radio id="rRetakeGeneral" label="Общая"
+                                       radiogroup="rgRetakeType"/>
+                                <radio id="rRegisterIndividual" label="Индивидуальная"
+                                       radiogroup="rgRetakeType"/>
+                                <space spacing="20px"/>
+                                <label value="С"/>
+                                <datebox id="dateOfBeginRetake" placeholder="Дата начала" width="200px"/>
+                                <label value="По"/>
+                                <datebox id="dateOfEndRetake" placeholder="Дата окончания" width="200px"/>
+                                <button style="margin-left: 10px" id="btnRetakeOpen">Открыть</button>
+                            </hbox>
+                        </groupbox>
+                    </vbox>
+                </hbox>
+            </tabpanel>
+            <tabpanel id="tabpOpenRetake">
+                <vbox hflex="1" vflex="1">
+                    <groupbox height="90px" hflex="1" title="Фильтры">
+                        <hbox>
+                            <vbox>
+                                <label value="Семестр"/>
+                                <combobox id="cmbOpenRetakeSem" placeholder="Семестр" width="200px" readonly="true"/>
+                            </vbox>
+                            <vbox>
+                                <label value="Курс"/>
+                                <combobox id="cmbOpenRetakeCourse" placeholder="Курс" readonly="true"
+                                          onCreate="cmbOpenRetakeCourse.setSelectedIndex(0)">
+                                    <comboitem label="Все"/>
+                                    <comboitem label="1"/>
+                                    <comboitem label="2"/>
+                                    <comboitem label="3"/>
+                                    <comboitem label="4"/>
+                                    <comboitem label="5"/>
+                                </combobox>
+                            </vbox>
+                            <vbox>
+                                <label value="Квалификация"/>
+                                <hbox>
+                                    <checkbox id="chOpenRetakeBachelor" label="Бак." checked="true"/>
+                                    <checkbox id="chOpenRetakeMaster" label="Маг." checked="true"/>
+                                    <checkbox id="chOpenRetakeEngineer" label="Инж." checked="true"/>
+                                </hbox>
+                            </vbox>
+                        </hbox>
+                    </groupbox>
+                    <hbox height="30px" hflex="1">
+                        <hbox hflex="1" pack="center">
+                            <button id="btnOpenRetakeShowSubject" label="Показать предметы"/>
+                        </hbox>
+                        <hbox hflex="3">
+                            Открыть пересдачу с
+                            <datebox id="dbOpenRetakeDateBegin"/>
+                            по
+                            <datebox id="dbOpenRetakeDateEnd"/>
+                            <button id="btnOpenRetake" label="Открыть"
+                                    tooltiptext="Открыть пересдачу по выбранным предметам"/>
+                        </hbox>
+                    </hbox>
+                    <hbox hflex="1" vflex="1">
+                        <listbox id="lbOpenRetakeGroup" hflex="1" vflex="1" checkmark="true" multiple="true">
+                            <auxhead>
+                                <auxheader>
+                                    <textbox id="tbOpenRetakeGroup" placeholder="Группа" hflex="1"/>
+                                </auxheader>
+                            </auxhead>
+                            <listhead>
+                                <listheader>
+                                    <label sclass="cwf-listheader-label" value="Группа"/>
+                                </listheader>
+                            </listhead>
+                        </listbox>
+                        <listbox id="lbOpenRetakeSubject" hflex="3" vflex="1" checkmark="true" multiple="true">
+                            <auxhead>
+                                <auxheader colspan="4">
+                                    <textbox id="tbOpenRetakeFilter" placeholder="Предмет/ФИО преподавателя" hflex="1"/>
+                                </auxheader>
+                            </auxhead>
+                            <listhead>
+                                <listheader hflex="1">
+                                    <label sclass="cwf-listheader-label" value="Предмет"/>
+                                </listheader>
+                                <listheader width="120px" align="center">
+                                    <label sclass="cwf-listheader-label" value="Группа"/>
+                                </listheader>
+                                <listheader width="200px">
+                                    <label sclass="cwf-listheader-label" value="Предподаватели"/>
+                                </listheader>
+                                <listheader width="100px">
+                                    <label sclass="cwf-listheader-label" value="ФК"/>
+                                </listheader>
+                            </listhead>
+                        </listbox>
+                    </hbox>
+                </vbox>
+            </tabpanel>
+            <tabpanel vflex="1">
+                <hbox vflex="1">
+                    <vbox hflex="1" vflex="1">
+                        <hbox>
+                            <groupbox>
+                                <label value="Фильтр по статусу:"/>
+                                <space width="10px"/>
+                                <checkbox id="chbApproved" label="Одобрено"/>
+                                <space width="5px"/>
+                                <checkbox id="chbDenied" label="Отказано"/>
+                                <space width="5px"/>
+                                <checkbox id="chbUnderConsideration" label="На рассмотрении" checked="true"/>
+                            </groupbox>
+                            <button id="btnUpdate" height="100%">Обновить</button>
+                        </hbox>
+                        <listbox id="listboxRegisterRequests" mold="paging" autopaging="true" height="100%" hflex="2"
+                                 vflex="1" multiple="true"
+                                 checkmark="true">
+                            <auxhead>
+                                <auxheader/>
+                                <auxheader align="left">
+                                    <textbox id="tbRegisterRequestFioTeacherFilter" placeholder="ФИО преподавателя.."
+                                             hflex="1"/>
+                                </auxheader>
+                                <auxheader>
+                                    <textbox id="tbRegisterRequestFioStudentFilter" placeholder="ФИО студента.."
+                                             hflex="1"/>
+                                </auxheader>
+                                <auxheader>
+                                    <textbox id="tbRegisterRequestGroupFilter" placeholder="Группа.." hflex="1"/>
+                                </auxheader>
+                                <auxheader>
+                                    <textbox id="tbRegisterRequestSubjectFilter" placeholder="Предмет.." hflex="1"/>
+                                </auxheader>
+                                <auxheader/>
+                                <auxheader/>
+                                <auxheader/>
+                                <auxheader/>
+                                <auxheader/>
+                            </auxhead>
+                            <listhead>
+                                <listheader align="center" width="30px"/>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Преподаватель"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Студент"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Группа"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Предмет"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Форма контроля"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Семестр"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Дата заявки"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label" value="Доп. информация"/>
+                                </listheader>
+                                <listheader align="center">
+                                    <label sclass="cwf-listheader-label"/>
+                                </listheader>
+                            </listhead>
+                        </listbox>
+                        <groupbox>
+                            <hbox align="center">
+                                <hbox style="width: 28px; height: 28px; border: 1px solid black; background: #99ff99;"/>
+                                <label value=" - одобрено"/>
+                                <hbox style="width: 28px; height: 28px; border: 1px solid black; background: #FF7373;"/>
+                                <label value=" - отказано"/>
+                                <hbox style="width: 28px; height: 28px; border: 1px solid black; background: white;"/>
+                                <label value=" - на рассмотрении"/>
+                                <space spacing="20px"/>
+                                <label value="С"/>
+                                <datebox id="dateOfBeginPersonalRetake" placeholder="Дата начала" width="200px"/>
+                                <label value="По"/>
+                                <datebox id="dateOfEndPersonalRetake" placeholder="Дата окончания" width="200px"/>
+                                <button style="margin-left: 10px" id="btnPersonalRetakeOpen">Открыть</button>
+                                <combobox sclass="filterElement" placeholder="Институт" id="cmbInstituteRegisterRequest"
+                                          readonly="true"/>
+                                <combobox sclass="filterElement" placeholder="Форма обучения" id="cmbFKRegisterRequest"
+                                          readonly="true"/>
+                            </hbox>
+                        </groupbox>
+                    </vbox>
+                </hbox>
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+</vbox>

@@ -1,0 +1,115 @@
+<window position="center" id="winCreateOrder" closable="true" apply="org.edec.newOrder.ctrl.WinCreateOrderCtrl" title="Создать приказ">
+    <vbox>
+        <hbox id="hbInst">
+            <combobox id="cmbInst" itemRenderer="org.edec.utility.component.renderer.InstituteRenderer"
+                      placeholder="Институт" readonly="true" />
+        </hbox>
+        <hbox id="hbFormOfStudy">
+            <combobox id="cmbFormOfStudy" placeholder="Форма обучения" readonly="true"/>
+        </hbox>
+        <hbox>
+            <combobox id="cmbListOrderTypes" placeholder="Тип приказа" readonly="true" width="300px" />
+        </hbox>
+        <hbox>
+            <groupbox title="Параметры приказа:" id="gbOrderParams" visible="false">
+                <listbox id="lbParams" width="350px" height="300px">
+                    <listhead>
+                        <listheader align="center" width="200px">
+                            <label sclass="cwf-listheader-label" value="Название"/>
+                        </listheader>
+                        <listheader align="center" width="150px">
+                            <label sclass="cwf-listheader-label" value=""/>
+                        </listheader>
+                    </listhead>
+
+                    <listitem>
+                        <listcell>Дата начала</listcell>
+                        <listcell>
+                            <datebox></datebox>
+                        </listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell>Дата окончания</listcell>
+                        <listcell>
+                            <datebox></datebox>
+                        </listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell>В сессию</listcell>
+                        <listcell>
+                            <checkbox></checkbox>
+                        </listcell>
+                    </listitem>
+                </listbox>
+            </groupbox>
+            <groupbox title="Студенты:" id="gbOrderStudents" visible="false">
+                <listbox id="lbStudents" width="520px" height="300px">
+                    <listhead>
+                        <listheader align="center" width="340px">
+                            <label sclass="cwf-listheader-label" value="ФИО"/>
+                        </listheader>
+                        <listheader align="center" width="100px">
+                            <label sclass="cwf-listheader-label" value="Группа"/>
+                        </listheader>
+                        <listheader align="center" width="80px">
+                            <label sclass="cwf-listheader-label" value=""/>
+                        </listheader>
+                    </listhead>
+
+                    <listitem>
+                        <listcell>Иванов Иван Иванович</listcell>
+                        <listcell>КИ17-04-1М</listcell>
+                        <listcell><button>Удалить</button></listcell>
+                    </listitem>
+
+                    <listitem>
+                        <listcell>
+                            <button>Добавить студента</button>
+                        </listcell>
+                        <listcell></listcell>
+                    </listitem>
+
+                </listbox>
+            </groupbox>
+            <groupbox title="Будут прикреплены следующие документы:" id="gbOrderDocuments" visible="false">
+                <listbox id="lbAttachedFiles" width="350px" height="300px">
+                    <listhead>
+                        <listheader align="center" width="200px">
+                            <label sclass="cwf-listheader-label" value="Название"/>
+                        </listheader>
+                        <listheader align="center" width="150px">
+                            <label sclass="cwf-listheader-label" value=""/>
+                        </listheader>
+                    </listhead>
+                        <listitem>
+                            <listcell>Служебная ЛАЗ</listcell>
+                            <listcell>
+                                <datebox placeholder="Дата с"></datebox>
+                            </listcell>
+                        </listitem>
+                        <listitem>
+                            <listcell>
+                                Заявление Иванов А.А.
+                            </listcell>
+                            <listcell>
+                                <button image="/imgs/del.png"></button>
+                            </listcell>
+                            <listcell></listcell>
+                        </listitem>
+                        <listitem>
+                            <listcell>
+                                <button>Добавить документ</button>
+                            </listcell>
+                            <listcell></listcell>
+                        </listitem>
+                </listbox>
+            </groupbox>
+        </hbox>
+        <groupbox title="Описание приказа" width="100%">
+            <textbox id="tbDescription" multiline="true" rows="3" width="100%"></textbox>
+        </groupbox>
+        <hbox align="end" hflex="1">
+            <button id="btnCreateOrder">Создать</button>
+        </hbox>
+    </vbox>
+</window>

@@ -1,0 +1,11 @@
+<window id="winGetRegisterReport" width="25%" height="30%" closable="true"
+        apply="org.edec.register.ctrl.WinGetRegisterReportCtrl">
+    <caption>
+        <label value="Отчет по ведомостям" style="font-weight: 700;"/>
+    </caption>
+    <vbox vflex="1" hflex="1" align="center">
+        <datebox style="margin: 10px" id="dateOfBeginRegisterReport" placeholder="Дата начала" width="125px"/>
+        <datebox style="margin-bottom: 10px" id="dateOfEndRegisterReport" placeholder="Дата окончания" width="125px"/>
+        <button id="btnGetRegisterReport" width="125px">Получить отчет</button>
+    </vbox>
+</window>
