@@ -1,6 +1,7 @@
 package org.edec.utility.component.manager;
 
 import org.edec.dao.DAO;
+import org.edec.model.GroupSemesterModel;
 import org.edec.utility.component.model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;

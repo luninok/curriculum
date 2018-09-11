@@ -45,7 +45,6 @@ public class WinResitCtrl extends SelectorComposer<Window> {
     }
 
     private void fill () {
-
         lResitStudent.setValue("Перезачет оценок у студента " + selectedStudent.getFio() + " (" + selectedStudent.getGroupname() + ")");
         lbResitOldGroup.setItemRenderer((ListitemRenderer<ResitRatingModel>) (listitem, data, index) -> {
             listitem.setValue(data);
@@ -54,13 +53,7 @@ public class WinResitCtrl extends SelectorComposer<Window> {
             new Listcell(data.getSemesternumber().toString()).setParent(listitem);
             new Listcell(data.getFoc()).setParent(listitem);
             new Listcell(String.valueOf(data.getHoursCount())).setParent(listitem);
-            if (data.getFoc().equals("Зачет")) {
-                Listcell listcell = new Listcell();
-                listcell.appendChild(new Image("/imgs/okCLR.png"));
-                listitem.appendChild(listcell);
-            } else {
-                new Listcell(data.getRating().toString()).setParent(listitem);
-            }
+            new Listcell(RatingConst.getNameByRating(data.getRating())).setParent(listitem);
             if (data.getResitRating() != null) {
                 listitem.setStyle("background: #bde0ff;");
             }
@@ -71,13 +64,7 @@ public class WinResitCtrl extends SelectorComposer<Window> {
             new Listcell(String.valueOf(data.getSemesternumber())).setParent(listitem);
             new Listcell(data.getFoc()).setParent(listitem);
             new Listcell(String.valueOf(data.getHoursCount())).setParent(listitem);
-            if (data.getFoc().equals("Зачет")) {
-               Listcell listcell = new Listcell();
-               listcell.appendChild(new Image("/imgs/okCLR.png"));
-                listitem.appendChild(listcell);
-            } else {
-                new Listcell(data.getRating().toString()).setParent(listitem);
-            }
+            new Listcell(RatingConst.getNameByRating(data.getRating())).setParent(listitem);
             if (data.getResitRating() != null) {
                 listitem.setStyle("background: #bde0ff;");
             }

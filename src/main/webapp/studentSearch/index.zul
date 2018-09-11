@@ -1,4 +1,3 @@
-<!-- apply="org.edec.studentSearch.ctrl.IndexPageCtrl" -->
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
 <?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
 <vlayout self="@define(content)" hflex="1" vflex="1" apply="org.edec.studentSearch.ctrl.IndexPageCtrl">

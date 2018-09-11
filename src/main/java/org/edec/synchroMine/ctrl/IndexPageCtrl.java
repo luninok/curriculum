@@ -149,15 +149,8 @@ public class IndexPageCtrl extends CabinetSelector {
                 continue;
             }
             if (idStudentCard == null) {
-                try {
-                    idStudentCard = studentService.createStudent(selectedGroup.getGroupname(), student.getFamily(), student.getName(),
-                                                                 student.getPatronymic(), student.getBirthday(), student.getRecordbook(),
-                                                                 student.getSex(), student.getIdStudCardMine(), null
-                    );
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    continue;
-                }
+                idStudentCard = studentService.createStudent(student.getFamily(), student.getName(), student.getPatronymic(), student.getBirthday(), student.getRecordbook(),
+                        student.getSex(), student.getIdStudCardMine(), null);
             }
             student.setIdStudCard(idStudentCard);
             int trustAgreement = student.getCondOfEducation() == 2 ? 1 : 0;

@@ -48,7 +48,7 @@ public class StudentModel {
     }
 
     public String getShortFio () {
-        return family + " " + name.substring(0, 1) + ". " + (patronymic != null ? patronymic.substring(0, 1) + "." : "");
+        return family + " " + name.substring(0, 1) + ". " + patronymic.substring(0, 1) + ".";
     }
 
     public Integer getCondOfEducation () {

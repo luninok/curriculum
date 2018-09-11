@@ -101,7 +101,6 @@
                 <!-- центр -->
                 <hbox vflex="1" style="margin-top: 5px;">
                     <!-- левый блок со списком семестров -->
-
                     <listbox id="lbSemester" checkmark="true" width="240px" vflex="1"  multiple="true" style="margin-right: 5px;"
                              itemRenderer="org.edec.utility.component.renderer.SemesterListRenderer">
                         <listhead>

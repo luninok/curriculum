@@ -27,7 +27,7 @@ public interface StudentMineService {
 
     boolean synchroStudentId (Long idInstMine, Long idInst);
 
-    Long createStudent (String groupname, String family, String name, String patronymic, Date birthday, String recordbook, Integer sex, Long idStudentMine,
+    Long createStudent (String family, String name, String patronymic, Date birthday, String recordbook, Integer sex, Long idStudentMine,
                         Long idHum);
 
     void createSSSforStudent (Long idStudent, Integer trustAgreement, Integer governmentFinanced, Integer academicLeave, Long idGroup,

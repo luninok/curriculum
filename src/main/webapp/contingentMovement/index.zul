@@ -5,7 +5,7 @@
 
     <hbox height="50px" id="hbFilters">
         <vbox id="vbInst">
-            <label value="Институт"  />
+            <label value="Институт"/>
             <combobox id="cmbInst" readonly="true" />
         </vbox>
         <vbox id="vbFos">

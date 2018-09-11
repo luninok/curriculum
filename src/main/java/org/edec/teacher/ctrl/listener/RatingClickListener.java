@@ -1,6 +1,5 @@
 package org.edec.teacher.ctrl.listener;
 
-import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.edec.main.ctrl.TemplatePageCtrl;
 import org.edec.main.model.UserModel;
@@ -23,7 +22,6 @@ import java.util.List;
 /**
  * Created by antonskripacev on 24.02.17.
  */
-    @Log4j
 public class RatingClickListener implements EventListener<Event> {
     private Listcell lc;
 
@@ -38,6 +36,7 @@ public class RatingClickListener implements EventListener<Event> {
     private RegisterService service = new RegisterServiseImpl();
 
     private List<RatingConst> ratings;
+    private final Logger log = Logger.getLogger(RegisterServiseImpl.class.getName());
     private UserModel currentUser = (UserModel) Executions.getCurrent().getSession().getAttribute(TemplatePageCtrl.CURRENT_USER);
 
     Combobox comb;

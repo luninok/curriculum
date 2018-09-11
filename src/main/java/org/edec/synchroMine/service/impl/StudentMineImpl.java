@@ -90,11 +90,11 @@ public class StudentMineImpl implements StudentMineService {
                                     System.out.println("Не совпадают основания обучения у студента: " + studentModel.getFio() + "(" +
                                                        studentModel.getIdSSS() + ") " + ", у нас: " + studentModel.getReasonStudy() +
                                                        ", в шахтах:" + student.getReasonStudy());
-                                    /*emStudentESO.updateSSSstudyReason(
+                                    emStudentESO.updateSSSstudyReason(
                                             studentModel.getIdSSS(),
                                             (student.getReasonStudy().equals("ЦН") || student.getReasonStudy().equals("ОО")) ? 1 : 0,
                                             student.getReasonStudy().equals("ЦН") ? 1 : 0
-                                    );*/
+                                    );
                                 }
                                 completed.add(studentModel);
                                 completed2.add(student);
@@ -141,9 +141,9 @@ public class StudentMineImpl implements StudentMineService {
     }
 
     @Override
-    public Long createStudent (String groupname, String family, String name, String patronymic, Date birthday, String recordbook, Integer sex,
+    public Long createStudent (String family, String name, String patronymic, Date birthday, String recordbook, Integer sex,
                                Long idStudentMine, Long idHum) {
-        return emStudentESO.createStudent(groupname, family, name, patronymic, birthday, recordbook, sex, idStudentMine, idHum);
+        return emStudentESO.createStudent(family, name, patronymic, birthday, recordbook, sex, idStudentMine, idHum);
     }
 
     @Override

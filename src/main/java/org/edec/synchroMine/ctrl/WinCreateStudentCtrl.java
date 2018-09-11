@@ -113,17 +113,17 @@ public class WinCreateStudentCtrl extends SelectorComposer<Component> {
             StudentModel selectedStudent = (student != null && cmbStudent == null)
                                            ? student
                                            : (StudentModel) cmbStudent.getSelectedItem().getValue();
-            if (addToHum) {
-                Long idStudentCard = studentMineService.createStudent(student.getGroupname(), null, null, null, null,
-                        student.getRecordbook(), null, student.getIdStudCardMine(), selectedStudent.getIdHum());
+            /*if (addToHum) {
+                Long idStudentCard = studentMineService.createStudent(null, null, null, null,
+                        student.getRecordBook(), null, student.getIdStudCardMine(), selectedStudent.getIdHum());
                 if (idStudentCard == null) {
                     PopupUtil.showError("Не удалось создать студнета");
                     return;
                 }
                 selectedStudent.setIdStudCard(idStudentCard);
-            }
+            }*/
             if (selectedStudent.getIdStudCard() == null) {
-                Long idStudentCard = studentMineService.createStudent(selectedStudent.getGroupname(),selectedStudent.getFamily(), selectedStudent.getName(),
+                Long idStudentCard = studentMineService.createStudent(selectedStudent.getFamily(), selectedStudent.getName(),
                                                                       selectedStudent.getPatronymic(), selectedStudent.getBirthday(),
                                                                       selectedStudent.getRecordbook(), selectedStudent.getSex(),
                                                                       selectedStudent.getIdStudCardMine(), null

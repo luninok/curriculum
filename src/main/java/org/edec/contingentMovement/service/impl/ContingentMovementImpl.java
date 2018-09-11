@@ -127,7 +127,7 @@ public class ContingentMovementImpl extends DAO implements ContingentMovementSer
 
     @Override
     public Long createNewStudent (StudentStatusModel studentStatusModel) {
-        return emStudentESO.createStudent(studentStatusModel.getGroupname(), studentStatusModel.getFamily(), studentStatusModel.getName(), studentStatusModel.getPatronymic(),
+        return emStudentESO.createStudent(studentStatusModel.getFamily(), studentStatusModel.getName(), studentStatusModel.getPatronymic(),
                 studentStatusModel.getBirthday(), studentStatusModel.getRecordBook(), studentStatusModel.getSex(),
                 studentStatusModel.getMineId(), studentStatusModel.getIdHum()
         );

@@ -124,12 +124,11 @@ public class EntityManagerStudentESO extends DAO {
         return (List<StudentModel>) getList(q);
     }
 
-    public Long createStudent (String groupname, String family, String name, String patronymic, Date birthday, String recordbook, Integer sex,
+    public Long createStudent (String family, String name, String patronymic, Date birthday, String recordbook, Integer sex,
                                Long idStudentMine, Long idHum) {
-        String query = "SELECT * FROM create_student_in_group(:groupname, :family, :name, :patronymic, :birthday, :recordbook, :sex, :idstudmine, :idHum)";
+        String query = "SELECT * FROM create_student(:family, :name, :patronymic, :birthday, :recordbook, :sex, :idstudmine, :idHum)";
         Query q = getSession().createSQLQuery(query)
-                              .addScalar("create_student_in_group", LongType.INSTANCE)
-                              .setParameter("groupname", groupname, StringType.INSTANCE)
+                              .addScalar("create_student", LongType.INSTANCE)
                               .setParameter("family", family, StringType.INSTANCE)
                               .setParameter("name", name, StringType.INSTANCE)
                               .setParameter("patronymic", patronymic, StringType.INSTANCE)

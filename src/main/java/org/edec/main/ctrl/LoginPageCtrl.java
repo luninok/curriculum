@@ -50,7 +50,7 @@ public class LoginPageCtrl extends SelectorComposer<Component> {
         }
         //Админский бэкдор
         if (login.equals("admin") && password.equals("collins338") && Executions.getCurrent().getServerName().equals("localhost")) {
-            UserModel userModel = userService.getUserByLdapLogin("ASkripachev-ki17");
+            UserModel userModel = userService.getUserByLdapLogin("MDimukhametov-KI16"); // ASkripachev-KI17
 
             checkUser(userModel, login);
             return;

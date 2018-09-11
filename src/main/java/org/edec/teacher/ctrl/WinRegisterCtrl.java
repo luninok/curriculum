@@ -1,6 +1,5 @@
 package org.edec.teacher.ctrl;
 
-import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.edec.main.ctrl.TemplatePageCtrl;
 import org.edec.main.model.UserModel;
@@ -36,7 +35,6 @@ import java.util.*;
 /**
  * Created by antonskripacev on 24.02.17.
  */
-@Log4j
 public class WinRegisterCtrl extends CabinetSelector {
     public static final String SELECTED_GROUP = "group";
     public static final String FORM_CONTROL = "fc";
@@ -82,6 +80,7 @@ public class WinRegisterCtrl extends CabinetSelector {
     private RegisterModel mainRegister, mainRetakeRegister;
     private List<RatingConst> ratingConsts;
     private int type;
+    private final Logger log = Logger.getLogger(RegisterServiseImpl.class.getName());
     private UserModel currentUser = (UserModel) Executions.getCurrent().getSession().getAttribute(TemplatePageCtrl.CURRENT_USER);
 
     ListModelList<RegisterRowModel> mainRegisterModel, mainRetakeRegisterModel;
