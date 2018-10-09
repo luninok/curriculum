@@ -1,0 +1,679 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
+<?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
+<?link href="/css/studyLoad.css" rel="stylesheet"?>
+<vlayout self="@define(content)" vflex="1" style="min-width: 700px; min-height: 500px; margin: 5px;"
+         apply="">
+
+    <tabbox vflex="1" style="">
+        <tabs>
+            <tab label="Преподаватели"/>
+            <tab label="Учебная нагрузка"/>
+            <tab label="Поручения"/>
+        </tabs>
+        <tabpanels>
+            <!-- Преподаватели -->
+            <tabpanel height="100%" width="100%" style="overflow-y:auto;">
+                <hbox style="margin: 1% 1% 1%">
+                    <button label="Выбрать роль"/>
+                    <button label="Сохранить"/>
+                    <button label="Обновить"/>
+                    <button label="Вырезать"/>
+                    <button label="Копировать"/>
+                    <button label="Вставить"/>
+                </hbox>
+                <hbox>
+                    <vbox style="margin: 0% 7% 0%;">
+                        <label value="Кафедра" style="font-size: 1vw;"/>
+                        <combobox id="cmbFaculty" width="100%" readonly="true">
+                            <comboitem label="ИСУ"/>
+                            <comboitem label="КБ"/>
+                            <comboitem label="ИБ"/>
+                        </combobox>
+                    </vbox>
+                </hbox>
+                <hbox vflex="1" style="margin-top: 1%;">
+                    <grid hflex="1" width="99%" vflex="1" style="margin:  2.5% 2% ;">
+                        <auxhead>
+                            <auxheader align="center" label="Фамилия Имя Отчество"/>
+                        </auxhead>
+                        <columns menupopup="auto"><!-- make it invisible -->
+                            <column sort="auto" width=""/><!-- specify width here -->
+                        </columns>
+                        <rows>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Фамилия Имя Отчество"
+                                       value="${each}"/>
+                            </row>
+                        </rows>
+                    </grid>
+                    <groupbox vflex="1" hflex="1" style="margin: 0% 0 2.5%;">
+                        <caption>
+                            <label value="Вакансии"/>
+                        </caption>
+                        <hbox style="margin: 0 2% 0;">
+                            <button label="Добавить ставку"/>
+                            <button label="Удалить ставку"/>
+                        </hbox>
+                        <hbox vflex="1" style="margin: 1% 0 0;">
+                            <grid vflex="1" hflex="1" width="99%" style="margin:2.5% 2%;">
+                                <columns menupopup="auto"><!-- make it invisible -->
+                                    <column align="center" label="Вакансии" sort="auto" width=""/>
+                                    <column align="center" label="Должность" sort="auto" width=""/>
+                                    <column align="center" label="Ставок" sort="auto" width=""/>
+                                </columns>
+                                <rows>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                    <row>
+                                        <label forEach="Вакансии, Должность, Ствок"
+                                               value="${each}"/>
+                                    </row>
+                                </rows>
+                            </grid>
+                        </hbox>
+                        <hbox style="margin: 1% 2% 1.5%">
+                            <button label="Добавить вакансию"/>
+                            <button label="Изменить"/>
+                            <button label="Удалить"/>
+                        </hbox>
+                    </groupbox>
+                </hbox>
+            </tabpanel>
+            <tabpanel height="100%" width="100%">
+                <vlayout vflex="1" style="overflow-y:auto;">
+                    <!-- Учебная нагрузка -->
+                    <hbox style="margin: 1% 1% 0%">
+                        <button label="Выбрать роль"/>
+                        <button label="Сохранить"/>
+                        <button label="Обновить"/>
+                        <button label="Вырезать"/>
+                        <button label="Копировать"/>
+                        <button label="Вставить"/>
+                        <button label="Печать"/>
+                        <button label="Экспорт"/>
+                    </hbox>
+                    <hbox width="99%">
+                        <groupbox hflex="1" style="margin: 0 3% 0;">
+                            <caption>
+                                <label value="Команды"/>
+                            </caption>
+                            <hbox>
+                                <button label="Разбить строку"/>
+                                <button label="Собрать"/>
+                                <button label="Вкл/Выкл"/>
+                                <button label="Создать поток"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox hflex="2" style="margin: 0 0 0;">
+                            <caption>
+                                <label value="Просмотр"/>
+                            </caption>
+                            <hbox style="margin: 0 0 0.7%">
+                                <checkbox id="" label="Панель закрепления преподавателей" onCheck=""/>
+                                <checkbox id="" label="Осенний" onCheck=""/>
+                                <checkbox id="" label="Весенний" onCheck=""/>
+                                <checkbox id="" label="Установочная" onCheck=""/>
+                                <checkbox id="" label="Зимняя" onCheck=""/>
+                                <checkbox id="" label="Летняя" onCheck=""/>
+                            </hbox>
+                        </groupbox>
+                    </hbox>
+                    <vbox>
+                        <grid width="210.4vh" style="margin: 1% 0 0 1%; overflow-x: auto;">
+                            <auxhead>
+                                <auxheader label="Номер" align="center" rowspan="2"/>
+                                <auxheader label="Учебный план" align="center" rowspan="2"/>
+                                <auxheader label="Факультет, группы" align="center" rowspan="2"/>
+                                <auxheader label="Блок" align="center" rowspan="2"/>
+                                <auxheader label="Дисциплина" align="center" rowspan="2"/>
+                                <auxheader label="Закреплённая кафедра" align="center" rowspan="2"/>
+                                <auxheader label="Курс/Семестр" align="center" rowspan="2"/>
+                                <auxheader label="Группа" align="center" rowspan="2"/>
+                                <auxheader label="Кол-во студентов" align="center" rowspan="2"/>
+                                <auxheader label="Недель" align="center" rowspan="2"/>
+                                <auxheader label="Вид занятий" align="center" rowspan="2"/>
+                                <auxheader label="Часов" align="center" rowspan="2"/>
+                                <auxheader label="Виды контроля" align="center" rowspan="2"/>
+                                <auxheader label="КСР" align="center" rowspan="2"/>
+                                <auxheader label="Индивидуальные занятия" align="center" rowspan="2"/>
+                                <auxheader label="Контрольные" align="center" rowspan="2"/>
+                                <auxheader label="Оценка по рейтингу" align="center" rowspan="2"/>
+                                <auxheader label="Рефераты" align="center" rowspan="2"/>
+                                <auxheader label="Эссе" align="center" rowspan="2"/>
+                                <auxheader label="РГР" align="center" rowspan="2"/>
+                                <auxheader label="Контрольные работы (заоч)" align="center" rowspan="2"/>
+                                <auxheader label="Консультации (СПО)" align="center" rowspan="2"/>
+                                <auxheader label="Нагрузка, час" align="center" colspan="4"/>
+                                <auxheader label="Преподаватель" align="center" rowspan="2"/>
+                                <auxheader label="Номер потока" align="center" rowspan="2"/>
+                                <auxheader label="Индикатор первой группы" align="center" rowspan="2"/>
+                                <auxheader label="Ауд. рекомендуемая" align="center" rowspan="2"/>
+                                <auxheader label="Дополнительно часов на" align="center" colspan="2"/>
+                                <auxheader label="Фактически выполено" align="center" rowspan="2"/>
+                                <auxheader label="Время проведения занятий по графику" align="center" colspan="2"/>
+                                <auxheader label="Распределение нагрузки, час" align="center" colspan="3"/>
+                                <auxheader label="Доля внебюджет" align="center" rowspan="2"/>
+                                <auxheader label="Доля иностр." align="center" rowspan="2"/>
+                                <auxheader label="Всего/Договор/Иностр." align="center" rowspan="2"/>
+                                <auxheader label="Уровень образования" align="center" rowspan="2"/>
+                                <auxheader label="Часов на экзамены" align="center" rowspan="2"/>
+                                <auxheader label="Сам. работа" align="center" rowspan="2"/>
+                                <auxheader label="Электронные часы" align="center" rowspan="2"/>
+                                <auxheader label="Нормирующий коэф." align="center" rowspan="2"/>
+                            </auxhead>
+                            <auxhead>
+                                <auxheader label="Аудиторная" align="center"/>
+                                <auxheader label="Другое" align="center" colspan="2"/>
+                                <auxheader label="Итого" align="center"/>
+                                <auxheader label="Студента" align="center"/>
+                                <auxheader label="Группу" align="center"/>
+                                <auxheader label="С" align="center"/>
+                                <auxheader label="По" align="center"/>
+                                <auxheader label="Бюджет" align="center"/>
+                                <auxheader label="Внебюджет" align="center"/>
+                                <auxheader label="Иностр." align="center"/>
+                            </auxhead>
+                            <columns visible="false"><!-- make it invisible -->
+                                <column width="8vh"/><!-- specify width here -->
+                                <column width="15.5vh"/><!-- specify width here -->
+                                <column width="19.5vh"/><!-- specify width here -->
+                                <column width="7.5vh"/><!-- specify width here -->
+                                <column width="16.5vh"/><!-- specify width here -->
+                                <column width="24.5vh"/><!-- specify width here -->
+                                <column width="17vh"/><!-- specify width here -->
+                                <column width="9vh"/><!-- specify width here -->
+                                <column width="20vh"/><!-- specify width here -->
+                                <column width="10.5vh"/><!-- specify width here -->
+                                <column width="15.5vh"/><!-- specify width here -->
+                                <column width="8vh"/><!-- specify width here -->
+                                <column width="18vh"/><!-- specify width here -->
+                                <column width="7vh"/><!-- specify width here -->
+                                <column width="28vh"/><!-- specify width here -->
+                                <column width="17vh"/><!-- specify width here -->
+                                <column width="21vh"/><!-- specify width here -->
+                                <column width="11vh"/><!-- specify width here -->
+                                <column width="7vh"/><!-- specify width here -->
+                                <column width="6vh"/><!-- specify width here -->
+                                <column width="29vh"/><!-- specify width here -->
+                                <column width="21vh"/>
+                                <column width="14vh"/>
+                                <column width="11vh"/>
+                                <column width="11vh"/>
+                                <column width="11vh"/>
+                                <column width="17vh"/>
+                                <column width="15vh"/>
+                                <column width="27vh"/>
+                                <column width="21vh"/>
+                                <column width="15vh"/>
+                                <column width="15vh"/>
+                                <column width="23vh"/>
+                                <column width="19vh"/>
+                                <column width="20vh"/>
+                                <column width="15vh"/>
+                                <column width="15vh"/>
+                                <column width="15vh"/>
+                                <column width="19vh"/>
+                                <column width="15vh"/>
+                                <column width="25vh"/>
+                                <column width="25vh"/>
+                                <column width="23vh"/>
+                                <column width="15vh"/>
+                                <column width="23vh"/>
+                                <column width="22vh"/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
+                                           value="${each}"/>
+                                </row>
+                                <row>
+                                    <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
+                                           value="${each}"/>
+                                </row>
+                                <row>
+                                    <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
+                                           value="${each}"/>
+                                </row>
+                            </rows>
+                        </grid>
+                    </vbox>
+                    <hbox style="margin: 1% 1% 1%">
+                        <button label="Закрепить"/>
+                        <button label="Открепить"/>
+                    </hbox>
+                    <div width="98%" style="margin: 0% 1% 1%; border:1px solid lightgray;overflow:auto; padding: 1%;">
+                        <hbox>
+                            <div width="140px" height="140px" >
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox >
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                        </hbox>
+                    </div>
+                </vlayout>
+            </tabpanel>
+            <tabpanel height="100%" width="100%">
+                <vlayout vflex="1" style="overflow-y:auto;">
+                    <!-- Поручения -->
+                    <grid vflex="1" hflex="1" width="99%" style="margin:0 1% 1%;">
+                        <auxhead>
+                            <auxheader align="center" label="Номер"/>
+                            <auxheader align="center" label="Преподаватель"/>
+                            <auxheader align="center" label="Дисциплина"/>
+                            <auxheader align="center" label="Вид"></auxheader>
+                            <auxheader align="center" label="Факультет"></auxheader>
+                            <auxheader align="center" label="Группа(ы)"></auxheader>
+                            <auxheader align="center" label="Студентов"></auxheader>
+                            <auxheader align="center" label="Контроль"></auxheader>
+                            <auxheader align="center" label="Учебных недель"></auxheader>
+                            <auxheader align="center" label="Курс"></auxheader>
+                            <auxheader align="center" label="Аудитория"></auxheader>
+                            <auxheader align="center" label="Часов" width=""></auxheader>
+                            <auxheader align="center" label="Начало" width=""></auxheader>
+                            <auxheader align="center" label="Конец" width=""></auxheader>
+                            <auxheader align="center" label="Бюджет" width=""></auxheader>
+                            <auxheader align="center" label="Внебюджета"></auxheader>
+                        </auxhead>
+                        <columns visible="false"><!-- make it invisible -->
+                            <column width="4%"/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width="3%"/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width=""/><!-- specify width here -->
+                            <column width="4%"/><!-- specify width here -->
+                            <column width="6%"/><!-- specify width here -->
+                            <column width="4%"/><!-- specify width here -->
+                            <column width="5%"/><!-- specify width here -->
+                            <column width="5%"/><!-- specify width here -->
+                            <column width="5%"/><!-- specify width here -->
+                            <column width="7%"/><!-- specify width here -->
+                        </columns>
+                        <rows>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                            <row>
+                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
+                                       value="${each}"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </vlayout>
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+</vlayout>
