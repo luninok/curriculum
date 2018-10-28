@@ -6,7 +6,7 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 
 /**
- * Renderer списка кафедр.
+ * renderer списка кафедр.
  *
  * @author DChiginev
  */
