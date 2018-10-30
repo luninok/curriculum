@@ -735,7 +735,7 @@
                         </vbox>
                     </hbox>
                     <hbox vflex="1" style="margin-top: 1%;">
-                        <grid vflex="1" hflex="1" width="99%" style="margin:  2.5% 2% ;" id="gridTeachers">
+                        <grid vflex="1" hflex="1" style="margin:  2.5% 2% ;" id="gridTeachers">
                             <auxhead>
                                 <auxheader align="center" colspan="3" label="Преподаватели"/>
                             </auxhead>
@@ -756,17 +756,29 @@
                                 <label value="Вакансии"/>
                             </caption>
                             <hbox style="margin: 0 2% 0;">
-                                <button label="Добавить ставку"/>
+                                <button id="addRateBtn" label="Добавить ставку" autodisable="self"/>
                                 <button label="Удалить ставку"/>
                             </hbox>
                             <hbox vflex="1" style="margin: 1% 0 0;">
-                                <grid vflex="1" hflex="1" width="99%" style="margin:2.5% 2%;">
+                                <grid vflex="1" hflex="1" style="margin:2.5% 2%;">
                                     <columns menupopup="auto"><!-- make it invisible -->
                                         <column align="center" label="Вакансии" sort="auto" width=""/>
                                         <column align="center" label="Должность" sort="auto" width=""/>
                                         <column align="center" label="Ставок" sort="auto" width=""/>
                                     </columns>
                                     <rows>
+                                        <row>
+                                            <label forEach="Вакансии, Должность, Ствок"
+                                                   value="${each}"/>
+                                        </row>
+                                        <row>
+                                            <label forEach="Вакансии, Должность, Ствок"
+                                                   value="${each}"/>
+                                        </row>
+                                        <row>
+                                            <label forEach="Вакансии, Должность, Ствок"
+                                                   value="${each}"/>
+                                        </row>
                                         <row>
                                             <label forEach="Вакансии, Должность, Ствок"
                                                    value="${each}"/>

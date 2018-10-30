@@ -83,19 +83,6 @@
                             </vbox>
                         </hbox>
                     </groupbox>
-                    roupbox vflex="1">
-                        <caption>
-                            <label value="Сгруппировать должников" style="font-weight: 700;"/>
-                        </caption>
-                        <hbox>
-                            <vbox>
-                                <label value="Начало / окончание комиссии" />
-                                <datebox id="dbBeginCommission" />
-                                <datebox id="dbEndCommission" />
-                            </vbox>
-                            <button id="btnGoToCreateCommission" label="Сгруппировать"  hflex="1"/>
-                        </hbox>
-                    </roupbox>
                 </hbox>
                 <!-- центр -->
                 <hbox vflex="1" style="margin-top: 5px;">

@@ -1,13 +1,18 @@
 package org.edec.studyLoad.ctrl;
 
 
+import org.edec.commission.ctrl.WinCommissionStructureCtrl;
 import org.edec.studyLoad.model.TeacherModel;
 import org.edec.utility.zk.CabinetSelector;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IndexPageCtrl extends CabinetSelector {
 
@@ -44,6 +49,13 @@ public class IndexPageCtrl extends CabinetSelector {
 
             gridTeachers.getRows().appendChild(row);
         }
+    }
+
+    @Listen("onClick = #addRateBtn")
+    public void openWinRateStructure() {
+        Map arg = new HashMap();
+        Window win = (Window) Executions.createComponents("window/winRateDialog.zul", null, arg);
+        win.doModal();
     }
 
 }
