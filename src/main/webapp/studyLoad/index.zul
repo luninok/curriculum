@@ -10,8 +10,8 @@
             <tab label="Поручения"/>
         </tabs>
         <tabpanels>
-            <!-- Преподаватели -->
             <tabpanel height="100%" width="100%" style="overflow-y:auto;">
+                <!-- Информация о выбранном преподавателе  -->
                 <vbox style="margin:0 1% 1%;" id="col1" hflex="1" vflex="1" visible="false">
                     <hbox style="margin: 1%">
                         <image src="/imgs/backward-arrow.png" width=""
@@ -19,6 +19,7 @@
                         <label vflex="1" style="margin-left: 10% " value="Фамилия Имя Отчество"/>
                     </hbox>
                     <button style="margin: 0 1% 1%" label="Печать плана"/>
+                    <!-- Таблица занятости на кафедре -->
                     <hbox vflex="1">
                         <grid width="99%" style="margin:0 1% 1%;">
                             <columns menupopup="auto"><!-- make it invisible -->
@@ -42,13 +43,16 @@
                             </rows>
                         </grid>
                     </hbox>
+                    <!-- / Таблица занятости на кафедре -->
+
+                    <!-- Пожелание по расписанию на нечётную неделю -->
                     <groupbox style="margin-left: 1%">
                         <caption>
                             <label value="Пожелание по расписанию занятий (1 неделя)"/>
                         </caption>
                         <hbox style="margin: 1%;">
                             <grid width="99%">
-                                <columns><!-- make it invisible -->
+                                <columns>
                                     <column align="center" label="Ленты" width=""/>
                                     <column align="center" label="Понедельник" width=""/>
                                     <column align="center" label="Вторник" width=""/>
@@ -378,6 +382,9 @@
                             </grid>
                         </hbox>
                     </groupbox>
+
+                    <!-- / Пожелание по расписанию на нечётную неделю -->
+                    <!-- Пожелание по расписанию на чётную неделю -->
                     <groupbox style="margin-left: 1%; ">
                         <caption>
                             <label value="Пожелание по расписанию занятий (2 неделя)"/>
@@ -714,13 +721,18 @@
                             </grid>
                         </hbox>
                     </groupbox>
+                    <!-- / Пожелание по расписанию на чётную неделю -->
                 </vbox>
+                <!-- / Информация о выбранном преподавателе -->
+                
+                <!-- Преподаватели (основное) -->
                 <div id="col2">
                     <hbox style="margin: 1% 1% 1%">
                         <button label="Выбрать роль"/>
                         <button label="Сохранить"/>
                         <button label="Обновить"/>
                     </hbox>
+                    <!-- Выбор кафедры -->
                     <hbox>
                         <vbox style="margin: 0% 7% 0%;">
                             <label value="Кафедра" style="font-size: 1vw;"/>
@@ -731,7 +743,9 @@
                             </combobox>
                         </vbox>
                     </hbox>
+                    <!-- / Выбор кафедры -->
                     <hbox vflex="1" style="margin-top: 1%;">
+                        <!-- Таблица с преподавателями -->
                         <grid vflex="1" hflex="1" style="margin:  2.5% 2% ;" id="gridTeachers">
                             <auxhead>
                                 <auxheader align="center" colspan="3" label="Преподаватели"/>
@@ -748,6 +762,9 @@
                             </columns>
                             <rows onClick="col2.visible = col1.setVisible(true);"/>
                         </grid>
+                        <!-- / Таблица с преподавателями -->
+
+                        <!-- Вакансии  -->
                         <groupbox vflex="1" hflex="1" style="margin: 0% 0% 2.5%;">
                             <caption>
                                 <label value="Вакансии"/>
@@ -756,6 +773,7 @@
                                 <button id="addRateBtn" label="Добавить ставку" autodisable="self"/>
                                 <button label="Удалить ставку"/>
                             </hbox>
+                            <!-- Таблица с вакансиями -->
                             <hbox vflex="1" style="margin: 1% 0 0;">
                                 <grid vflex="1" hflex="1" style="margin:2.5% 2%;">
                                     <columns menupopup="auto"><!-- make it invisible -->
@@ -791,6 +809,7 @@
                                     </rows>
                                 </grid>
                             </hbox>
+                            <!-- / Таблица с вакансиями -->
                             <hbox style="margin: 1% 2% 4%">
                                 <button id="addVacancyBtn" label="Добавить вакансию"/>
                                 <button id="fillRateBtn" label="Заполнить"/>
@@ -798,23 +817,23 @@
                                 <button label="Удалить"/>
                             </hbox>
                         </groupbox>
+                        <!-- / Вакансии  -->
                     </hbox>
                 </div>
+                <!-- / Преподаватели (основное) -->
             </tabpanel>
             <tabpanel height="100%" width="100%">
+                <!-- Учебная нагрузка -->
                 <vlayout vflex="1" style="overflow-y:auto;">
-                    <!-- Учебная нагрузка -->
                     <hbox style="margin: 1% 1% 0%">
                         <button label="Выбрать роль"/>
                         <button label="Сохранить"/>
                         <button label="Обновить"/>
-                        <button label="Вырезать"/>
-                        <button label="Копировать"/>
-                        <button label="Вставить"/>
                         <button label="Печать"/>
                         <button label="Экспорт"/>
                     </hbox>
                     <hbox width="99%">
+                        <!-- Основные команды для работы  -->
                         <groupbox hflex="1" style="margin: 0 3% 0;">
                             <caption>
                                 <label value="Команды"/>
@@ -826,6 +845,9 @@
                                 <button label="Создать поток"/>
                             </hbox>
                         </groupbox>
+                        <!-- / Основные команды для работы  -->
+
+                        <!-- Просмотр  -->
                         <groupbox hflex="2" style="margin: 0 0 0;">
                             <caption>
                                 <label value="Просмотр"/>
@@ -839,7 +861,9 @@
                                 <checkbox id="" label="Летняя" onCheck=""/>
                             </hbox>
                         </groupbox>
+                        <!-- / Просмотр  -->
                     </hbox>
+                    <!-- Таблца "Учебная нагрузка" -->
                     <grid vflex="2" hflex="1" style="margin: 1% 2.5% 0 1%;">
                         <auxhead>
                             <auxheader label="Номер" align="center" rowspan="2"/>
@@ -985,6 +1009,9 @@
                             </row>
                         </rows>
                     </grid>
+                    <!-- / Таблца "Учебная нагрузка" -->
+
+                    <!-- Таблца "Карточки преподавелей" -->
                     <vbox style="margin-right: 1% 1% 1%" vflex="1">
                         <hbox style="margin: 0% 1% 1%">
                             <button label="Закрепить"/>
@@ -1212,11 +1239,13 @@
                             </hbox>
                         </div>
                     </vbox>
+                    <!-- / Таблца "Карточки преподавелей" -->
                 </vlayout>
+                <!-- / Учебная нагрузка -->
             </tabpanel>
             <tabpanel height="100%" width="100%">
+                <!-- Поручения -->
                 <vlayout vflex="1">
-                    <!-- Поручения -->
                     <hbox style="margin: 1% 1% 1%">
                         <button label="Выбрать роль"/>
                         <button label="Обновить"/>
@@ -1332,6 +1361,7 @@
                         </rows>
                     </grid>
                 </vlayout>
+                <!-- / Поручения -->
             </tabpanel>
         </tabpanels>
     </tabbox>
