@@ -793,7 +793,7 @@
                             </hbox>
                             <hbox style="margin: 1% 2% 4%">
                                 <button id="addVacancyBtn" label="Добавить вакансию"/>
-                                <button label="Заполнить"/>
+                                <button id="fillRateBtn" label="Заполнить"/>
                                 <button label="Изменить"/>
                                 <button label="Удалить"/>
                             </hbox>

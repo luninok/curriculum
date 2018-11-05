@@ -64,4 +64,11 @@ public class IndexPageCtrl extends CabinetSelector {
         Window win = (Window) Executions.createComponents("window/winVacancyDialog.zul", null, arg);
         win.doModal();
     }
+
+    @Listen("onClick = #fillRateBtn")
+    public void openWinFillRateStructure() {
+        Map arg = new HashMap();
+        Window win = (Window) Executions.createComponents("window/winRateDialog.zul", null, arg);
+        win.doModal();
+    }
 }
