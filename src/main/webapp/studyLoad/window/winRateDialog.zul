@@ -1,80 +1,22 @@
 <window id="winRateDialog" closable="true" title="Добавить нового преподавателя" style="margin:1" width="60%" height="50%"
-        apply=""> <!--org.edec.studyLoad.ctrl.windowCtrl.winRateDialogCtrl-->
+        apply="org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <hbox style="margin:1%">
         <label value="Фамилия" width="50%"/>
-        <textbox value="@bind(fx.userName)" width="90%" tabindex="1"/>
+        <textbox id="tbLastName" value="" width="90%" tabindex="1"/>
         <label value="Имя" width="50%"/>
-        <textbox value="@bind(fx.userName)" width="90%" tabindex="1"/>
+        <textbox id="tbFirstName" value="" width="90%" tabindex="1"/>
         <label value="Отчество" width="50%"/>
-        <textbox value="@bind(fx.userName)" width="90%" tabindex="1"/>
+        <textbox id="tbMiddleName" value="" width="90%" tabindex="1"/>
     </hbox>
     <grid id="gridRate" vflex="1" style="margin:1%;">
         <columns menupopup="auto"><!-- make it invisible -->
-            <column align="center" label="Фамилия" sort="auto" width=""/>
-            <column align="center" label="Имя" sort="auto" width=""/>
-            <column align="center" label="Отчество" sort="auto" width=""/>
+            <column id="colLastName" align="center" label="Фамилия" sort="auto" width=""/>
+            <column id="colFirstName" align="center" label="Имя" sort="auto" width=""/>
+            <column id="colMiddleName" align="center" label="Отчество" sort="auto" width=""/>
         </columns>
-        <rows>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-            <row>
-                <label forEach="Фамилия, Имя, Отчество"
-                       value="${each}"/>
-            </row>
-        </rows>
+        <rows/>
     </grid>
-    <hbox style="margin:1%">
+    <hbox style="margin:1%; ">
     <button id="addRateBtn" label="Принять" autodisable="self"/>
-    <button id="" label="Отмена"/>
     </hbox>
 </window>

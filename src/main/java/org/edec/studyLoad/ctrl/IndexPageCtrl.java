@@ -58,4 +58,10 @@ public class IndexPageCtrl extends CabinetSelector {
         win.doModal();
     }
 
+    @Listen("onClick = #addVacancyBtn")
+    public void openWinVacancyStructure() {
+        Map arg = new HashMap();
+        Window win = (Window) Executions.createComponents("window/winVacancyDialog.zul", null, arg);
+        win.doModal();
+    }
 }

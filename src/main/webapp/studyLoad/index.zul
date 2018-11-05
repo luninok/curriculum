@@ -34,7 +34,7 @@
                                 <row align="center">
                                     <label forEach="Название кафедры, Совместительство, Должность, Ставок"
                                            value="${each}"/>
-                                    <spinner inplace="true" style="text-align: center" value="44" hflex="1"></spinner>
+                                    <spinner style="text-align: center" value="44" hflex="1"></spinner>
                                     <label>Максимальная нагрузка</label>
                                     <slider width="90%" curpos="1" maxpos="20"/>
                                 </row>
@@ -720,9 +720,6 @@
                         <button label="Выбрать роль"/>
                         <button label="Сохранить"/>
                         <button label="Обновить"/>
-                        <button label="Вырезать"/>
-                        <button label="Копировать"/>
-                        <button label="Вставить"/>
                     </hbox>
                     <hbox>
                         <vbox style="margin: 0% 7% 0%;">
@@ -795,7 +792,8 @@
                                 </grid>
                             </hbox>
                             <hbox style="margin: 1% 2% 4%">
-                                <button label="Добавить вакансию"/>
+                                <button id="addVacancyBtn" label="Добавить вакансию"/>
+                                <button label="Заполнить"/>
                                 <button label="Изменить"/>
                                 <button label="Удалить"/>
                             </hbox>
