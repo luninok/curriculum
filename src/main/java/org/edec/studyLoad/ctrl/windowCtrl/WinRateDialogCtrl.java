@@ -26,23 +26,7 @@ public class WinRateDialogCtrl extends CabinetSelector {
 
     private void fillTable() {
 
-        List<TeacherModel> teacherModelList = new ArrayList<>();
-        teacherModelList.add(new TeacherModel("Nastya", "b", "c"));
-        teacherModelList.add(new TeacherModel("Nik", "d", "s"));
-        teacherModelList.add(new TeacherModel("Nina", "d", "s"));
-        teacherModelList.add(new TeacherModel("Anton", "d", "s"));
-        teacherModelList.add(new TeacherModel("Tom", "d", "s"));
-        teacherModelList.add(new TeacherModel("Pit", "d", "s"));
-        teacherModelList.add(new TeacherModel("Roma", "d", "s"));
 
-        for (TeacherModel teacherModel : teacherModelList) {
-            Row row = new Row();
-            new org.zkoss.zul.Label(teacherModel.getLastName()).setParent(row);
-            new org.zkoss.zul.Label(teacherModel.getFirstName()).setParent(row);
-            new Label(teacherModel.getMiddleName()).setParent(row);
-
-            gridRate.getRows().appendChild(row);
-        }
     }
 
 

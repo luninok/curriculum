@@ -724,7 +724,7 @@
                     <!-- / Пожелание по расписанию на чётную неделю -->
                 </vbox>
                 <!-- / Информация о выбранном преподавателе -->
-                
+
                 <!-- Преподаватели (основное) -->
                 <div id="col2">
                     <hbox style="margin: 1% 1% 1%">
@@ -738,7 +738,7 @@
                             <label value="Кафедра" style="font-size: 1vw;"/>
                             <combobox id="cmbFaculty" width="100%" readonly="true">
                                 <comboitem label="ИСУ"/>
-                                <comboitem label="КБ"/>
+                                <comboitem label="И"/>
                                 <comboitem label="ИБ"/>
                             </combobox>
                         </vbox>
