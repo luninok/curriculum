@@ -15,7 +15,7 @@ import org.zkoss.zul.Textbox;
 public class WinRateDialogCtrl extends CabinetSelector {
 
     @Wire
-    private Grid gridRate;
+    private Grid lbRate;
 
     @Wire
     Textbox tbLastName, tbFirstName, tbMiddleName;
@@ -38,7 +38,7 @@ public class WinRateDialogCtrl extends CabinetSelector {
 
     //  public static final String REGISTER_COMMISSION = "register_commission";
 
-    //  private Grid gridRate;
+    //  private Grid lbRate;
 
     //  private TeacherModel teacher;
 
@@ -47,8 +47,8 @@ public class WinRateDialogCtrl extends CabinetSelector {
     //      super.doAfterCompose(comp);
 
     //      teacher = (TeacherModel) Executions.getCurrent().getArg().get(REGISTER_COMMISSION);
-    //      Clients.showBusy(gridRate, "Загрузка данных");
-    //       Events.echoEvent("onLater", gridRate, null);
+    //      Clients.showBusy(lbRate, "Загрузка данных");
+    //       Events.echoEvent("onLater", lbRate, null);
     // teacher = (TeacherModel) Executions.getCurrent().getArg().get(REGISTER_COMMISSION);
     // Clients.showBusy(lbShowStudentCommission, "Загрузка данных");
     // Events.echoEvent("onLater", lbShowStudentCommission, null);

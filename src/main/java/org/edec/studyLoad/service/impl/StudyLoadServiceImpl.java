@@ -16,4 +16,9 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public List<TeacherModel> getTeachers (String department) {
         return entityManagerStudyLoad.getTeachers(department);
     }
+
+    @Override
+    public  List<String> getDepartments() {
+        return entityManagerStudyLoad.getDepartments();
+    }
 }

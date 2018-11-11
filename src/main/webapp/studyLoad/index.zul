@@ -10,60 +10,63 @@
             <tab label="Поручения"/>
         </tabs>
         <tabpanels>
-            <tabpanel height="100%" width="100%" style="overflow-y:auto;">
+            <tabpanel id="tabPanelTeacher" height="100%" width="100%" style="overflow-y:auto;">
                 <!-- Информация о выбранном преподавателе  -->
                 <vbox style="margin:0 1% 1%;" id="col1" hflex="1" vflex="1" visible="false">
                     <hbox style="margin: 1%">
-                        <image src="/imgs/backward-arrow.png" width=""
+                        <image id="imgBackward" src="/imgs/backward-arrow.png" width=""
                                onClick="col1.visible = col2.setVisible(true);"></image>
-                        <label vflex="1" style="margin-left: 10% " value="Фамилия Имя Отчество"/>
+                        <label id="labelFIO" vflex="1" style="margin-left: 10% " value="Фамилия Имя Отчество"/>
                     </hbox>
                     <button style="margin: 0 1% 1%" label="Печать плана"/>
                     <!-- Таблица занятости на кафедре -->
                     <hbox vflex="1">
-                        <grid width="99%" style="margin:0 1% 1%;">
-                            <columns menupopup="auto"><!-- make it invisible -->
-                                <column align="center" label="Название кафедры" sort="auto" width=""/>
-                                <column align="center" label="Совместительство" sort="auto" width=""/>
-                                <column align="center" label="Должность" sort="auto" width=""/>
-                                <column align="center" label="Ставок" sort="auto" width=""/>
-                                <column align="center" label="Норма времени на ставку" sort="auto" width=""/>
-                                <column align="center" label="Максимальная нагрузка" sort="auto" width=""/>
-                                <column align="center" label="Приоритет" sort="auto" width=""/>
-                            </columns>
-                            <rows>
-                                <row align="center">
+                        <listbox id="lbEmployment" width="99%" style="margin:0 1% 1%;">
+                            <listhead menupopup="auto"><!-- make it invisible -->
+                                <listheader id="lhNameFaculty" align="center" label="Название кафедры" sort="auto"
+                                            width=""/>
+                                <listheader id="lhPartTime" align="center" label="Совместительство" sort="auto"
+                                            width=""/>
+                                <listheader id="lhPositionTeacher" align="center" label="Должность" sort="auto"
+                                            width=""/>
+                                <listheader id="lhRateTeacher" align="center" label="Ставок" sort="auto" width=""/>
+                                <listheader id="lhRateTime" align="center" label="Норма времени на ставку" sort="auto"
+                                            width=""/>
+                                <listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" sort="auto"
+                                            width=""/>
+                                <listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>
+                            </listhead>
+                            <listitem>
+                                <listcell>
                                     <label forEach="Название кафедры, Совместительство, Должность, Ставок"
                                            value="${each}"/>
                                     <spinner style="text-align: center" value="44" hflex="1"></spinner>
                                     <label>Максимальная нагрузка</label>
                                     <slider width="90%" curpos="1" maxpos="20"/>
-                                </row>
-
-                            </rows>
-                        </grid>
+                                </listcell>
+                            </listitem>
+                        </listbox>
                     </hbox>
                     <!-- / Таблица занятости на кафедре -->
-
-                    <!-- Пожелание по расписанию на нечётную неделю -->
+                    <!-- Пожелание по расписанию -->
                     <groupbox style="margin-left: 1%">
                         <caption>
                             <label value="Пожелание по расписанию занятий (1 неделя)"/>
                         </caption>
                         <hbox style="margin: 1%;">
-                            <grid width="99%">
-                                <columns>
-                                    <column align="center" label="Ленты" width=""/>
-                                    <column align="center" label="Понедельник" width=""/>
-                                    <column align="center" label="Вторник" width=""/>
-                                    <column align="center" label="Среда" width=""/>
-                                    <column align="center" label="Четверг" width=""/>
-                                    <column align="center" label="Пятница" width=""/>
-                                    <column align="center" label="Суббота" width=""/>
-                                    <column align="center" label="Воскресенье" width=""/>
-                                </columns>
-                                <rows>
-                                    <row>
+                            <listbox id="lbOddWishes" width="99%">
+                                <listhead>
+                                    <listheader id="lhOddPairs" align="center" label="Ленты" width=""/>
+                                    <listheader id="lhOddMonday" align="center" label="Понедельник" width=""/>
+                                    <listheader id="lhOddTuesday" align="center" label="Вторник" width=""/>
+                                    <listheader id="lhOddEnvironment" align="center" label="Среда" width=""/>
+                                    <listheader id="lhOddThursday" align="center" label="Четверг" width=""/>
+                                    <listheader id="lhOddFriday" align="center" label="Пятница" width=""/>
+                                    <listheader id="lhOddSaturday" align="center" label="Суббота" width=""/>
+                                    <listheader id="lhOddSunday" align="center" label="Воскресенье" width=""/>
+                                </listhead>
+                                <listitem>
+                                    <listcell>
                                         <label>8:30-10:05</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -107,8 +110,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>10:15-11:50</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -152,8 +155,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>12:00-13:35</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -197,8 +200,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>14:10-15:45</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -242,8 +245,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>15:55-17:30</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -287,8 +290,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>17:40-19:15</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -332,8 +335,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>19:25-21:00</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -377,32 +380,29 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                </rows>
-                            </grid>
+                                    </listcell>
+                                </listitem>
+                            </listbox>
                         </hbox>
                     </groupbox>
-
-                    <!-- / Пожелание по расписанию на нечётную неделю -->
-                    <!-- Пожелание по расписанию на чётную неделю -->
                     <groupbox style="margin-left: 1%; ">
                         <caption>
                             <label value="Пожелание по расписанию занятий (2 неделя)"/>
                         </caption>
                         <hbox style="margin: 1%;">
-                            <grid width="99%">
-                                <columns><!-- make it invisible -->
-                                    <column align="center" label="Ленты" width=""/>
-                                    <column align="center" label="Понедельник" width=""/>
-                                    <column align="center" label="Вторник" width=""/>
-                                    <column align="center" label="Среда" width=""/>
-                                    <column align="center" label="Четверг" width=""/>
-                                    <column align="center" label="Пятница" width=""/>
-                                    <column align="center" label="Суббота" width=""/>
-                                    <column align="center" label="Воскресенье" width=""/>
-                                </columns>
-                                <rows>
-                                    <row>
+                            <listbox id="lbEvenWishes" width="99%">
+                                <listhead><!-- make it invisible -->
+                                    <listheader id="lhEvenPairs" align="center" label="Ленты" width=""/>
+                                    <listheader id="lhEvenMonday" align="center" label="Понедельник" width=""/>
+                                    <listheader id="lhEvenTuesday" align="center" label="Вторник" width=""/>
+                                    <listheader id="lhEvenEnvironment" align="center" label="Среда" width=""/>
+                                    <listheader id="lhEvenThursday" align="center" label="Четверг" width=""/>
+                                    <listheader id="lhEvenFriday" align="center" label="Пятница" width=""/>
+                                    <listheader id="lhEvenSaturday" align="center" label="Суббота" width=""/>
+                                    <listheader id="lhEvenSunday" align="center" label="Воскресенье" width=""/>
+                                </listhead>
+                                <listitem>
+                                    <listcell>
                                         <label>8:30-10:05</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -446,8 +446,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>10:15-11:50</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -491,8 +491,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>12:00-13:35</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -536,8 +536,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>14:10-15:45</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -581,8 +581,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>15:55-17:30</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -626,8 +626,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>17:40-19:15</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -671,8 +671,8 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                    <row>
+                                    </listcell>
+                                    <listcell>
                                         <label>19:25-21:00</label>
                                         <combobox hflex="1" style="margin-left: 10%; text-align: center"
                                                   value="Желательно" inplace="true">
@@ -716,308 +716,312 @@
                                             <comboitem label="Не желательно"/>
                                             <comboitem label="Невозможно"/>
                                         </combobox>
-                                    </row>
-                                </rows>
-                            </grid>
+                                    </listcell>
+                                </listitem>
+                            </listbox>
                         </hbox>
                     </groupbox>
-                    <!-- / Пожелание по расписанию на чётную неделю -->
+                    <!-- / Пожелание по расписанию -->
                 </vbox>
                 <!-- / Информация о выбранном преподавателе -->
-
                 <!-- Преподаватели (основное) -->
-                <div id="col2">
-                    <hbox style="margin: 1% 1% 1%">
-                        <button label="Выбрать роль"/>
-                        <button label="Сохранить"/>
-                        <button label="Обновить"/>
+                <div vflex="1" id="col2">
+                    <hbox width="100%">
+                        <button id="btnSaveTeachersTabs" label="Сохранить"/>
+                        <button id="btnUpdateTeachersTabs" label="Обновить"/>
                     </hbox>
-                    <!-- Выбор кафедры -->
-                    <hbox>
-                        <vbox style="margin: 0% 7% 0%;">
-                            <label value="Кафедра" style="font-size: 1vw;"/>
-                            <combobox id="cmbFaculty" width="100%" readonly="true">
-                                <comboitem label="ИСУ"/>
-                                <comboitem label="И"/>
-                                <comboitem label="ИБ"/>
-                            </combobox>
-                        </vbox>
-                    </hbox>
-                    <!-- / Выбор кафедры -->
+                    <vbox width="100%">
+                        <label value="Кафедра" style="font-size: 1vw;"/>
+                        <combobox vflex="1" id="cmbFaculty" width="50%" readonly="true">
+                            <comboitem label="ИСУ"/>
+                            <comboitem label="И"/>
+                            <comboitem label="ИБ"/>
+                        </combobox>
+                    </vbox>
                     <hbox vflex="1" style="margin-top: 1%;">
                         <!-- Таблица с преподавателями -->
-                        <grid vflex="1" hflex="1" style="margin:  2.5% 2% ;" id="gridTeachers">
+                        <listbox vflex="1" hflex="1" id="lbTeachers">
                             <auxhead>
                                 <auxheader align="center" colspan="3" label="Преподаватели"/>
                             </auxhead>
-                            <auxhead>
-                                <auxheader label="Фамилия" align="center"/>
-                                <auxheader label="Имя" align="center"/>
-                                <auxheader label="Отчество" align="center"/>
-                            </auxhead>
-                            <columns menupopup="auto">
-                                <column align="center" width=""/>
-                                <column align="center" width=""/>
-                                <column align="center" width=""/>
-                            </columns>
-                            <rows onClick="col2.visible = col1.setVisible(true);"/>
-                        </grid>
+                            <listhead menupopup="auto">
+                                <listheader id="lhLastName" align="center" label="Фамилия"/>
+                                <listheader id="lhFirstName" align="center" label="Имя"/>
+                                <listheader id="lhMiddleName" align="center" label="Отчество"/>
+                            </listhead>
+                            <listitem onClick="col2.visible = col1.setVisible(true);"/>
+                        </listbox>
                         <!-- / Таблица с преподавателями -->
-
-                        <!-- Вакансии  -->
-                        <groupbox vflex="1" hflex="1" style="margin: 0% 0% 2.5%;">
-                            <caption>
-                                <label value="Вакансии"/>
-                            </caption>
+                        <vbox vflex="1" >
                             <hbox style="margin: 0 2% 0;">
-                                <button id="addRateBtn" label="Добавить ставку" autodisable="self"/>
-                                <button label="Удалить ставку"/>
+                                <button id="btnAddRate" label="Добавить ставку" autodisable="self"/>
+                                <button id="btnRemoveRate" label="Удалить ставку"/>
                             </hbox>
                             <!-- Таблица с вакансиями -->
-                            <hbox vflex="1" style="margin: 1% 0 0;">
-                                <grid vflex="1" hflex="1" style="margin:2.5% 2%;">
-                                    <columns menupopup="auto"><!-- make it invisible -->
-                                        <column align="center" label="Вакансии" sort="auto" width=""/>
-                                        <column align="center" label="Должность" sort="auto" width=""/>
-                                        <column align="center" label="Ставок" sort="auto" width=""/>
-                                    </columns>
-                                    <rows>
-                                        <row>
-                                            <label forEach="Вакансии, Должность, Ствок"
-                                                   value="${each}"/>
-                                        </row>
-                                        <row>
-                                            <label forEach="Вакансии, Должность, Ствок"
-                                                   value="${each}"/>
-                                        </row>
-                                        <row>
-                                            <label forEach="Вакансии, Должность, Ствок"
-                                                   value="${each}"/>
-                                        </row>
-                                        <row>
-                                            <label forEach="Вакансии, Должность, Ствок"
-                                                   value="${each}"/>
-                                        </row>
-                                        <row>
-                                            <label forEach="Вакансии, Должность, Ствок"
-                                                   value="${each}"/>
-                                        </row>
-                                        <row>
-                                            <label forEach="Вакансии, Должность, Ствок"
-                                                   value="${each}"/>
-                                        </row>
-                                    </rows>
-                                </grid>
+                            <hbox vflex="1">
+                                <listbox id="lbVacancy" vflex="1" hflex="1" style="margin: 0 0 0 2%;">
+                                    <listhead menupopup="auto"><!-- make it invisible -->
+                                        <listheader id="lhVacancy" align="center" label="Вакансии" sort="auto"
+                                                    width=""/>
+                                        <listheader id="lhPosition" align="center" label="Должность" sort="auto"
+                                                    width=""/>
+                                        <listheader id="lhRate" align="center" label="Ставок" sort="auto" width=""/>
+                                    </listhead>
+                                    <listitem>
+                                    </listitem>
+                                </listbox>
                             </hbox>
                             <!-- / Таблица с вакансиями -->
-                            <hbox style="margin: 1% 2% 4%">
-                                <button id="addVacancyBtn" label="Добавить вакансию"/>
-                                <button id="fillRateBtn" label="Заполнить"/>
-                                <button label="Изменить"/>
-                                <button label="Удалить"/>
+                            <hbox style="margin: 0 2% 0;">
+                                <button id="btnAddVacancy" label="Добавить вакансию"/>
+                                <button id="btnFillRate" label="Заполнить"/>
+                                <button id="btnChangeVacancy" label="Изменить"/>
+                                <button id="btnRemoveVacancy" label="Удалить"/>
                             </hbox>
-                        </groupbox>
-                        <!-- / Вакансии  -->
+                        </vbox>
                     </hbox>
                 </div>
                 <!-- / Преподаватели (основное) -->
             </tabpanel>
-            <tabpanel height="100%" width="100%">
+            <tabpanel id="tabPanelStudyLoad" height="100%" width="100%">
                 <!-- Учебная нагрузка -->
                 <vlayout vflex="1" style="overflow-y:auto;">
                     <hbox style="margin: 1% 1% 0%">
-                        <button label="Выбрать роль"/>
-                        <button label="Сохранить"/>
-                        <button label="Обновить"/>
-                        <button label="Печать"/>
-                        <button label="Экспорт"/>
+                        <button id="btnSaveStudyLoadTabs" label="Сохранить"/>
+                        <button id="btnUpdateStudyLoadTabs" label="Обновить"/>
+                        <button id="btnPrintStudyLoadTabs" label="Печать"/>
+                        <button id="btnExportStudyLoadTabs" label="Экспорт"/>
                     </hbox>
                     <hbox width="99%">
-                        <!-- Основные команды для работы  -->
                         <groupbox hflex="1" style="margin: 0 3% 0;">
                             <caption>
                                 <label value="Команды"/>
                             </caption>
                             <hbox>
-                                <button label="Разбить строку"/>
-                                <button label="Собрать"/>
-                                <button label="Вкл/Выкл"/>
-                                <button label="Создать поток"/>
+                                <button id="btnSplitLine" label="Разбить строку"/>
+                                <button id="btnCollect" label="Собрать"/>
+                                <button id="btnSwitch" label="Вкл/Выкл"/>
+                                <button id="btnCreateThread" label="Создать поток"/>
                             </hbox>
                         </groupbox>
-                        <!-- / Основные команды для работы  -->
-
-                        <!-- Просмотр  -->
                         <groupbox hflex="2" style="margin: 0 0 0;">
                             <caption>
                                 <label value="Просмотр"/>
                             </caption>
                             <hbox style="margin: 0 0 0.7%">
-                                <checkbox id="" label="Панель закрепления преподавателей" onCheck=""/>
-                                <checkbox id="" label="Осенний" onCheck=""/>
-                                <checkbox id="" label="Весенний" onCheck=""/>
-                                <checkbox id="" label="Установочная" onCheck=""/>
-                                <checkbox id="" label="Зимняя" onCheck=""/>
-                                <checkbox id="" label="Летняя" onCheck=""/>
+                                <checkbox id="chTeacherPinningToolbar" label="Панель закрепления преподавателей"
+                                          onCheck=""/>
+                                <checkbox id="chAutumn" label="Осенний" onCheck=""/>
+                                <checkbox id="chSpring" label="Весенний" onCheck=""/>
+                                <checkbox id="chAdjusting" label="Установочная" onCheck=""/>
+                                <checkbox id="chWinter" label="Зимняя" onCheck=""/>
+                                <checkbox id="chSummer" label="Летняя" onCheck=""/>
                             </hbox>
                         </groupbox>
-                        <!-- / Просмотр  -->
                     </hbox>
                     <!-- Таблца "Учебная нагрузка" -->
-                    <grid vflex="2" hflex="1" style="margin: 1% 2.5% 0 1%;">
+                    <listbox vflex="2" hflex="1" style="margin: 1% 2.2% 0 1%;">
                         <auxhead>
-                            <auxheader label="Номер" align="center" rowspan="2"/>
-                            <auxheader label="Учебный план" align="center" rowspan="2"/>
-                            <auxheader label="Факультет, группы" align="center" rowspan="2"/>
-                            <auxheader label="Блок" align="center" rowspan="2"/>
-                            <auxheader label="Дисциплина" align="center" rowspan="2"/>
-                            <auxheader label="Закреплённая кафедра" align="center" rowspan="2"/>
-                            <auxheader label="Курс/Семестр" align="center" rowspan="2"/>
-                            <auxheader label="Группа" align="center" rowspan="2"/>
-                            <auxheader label="Кол-во студентов" align="center" rowspan="2"/>
-                            <auxheader label="Недель" align="center" rowspan="2"/>
-                            <auxheader label="Вид занятий" align="center" rowspan="2"/>
-                            <auxheader label="Часов" align="center" rowspan="2"/>
-                            <auxheader label="Виды контроля" align="center" rowspan="2"/>
-                            <auxheader label="КСР" align="center" rowspan="2"/>
-                            <auxheader label="Индивидуальные занятия" align="center" rowspan="2"/>
-                            <auxheader label="Контрольные" align="center" rowspan="2"/>
-                            <auxheader label="Оценка по рейтингу" align="center" rowspan="2"/>
-                            <auxheader label="Рефераты" align="center" rowspan="2"/>
-                            <auxheader label="Эссе" align="center" rowspan="2"/>
-                            <auxheader label="РГР" align="center" rowspan="2"/>
-                            <auxheader label="Контрольные работы (заоч)" align="center" rowspan="2"/>
-                            <auxheader label="Консультации (СПО)" align="center" rowspan="2"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelNumber" value="Номер"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelCurriculum" value="Учебный план"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelFacultyGroup" value="Факультет, группы"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelBlock" value="Блок"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelDiscipline" value="Дисциплина"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelAssignedFaculty" value="Закреплённая кафедра"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelCourseSemester" value="Курс/Семестр"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelGroup" value="Группа"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelCountStudents" value="Кол-во студентов"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelWeek" value="Недель"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelTypeClasses" value="Вид занятий"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelHours" value="Часов"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelTypeControl" value="Виды контроля"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelKSR" value="КСР"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelIndividualLesson" value="Индивидуальные занятия"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelControl" value="Контрольные"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelAssessmentByRating" value="Оценка по рейтингу"/>
+                            </auxheader>
+                            <auxheader label="Рефераты" align="center" rowspan="2">
+                                <label id="labelAbstracts" value=""/>
+                            </auxheader>
+                            <auxheader label="Эссе" align="center" rowspan="2">
+                                <label id="labelEssay" value=""/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelRGR" value="РГР"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelControlWork" value="Контрольные работы (заоч)"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelConsultations(SPO)" value="Консультации (СПО)"/>
+                            </auxheader>
                             <auxheader label="Нагрузка, час" align="center" colspan="4"/>
-                            <auxheader label="Преподаватель" align="center" rowspan="2"/>
-                            <auxheader label="Номер потока" align="center" rowspan="2"/>
-                            <auxheader label="Индикатор первой группы" align="center" rowspan="2"/>
-                            <auxheader label="Ауд. рекомендуемая" align="center" rowspan="2"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelTeacher" value="Преподаватель"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelThreadNumber" value="Номер потока"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelFirstGroupIndicator" value="Индикатор первой группы"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelEducationalRoom(recommended)" value="Ауд. рекомендуемая"/>
+                            </auxheader>
                             <auxheader label="Дополнительно часов на" align="center" colspan="2"/>
-                            <auxheader label="Фактически выполено" align="center" rowspan="2"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelDoneInFact" value="Фактически выполено"/>
+                            </auxheader>
                             <auxheader label="Время проведения занятий по графику" align="center" colspan="2"/>
                             <auxheader label="Распределение нагрузки, час" align="center" colspan="3"/>
-                            <auxheader label="Доля внебюджет" align="center" rowspan="2"/>
-                            <auxheader label="Доля иностр." align="center" rowspan="2"/>
-                            <auxheader label="ВсегАудиторнаяор/Иностр." align="center" rowspan="2"/>
-                            <auxheader label="Уровень образования" align="center" rowspan="2"/>
-                            <auxheader label="Часов на экзамены" align="center" rowspan="2"/>
-                            <auxheader label="Сам. работа" align="center" rowspan="2"/>
-                            <auxheader label="Электронные часы" align="center" rowspan="2"/>
-                            <auxheader label="Нормирующий коэф." align="center" rowspan="2"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelShareOfExtraBudgetary" value="Доля внебюджет"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelShareOfForeign" value="Доля иностр."/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelAllEducationalRoom" value="ВсегАудиторнаяор/Иностр."/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelLevelOfEducation" value="Уровень образования"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelHoursForExams" value="Часов на экзамены"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelIndependentWork" value="Сам. работа"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelElectronicClock" value="Электронные часы"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelNormalizingFactor" value="Нормирующий коэф."/>
+                            </auxheader>
                         </auxhead>
                         <auxhead>
-                            <auxheader label="Аудиторная" align="center"/>
-                            <auxheader label="Другое" align="center" colspan="2"/>
-                            <auxheader label="Итого" align="center"/>
-                            <auxheader label="Студента" align="center"/>
-                            <auxheader label="Группу" align="center"/>
-                            <auxheader label="С" align="center"/>
-                            <auxheader label="По" align="center"/>
-                            <auxheader label="Бюджет" align="center"/>
-                            <auxheader label="Внебюджет" align="center"/>
-                            <auxheader label="Иностр." align="center"/>
+                            <auxheader align="center">
+                                <label id="labelEducationalRoom" value="Аудиторная"/>
+                            </auxheader>
+                            <auxheader align="center" colspan="2">
+                                <label id="labelMore" value="Другое"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelSubtotal" value="Итого"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelStudentHours" value="Студента"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelGroupHours" value="Группу"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelFirst" value="С"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelLast" value="По"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelBudget" value="Бюджет"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelExtraBudgetary" value="Внебюджет"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelForeigners" value="Иностр."/>
+                            </auxheader>
                         </auxhead>
-                        <columns visible="false"><!-- make it invisible -->
-                            <column align="center" width="8vh"/><!-- specify width here -->
-                            <column align="center" width="15.5vh"/><!-- specify width here -->
-                            <column align="center" width="19.5vh"/><!-- specify width here -->
-                            <column align="center" width="7.5vh"/><!-- specify width here -->
-                            <column align="center" width="16.5vh"/><!-- specify width here -->
-                            <column align="center" width="24.5vh"/><!-- specify width here -->
-                            <column align="center" width="17vh"/><!-- specify width here -->
-                            <column align="center" width="9vh"/><!-- specify width here -->
-                            <column align="center" width="20vh"/><!-- specify width here -->
-                            <column align="center" width="10.5vh"/><!-- specify width here -->
-                            <column align="center" width="15.5vh"/><!-- specify width here -->
-                            <column align="center" width="8vh"/><!-- specify width here -->
-                            <column align="center" width="18vh"/><!-- specify width here -->
-                            <column align="center" width="7vh"/><!-- specify width here -->
-                            <column align="center" width="28vh"/><!-- specify width here -->
-                            <column align="center" width="17vh"/><!-- specify width here -->
-                            <column align="center" width="21vh"/><!-- specify width here -->
-                            <column align="center" width="11vh"/><!-- specify width here -->
-                            <column align="center" width="7vh"/><!-- specify width here -->
-                            <column align="center" width="6vh"/><!-- specify width here -->
-                            <column align="center" width="29vh"/><!-- specify width here -->
-                            <column align="center" width="21vh"/>
-                            <column align="center" width="14vh"/>
-                            <column align="center" width="11vh"/>
-                            <column align="center" width="11vh"/>
-                            <column align="center" width="11vh"/>
-                            <column align="center" width="17vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="27vh"/>
-                            <column align="center" width="21vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="23vh"/>
-                            <column align="center" width="19vh"/>
-                            <column align="center" width="20vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="19vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="25vh"/>
-                            <column align="center" width="25vh"/>
-                            <column align="center" width="23vh"/>
-                            <column align="center" width="15vh"/>
-                            <column align="center" width="23vh"/>
-                            <column align="center" width="22vh"/>
-                        </columns>
-                        <rows>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="a,w,r,f,y,u,f,s,q,f,g,t,f,t,d,s,f,h,j,f,g,h,j,l,o,y,e,r,e,w,w,w,w,w,w,w,w,w,d,e,e,e,e,e,e,r"
-                                       value="${each}"/>
-                            </row>
-                        </rows>
-                    </grid>
+                        <listhead visible="false">
+                            <listheader align="center" width="8vh"/>
+                            <listheader align="center" width="15.5vh"/>
+                            <listheader align="center" width="19.5vh"/>
+                            <listheader align="center" width="7.5vh"/>
+                            <listheader align="center" width="16.5vh"/>
+                            <listheader align="center" width="24.5vh"/>
+                            <listheader align="center" width="17vh"/>
+                            <listheader align="center" width="9vh"/>
+                            <listheader align="center" width="20vh"/>
+                            <listheader align="center" width="10.5vh"/>
+                            <listheader align="center" width="15.5vh"/>
+                            <listheader align="center" width="8vh"/>
+                            <listheader align="center" width="18vh"/>
+                            <listheader align="center" width="7vh"/>
+                            <listheader align="center" width="28vh"/>
+                            <listheader align="center" width="17vh"/>
+                            <listheader align="center" width="21vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="7vh"/>
+                            <listheader align="center" width="6vh"/>
+                            <listheader align="center" width="29vh"/>
+                            <listheader align="center" width="21vh"/>
+                            <listheader align="center" width="14vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="17vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="27vh"/>
+                            <listheader align="center" width="21vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="23vh"/>
+                            <listheader align="center" width="19vh"/>
+                            <listheader align="center" width="20vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="19vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="25vh"/>
+                            <listheader align="center" width="25vh"/>
+                            <listheader align="center" width="23vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="23vh"/>
+                            <listheader align="center" width="22vh"/>
+                        </listhead>
+                    </listbox>
                     <!-- / Таблца "Учебная нагрузка" -->
 
                     <!-- Таблца "Карточки преподавелей" -->
                     <vbox style="margin-right: 1% 1% 1%" vflex="1">
                         <hbox style="margin: 0% 1% 1%">
-                            <button label="Закрепить"/>
-                            <button label="Открепить"/>
+                            <button id="btnAssignTeacher" label="Закрепить"/>
+                            <button id="btnDetachTeacher" label="Открепить"/>
                         </hbox>
-                        <div width="76%"
+                        <div id="teacherCards" width="76%"
                              style="margin: 0% 0% 0 1%; border:1px solid lightgray; overflow:auto; padding: 1%;">
                             <hbox>
                                 <div width="140px" height="140px">
@@ -1243,123 +1247,34 @@
                 </vlayout>
                 <!-- / Учебная нагрузка -->
             </tabpanel>
-            <tabpanel height="100%" width="100%">
+            <tabpanel id="tabAssignments" height="100%" width="100%">
                 <!-- Поручения -->
                 <vlayout vflex="1">
                     <hbox style="margin: 1% 1% 1%">
-                        <button label="Выбрать роль"/>
-                        <button label="Обновить"/>
-                        <button label="Печать"/>
-                        <button label="Экспорт"/>
+                        <button id="btnUpdateAssignmentsTabs" label="Обновить"/>
+                        <button id="btnPrintAssignmentsTabs" label="Печать"/>
+                        <button id="btnExportAssignmentsTabs" label="Экспорт"/>
                     </hbox>
-                    <grid vflex="1" hflex="1" width="99%" style="margin:0 1% 1%;">
-                        <auxhead>
-                            <auxheader align="center" label="Номер"/>
-                            <auxheader align="center" label="Преподаватель"/>
-                            <auxheader align="center" label="Дисциплина"/>
-                            <auxheader align="center" label="Вид"></auxheader>
-                            <auxheader align="center" label="Факультет"></auxheader>
-                            <auxheader align="center" label="Группа(ы)"></auxheader>
-                            <auxheader align="center" label="Студентов"></auxheader>
-                            <auxheader align="center" label="Контроль"></auxheader>
-                            <auxheader align="center" label="Учебных недель"></auxheader>
-                            <auxheader align="center" label="Курс"></auxheader>
-                            <auxheader align="center" label="Аудитория"></auxheader>
-                            <auxheader align="center" label="Часов" width=""></auxheader>
-                            <auxheader align="center" label="Начало" width=""></auxheader>
-                            <auxheader align="center" label="Конец" width=""></auxheader>
-                            <auxheader align="center" label="Бюджет" width=""></auxheader>
-                            <auxheader align="center" label="Внебюджета"></auxheader>
-                        </auxhead>
-                        <columns visible="false"><!-- make it invisible -->
-                            <column align="center" width="4%"/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width="3%"/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width=""/><!-- specify width here -->
-                            <column align="center" width="4%"/><!-- specify width here -->
-                            <column align="center" width="6%"/><!-- specify width here -->
-                            <column align="center" width="4%"/><!-- specify width here -->
-                            <column align="center" width="5%"/><!-- specify width here -->
-                            <column align="center" width="5%"/><!-- specify width here -->
-                            <column align="center" width="5%"/><!-- specify width here -->
-                            <column align="center" width="7%"/><!-- specify width here -->
-                        </columns>
-                        <rows>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                            <row>
-                                <label forEach="Номер, Преподаватель, Дисциплина, Вид, Факультет, Группа(ы), Студентов, Контроль, Учебных недель, Курс, Аудитория, Часов, Начало, Конец, Бюджет, Внебюджета"
-                                       value="${each}"/>
-                            </row>
-                        </rows>
-                    </grid>
+                    <listbox id="lbAssignments" vflex="1" hflex="1" width="99%" style="margin:0 1% 1%;">
+                        <listhead>
+                            <listheader id="lhNumber" align="center" label="Номер"/>
+                            <listheader id="lhTeacher" align="center" label="Преподаватель"/>
+                            <listheader id="lhDiscipline" align="center" label="Дисциплина"/>
+                            <listheader id="lhView" align="center" label="Вид"></listheader>
+                            <listheader id="lhFaculty" align="center" label="Факультет"></listheader>
+                            <listheader id="lhGroup" align="center" label="Группа(ы)"></listheader>
+                            <listheader id="lhStudents" align="center" label="Студентов"></listheader>
+                            <listheader id="lhControl" align="center" label="Контроль"></listheader>
+                            <listheader id="lhEducationalWeek" align="center" label="Учебных недель"></listheader>
+                            <listheader id="lhCourse" align="center" label="Курс"></listheader>
+                            <listheader id="lhStudyRoom" align="center" label="Аудитория"></listheader>
+                            <listheader id="lhHours" align="center" label="Часов" width=""></listheader>
+                            <listheader id="lhStart" align="center" label="Начало" width=""></listheader>
+                            <listheader id="lhFinish" align="center" label="Конец" width=""></listheader>
+                            <listheader id="lhBudget" align="center" label="Бюджет" width=""></listheader>
+                            <listheader id="lhExtraBudgetary" align="center" label="Внебюджета"></listheader>
+                        </listhead>
+                    </listbox>
                 </vlayout>
                 <!-- / Поручения -->
             </tabpanel>

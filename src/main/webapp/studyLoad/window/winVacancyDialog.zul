@@ -3,10 +3,11 @@
     <vbox style="margin:1%">
         <hbox width="100%" style="margin:3% 2% 0">
             <label style="margin-right:0%" value="Количество ставок" width="50%"/>
-            <spinner style="text-align: center" value="44" hflex="1"></spinner>
+            <spinner id="spinnerCountRate" style="text-align: center" value="44" hflex="1"></spinner>
         </hbox>
-        <hbox width="100%" style="margin:3% 2% 1%"><label value="Должность"/>
-            <combobox hflex="1" style="text-align: center" value="Ассистент">
+        <hbox width="100%" style="margin:3% 2% 1%">
+            <label value="Должность"/>
+            <combobox id="cmbPosition" hflex="1" style="text-align: center" value="Ассистент">
                 <comboitem label="Ассистент"/>
                 <comboitem label="Доцент"/>
                 <comboitem label="Старший преподаватель"/>
@@ -14,6 +15,6 @@
         </hbox>
     </vbox>
     <hbox style="margin: 3% 2% 0;">
-        <button id="addRateBtn" label="Добавить" autodisable="self"/>
+        <button id="btnTakeVacancy" label="Принять" autodisable="self"/>
     </hbox>
 </window>
