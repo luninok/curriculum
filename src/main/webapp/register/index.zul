@@ -143,6 +143,7 @@
                             <label sclass="cwf-listheader-label" value=""/>
                         </listheader>
                     </listhead>
+
                 </listbox>
                 <groupbox>
                     <hbox>

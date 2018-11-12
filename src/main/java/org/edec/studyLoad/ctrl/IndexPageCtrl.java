@@ -24,13 +24,17 @@ import java.util.Map;
 public class IndexPageCtrl extends CabinetSelector {
 
     @Wire
-    private Grid lbTeachers, gridVacancy;
+    private Listbox lbTeachers, lbVacancy;
     @Wire
     private Combobox cmbFaculty;
     @Wire
-    private Div col2;
+    private Vbox col2;
     @Wire
     private Vbox col1;
+    @Wire
+    private Label labelFIO;
+
+    private String selectFIO = "";
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
 
@@ -75,37 +79,43 @@ public class IndexPageCtrl extends CabinetSelector {
         //Events.echoEvent("onLater", lbTeachers, null);
     }
 
-    @Listen("onClick = #teacherRows row")
-    public void teacherRowClick()
-    {
-
+    @Listen("onSelect = #lbTeachers")
+    public void teacherRowClick() {
+        labelFIO.setValue("");
         col1.setVisible(true);
         col2.setVisible(false);
+        TeacherModel selectTeacher = lbTeachers.getSelectedItem().getValue();
+        labelFIO.setValue(selectTeacher.getFamily() + " " + selectTeacher.getName() + " " + selectTeacher.getPatronymic());
+    }
+
+    @Listen("onClick = #btnBackward")
+    public void labelFIOClick() {
+        col2.setVisible(true);
+        col1.setVisible(false);
     }
 
     @Listen("onClick = #vacancyRows row")
-    public void vacancyRowClick(Event e)
-    {
+    public void vacancyRowClick(Event e) {
         Row r = (Row) e.getTarget();
 
-        String t = ((Label)r.getChildren().get(0)).getValue();
-
+        String t = ((Label) r.getChildren().get(0)).getValue();
 
 
     }
 
     @Listen("onChange = #cmbFaculty")
     public void laterForTeachers() {
-        lbTeachers.getRows().getChildren().clear();
+        lbTeachers.clearSelection();
         List<TeacherModel> list = studyLoadService.getTeachers((String) cmbFaculty.getValue());
-
         for (TeacherModel teacher : list) {
-            Row row = new Row();
-            new Label(teacher.getFamily()).setParent(row);
-            new Label(teacher.getName()).setParent(row);
-            new Label(teacher.getPatronymic()).setParent(row);
-
-            lbTeachers.getRows().appendChild(row);
+            Listitem listitem = new Listitem();
+            listitem.setValue(teacher); // Вот она новая строчка!
+            new Listcell(teacher.getFamily()).setParent(listitem);
+            new Listcell(teacher.getName()).setParent(listitem);
+            new Listcell(teacher.getPatronymic()).setParent(listitem);
+            Listcell cell = new Listcell();
+            cell.setParent(listitem);
+            lbTeachers.getItems().add(listitem);
         }
 
         /*lbShowCommission.setModel(new ListModelList<>(list));
