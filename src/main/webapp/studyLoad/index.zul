@@ -1,0 +1,1565 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/layout/template.zul"?>
+<?link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon"?>
+<?link href="/css/studyLoad.css" rel="stylesheet"?>
+<vlayout self="@define(content)" vflex="1" style="min-width: 700px; min-height: 500px; margin: 5px;"
+         apply="org.edec.studyLoad.ctrl.IndexPageCtrl">
+    <tabbox vflex="1" style="">
+        <tabs>
+            <tab label="Преподаватели"/>
+            <tab label="Учебная нагрузка"/>
+            <tab label="Поручения"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel id="tabPanelTeacher" height="100%" width="100%" style="overflow-y:auto;">
+                <!-- Информация о выбранном преподавателе  -->
+                <vbox id="col1" width="100%" vflex="1" visible="false">
+                    <hbox>
+                        <button id="btnBackward" image="/imgs/backward-arrow.png"/>
+                        <label id="labelFIO"/>
+                    </hbox>
+                    <button label="Печать плана"/>
+                    <!-- Таблица занятости на кафедре -->
+                    <hbox width="100%" vflex="1">
+                        <listbox id="lbEmployment">
+                            <listhead menupopup="auto"><!-- make it invisible -->
+                                <listheader id="lhNameFaculty" align="center" label="Название кафедры" sort="auto"
+                                            width=""/>
+                                <listheader id="lhPartTime" align="center" label="Совместительство" sort="auto"
+                                            width=""/>
+                                <listheader id="lhPositionTeacher" align="center" label="Должность" sort="auto"
+                                            width=""/>
+                                <listheader id="lhRateTeacher" align="center" label="Ставок" sort="auto" width=""/>
+                                <listheader id="lhRateTime" align="center" label="Норма времени на ставку" sort="auto"
+                                            width=""/>
+                                <listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" sort="auto"
+                                            width=""/>
+                                <listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>
+                            </listhead>
+                            <listitem>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
+                                <listcell>
+                                    <spinner style="text-align: center" value="44" hflex="1"></spinner>
+                                </listcell>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
+                                <listcell label="нагрузка"/>
+                                <listcell>
+                                    <slider width="90%" curpos="1" maxpos="20"/>
+                                </listcell>
+                            </listitem>
+                        </listbox>
+                    </hbox>
+                    <!-- / Таблица занятости на кафедре -->
+                    <!-- Пожелание по расписанию -->
+                    <groupbox>
+                        <caption>
+                            <label value="Пожелание по расписанию занятий (1 неделя)"/>
+                        </caption>
+                        <hbox>
+                            <listbox id="lbOddWishes">
+                                <listhead>
+                                    <listheader id="lhOddPairs" align="center" label="Ленты" width=""/>
+                                    <listheader id="lhOddMonday" align="center" label="Понедельник" width=""/>
+                                    <listheader id="lhOddTuesday" align="center" label="Вторник" width=""/>
+                                    <listheader id="lhOddEnvironment" align="center" label="Среда" width=""/>
+                                    <listheader id="lhOddThursday" align="center" label="Четверг" width=""/>
+                                    <listheader id="lhOddFriday" align="center" label="Пятница" width=""/>
+                                    <listheader id="lhOddSaturday" align="center" label="Суббота" width=""/>
+                                    <listheader id="lhOddSunday" align="center" label="Воскресенье" width=""/>
+                                </listhead>
+                                <listitem>
+                                    <listcell>
+                                        <label>8:30-10:05</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>10:15-11:50</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>12:00-13:35</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>14:10-15:45</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>15:55-17:30</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>17:40-19:15</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>19:25-21:00</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                            </listbox>
+                        </hbox>
+                    </groupbox>
+                    <groupbox>
+                        <caption>
+                            <label value="Пожелание по расписанию занятий (2 неделя)"/>
+                        </caption>
+                        <hbox>
+                            <listbox id="lbEvenWishes">
+                                <listhead><!-- make it invisible -->
+                                    <listheader id="lhEvenPairs" align="center" label="Ленты" width=""/>
+                                    <listheader id="lhEvenMonday" align="center" label="Понедельник" width=""/>
+                                    <listheader id="lhEvenTuesday" align="center" label="Вторник" width=""/>
+                                    <listheader id="lhEvenEnvironment" align="center" label="Среда" width=""/>
+                                    <listheader id="lhEvenThursday" align="center" label="Четверг" width=""/>
+                                    <listheader id="lhEvenFriday" align="center" label="Пятница" width=""/>
+                                    <listheader id="lhEvenSaturday" align="center" label="Суббота" width=""/>
+                                    <listheader id="lhEvenSunday" align="center" label="Воскресенье" width=""/>
+                                </listhead>
+                                <listitem>
+                                    <listcell>
+                                        <label>8:30-10:05</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>10:15-11:50</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>12:00-13:35</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>14:10-15:45</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>15:55-17:30</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>17:40-19:15</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                                <listitem>
+                                    <listcell>
+                                        <label>19:25-21:00</label>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                    <listcell>
+                                        <combobox hflex="1" style="margin-left: 10%; text-align: center"
+                                                  value="Желательно" inplace="true">
+                                            <comboitem label="Желательно"/>
+                                            <comboitem label="Не желательно"/>
+                                            <comboitem label="Невозможно"/>
+                                        </combobox>
+                                    </listcell>
+                                </listitem>
+                            </listbox>
+                        </hbox>
+                    </groupbox>
+                    <!-- / Пожелание по расписанию -->
+                </vbox>
+                <!-- / Информация о выбранном преподавателе -->
+                <!-- Преподаватели (основное) -->
+                <vbox width="100%" vflex="1" id="col2">
+                    <vbox width="100%">
+                        <label value="Кафедра" style="font-size: 1vw;"/>
+                        <combobox vflex="1" id="cmbFaculty" width="50%" readonly="true"></combobox>
+                    </vbox>
+                    <hbox width="100%" vflex="1">
+                        <!-- Таблица с преподавателями -->
+                        <listbox vflex="1" hflex="1" id="lbTeachers">
+                            <auxhead>
+                                <auxheader align="center" colspan="3" label="Преподаватели"/>
+                            </auxhead>
+                            <listhead menupopup="auto">
+                                <listheader width="33%" sort="auto" id="lhLastName" align="center" label="Фамилия"/>
+                                <listheader width="33%" id="lhFirstName" align="center" label="Имя"/>
+                                <listheader width="34%" id="lhMiddleName" align="center" label="Отчество"/>
+                            </listhead>
+                        </listbox>
+                        <!-- / Таблица с преподавателями -->
+                        <vbox width="100%" vflex="1">
+                            <hbox>
+                                <button id="btnAddRate" label="Добавить ставку" autodisable="self"/>
+                                <button id="btnRemoveRate" label="Удалить ставку"/>
+                            </hbox>
+                            <!-- Таблица с вакансиями -->
+                            <listbox width="100%" id="lbVacancy" vflex="1" hflex="1">
+                                <listhead menupopup="auto"><!-- make it invisible -->
+                                    <listheader id="lhVacancy" align="center" label="Вакансии" sort="auto"
+                                                width=""/>
+                                    <listheader id="lhPosition" align="center" label="Должность" sort="auto"
+                                                width=""/>
+                                    <listheader id="lhRate" align="center" label="Ставок" sort="auto" width=""/>
+                                </listhead>
+                            </listbox>
+                            <!-- / Таблица с вакансиями -->
+                            <hbox>
+                                <button id="btnAddVacancy" label="Добавить вакансию"/>
+                                <button id="btnFillRate" label="Заполнить"/>
+                                <button id="btnChangeVacancy" label="Изменить"/>
+                                <button id="btnRemoveVacancy" label="Удалить"/>
+                            </hbox>
+                        </vbox>
+                    </hbox>
+                </vbox>
+                <!-- / Преподаватели (основное) -->
+            </tabpanel>
+            <tabpanel id="tabPanelStudyLoad" height="100%" width="100%">
+                <!-- Учебная нагрузка -->
+                <vlayout vflex="1" style="overflow-y:auto;">
+                    <hbox>
+                        <button id="btnPrintStudyLoadTabs" label="Печать"/>
+                        <button id="btnExportStudyLoadTabs" label="Экспорт"/>
+                    </hbox>
+                    <hbox width="80%">
+                        <groupbox hflex="1" vflex="1">
+                            <caption>
+                                <label value="Команды"/>
+                            </caption>
+                            <hbox>
+                                <button id="btnSplitLine" label="Разбить строку"/>
+                                <button id="btnCollect" label="Собрать"/>
+                                <button id="btnSwitch" label="Вкл/Выкл"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox hflex="2" vflex="1">
+                            <caption>
+                                <label value="Просмотр"/>
+                            </caption>
+                            <hbox>
+                                <checkbox id="chTeacherPinningToolbar" label="Панель закрепления преподавателей"
+                                          onCheck=""/>
+                                <checkbox id="chAutumn" label="Осенний" onCheck=""/>
+                                <checkbox id="chSpring" label="Весенний" onCheck=""/>
+                                <checkbox id="chAdjusting" label="Установочная" onCheck=""/>
+                                <checkbox id="chWinter" label="Зимняя" onCheck=""/>
+                                <checkbox id="chSummer" label="Летняя" onCheck=""/>
+                            </hbox>
+                        </groupbox>
+                    </hbox>
+                    <!-- Таблца "Учебная нагрузка" -->
+                    <listbox vflex="2" hflex="1">
+                        <auxhead>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelNumber" value="Номер"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelCurriculum" value="Учебный план"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelFacultyGroup" value="Факультет, группы"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelBlock" value="Блок"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelDiscipline" value="Дисциплина"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelAssignedFaculty" value="Закреплённая кафедра"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelCourseSemester" value="Курс/Семестр"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelGroup" value="Группа"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelCountStudents" value="Кол-во студентов"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelWeek" value="Недель"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelTypeClasses" value="Вид занятий"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelHours" value="Часов"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelTypeControl" value="Виды контроля"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelKSR" value="КСР"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelIndividualLesson" value="Индивидуальные занятия"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelControl" value="Контрольные"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelAssessmentByRating" value="Оценка по рейтингу"/>
+                            </auxheader>
+                            <auxheader label="Рефераты" align="center" rowspan="2">
+                                <label id="labelAbstracts" value=""/>
+                            </auxheader>
+                            <auxheader label="Эссе" align="center" rowspan="2">
+                                <label id="labelEssay" value=""/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelRGR" value="РГР"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelControlWork" value="Контрольные работы (заоч)"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelConsultations(SPO)" value="Консультации (СПО)"/>
+                            </auxheader>
+                            <auxheader label="Нагрузка, час" align="center" colspan="4"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelTeacher" value="Преподаватель"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelThreadNumber" value="Номер потока"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelFirstGroupIndicator" value="Индикатор первой группы"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelEducationalRoom(recommended)" value="Ауд. рекомендуемая"/>
+                            </auxheader>
+                            <auxheader label="Дополнительно часов на" align="center" colspan="2"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelDoneInFact" value="Фактически выполено"/>
+                            </auxheader>
+                            <auxheader label="Время проведения занятий по графику" align="center" colspan="2"/>
+                            <auxheader label="Распределение нагрузки, час" align="center" colspan="3"/>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelShareOfExtraBudgetary" value="Доля внебюджет"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelShareOfForeign" value="Доля иностр."/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelAllEducationalRoom" value="ВсегАудиторнаяор/Иностр."/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelLevelOfEducation" value="Уровень образования"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelHoursForExams" value="Часов на экзамены"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelIndependentWork" value="Сам. работа"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelElectronicClock" value="Электронные часы"/>
+                            </auxheader>
+                            <auxheader align="center" rowspan="2">
+                                <label id="labelNormalizingFactor" value="Нормирующий коэф."/>
+                            </auxheader>
+                        </auxhead>
+                        <auxhead>
+                            <auxheader align="center">
+                                <label id="labelEducationalRoom" value="Аудиторная"/>
+                            </auxheader>
+                            <auxheader align="center" colspan="2">
+                                <label id="labelMore" value="Другое"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelSubtotal" value="Итого"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelStudentHours" value="Студента"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelGroupHours" value="Группу"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelFirst" value="С"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelLast" value="По"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelBudget" value="Бюджет"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelExtraBudgetary" value="Внебюджет"/>
+                            </auxheader>
+                            <auxheader align="center">
+                                <label id="labelForeigners" value="Иностр."/>
+                            </auxheader>
+                        </auxhead>
+                        <listhead visible="false">
+                            <listheader align="center" width="8vh"/>
+                            <listheader align="center" width="15.5vh"/>
+                            <listheader align="center" width="19.5vh"/>
+                            <listheader align="center" width="7.5vh"/>
+                            <listheader align="center" width="16.5vh"/>
+                            <listheader align="center" width="24.5vh"/>
+                            <listheader align="center" width="17vh"/>
+                            <listheader align="center" width="9vh"/>
+                            <listheader align="center" width="20vh"/>
+                            <listheader align="center" width="10.5vh"/>
+                            <listheader align="center" width="15.5vh"/>
+                            <listheader align="center" width="8vh"/>
+                            <listheader align="center" width="18vh"/>
+                            <listheader align="center" width="7vh"/>
+                            <listheader align="center" width="28vh"/>
+                            <listheader align="center" width="17vh"/>
+                            <listheader align="center" width="21vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="7vh"/>
+                            <listheader align="center" width="6vh"/>
+                            <listheader align="center" width="29vh"/>
+                            <listheader align="center" width="21vh"/>
+                            <listheader align="center" width="14vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="11vh"/>
+                            <listheader align="center" width="17vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="27vh"/>
+                            <listheader align="center" width="21vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="23vh"/>
+                            <listheader align="center" width="19vh"/>
+                            <listheader align="center" width="20vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="19vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="25vh"/>
+                            <listheader align="center" width="25vh"/>
+                            <listheader align="center" width="23vh"/>
+                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="23vh"/>
+                            <listheader align="center" width="22vh"/>
+                        </listhead>
+                    </listbox>
+                    <!-- / Таблца "Учебная нагрузка" -->
+                    <hbox>
+                        <button id="bTeacher" label="Закрепить"/>
+                        <button id="btnDetacher" label="Открепить"/>
+                    </hbox>
+                    <!-- Таблца "Карточки преподавелей" -->
+                    <div style="overflow:auto" id="teacherCards">
+                        <hbox width="100%">
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/man.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                            <div width="140px" height="140px">
+                                <label>ФИО</label>
+                                <hbox>
+                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <vbox>
+                                        <label>Лек.:0</label>
+                                        <label>Прак.:0</label>
+                                        <label>Лаб.:0</label>
+                                    </vbox>
+                                </hbox>
+                                <vbox>
+                                    <label>Другое:0</label>
+                                    <hbox>
+                                        <label>Часов:0</label>
+                                        <label>Откл.:0</label>
+                                    </hbox>
+                                </vbox>
+                            </div>
+                        </hbox>
+                    </div>
+                    <!-- / Таблца "Карточки преподавелей" -->
+                </vlayout>
+                <!-- / Учебная нагрузка -->
+            </tabpanel>
+            <tabpanel id="tabAssignments" height="100%" width="100%">
+                <!-- Поручения -->
+                <vlayout vflex="1">
+                    <hbox>
+                        <button id="btnPrintAssignmentsTabs" label="Печать"/>
+                        <button id="btnExportAssignmentsTabs" label="Экспорт"/>
+                    </hbox>
+                    <listbox id="lbAssignments" vflex="1" hflex="1" width="99%">
+                        <listhead>
+                            <listheader id="lhNumber" align="center" label="Номер"/>
+                            <listheader id="lhTeacher" align="center" label="Преподаватель"/>
+                            <listheader id="lhDiscipline" align="center" label="Дисциплина"/>
+                            <listheader id="lhView" align="center" label="Вид"></listheader>
+                            <listheader id="lhFaculty" align="center" label="Факультет"></listheader>
+                            <listheader id="lhGroup" align="center" label="Группа(ы)"></listheader>
+                            <listheader id="lhStudents" align="center" label="Студентов"></listheader>
+                            <listheader id="lhControl" align="center" label="Контроль"></listheader>
+                            <listheader id="lhEducationalWeek" align="center" label="Учебных недель"></listheader>
+                            <listheader id="lhCourse" align="center" label="Курс"></listheader>
+                            <listheader id="lhStudyRoom" align="center" label="Аудитория"></listheader>
+                            <listheader id="lhHours" align="center" label="Часов" width=""></listheader>
+                            <listheader id="lhStart" align="center" label="Начало" width=""></listheader>
+                            <listheader id="lhFinish" align="center" label="Конец" width=""></listheader>
+                            <listheader id="lhBudget" align="center" label="Бюджет" width=""></listheader>
+                            <listheader id="lhExtraBudgetary" align="center" label="Внебюджета"></listheader>
+                        </listhead>
+                    </listbox>
+                </vlayout>
+                <!-- / Поручения -->
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+</vlayout>

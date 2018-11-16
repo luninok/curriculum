@@ -1,0 +1,21 @@
+<window id="winRateDialog" closable="true" title="Добавить нового преподавателя" style="margin:1" width="60%" height="50%"
+        apply="org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
+    <hbox style="margin:1%">
+        <label value="Фамилия" width="50%"/>
+        <textbox id="tbLastName" value="" width="90%" tabindex="1"/>
+        <label value="Имя" width="50%"/>
+        <textbox id="tbFirstName" value="" width="90%" tabindex="1"/>
+        <label value="Отчество" width="50%"/>
+        <textbox id="tbMiddleName" value="" width="90%" tabindex="1"/>
+    </hbox>
+    <listbox id="lbRate" vflex="1" style="margin:1%;">
+        <listhead menupopup="auto"><!-- make it invisible -->
+            <listheader id="lhLastName" align="center" label="Фамилия" sort="auto" width=""/>
+            <listheader id="lhFirstName" align="center" label="Имя" sort="auto" width=""/>
+            <listheader id="lhMiddleName" align="center" label="Отчество" sort="auto" width=""/>
+        </listhead>
+    </listbox>
+    <hbox style="margin:1%; ">
+    <button id="btnTakeRate" label="Принять" autodisable="self"/>
+    </hbox>
+</window>
