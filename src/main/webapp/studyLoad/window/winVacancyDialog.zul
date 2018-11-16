@@ -1,13 +1,13 @@
-<window id="winRateDialog" closable="true" title="Добавить вакансию" style="margin:1" width="20%" height="27%"
-        apply=""> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
+<window id="winVacancyDialog" closable="true" title="Добавить вакансию" style="margin:1" width="20%" height="27%"
+        apply="org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <vbox style="margin:1%">
         <hbox width="100%" style="margin:3% 2% 0">
             <label style="margin-right:0%" value="Количество ставок" width="50%"/>
-            <spinner id="spinnerCountRate" style="text-align: center" value="44" hflex="1"></spinner>
+            <spinner id="spinnerCountRate" style="text-align: center" hflex="1"></spinner>
         </hbox>
         <hbox width="100%" style="margin:3% 2% 1%">
             <label value="Должность"/>
-            <combobox id="cmbPosition" hflex="1" style="text-align: center" value="Ассистент">
+            <combobox readonly="true" id="cmbPosition" hflex="1" style="text-align: center">
                 <comboitem label="Ассистент"/>
                 <comboitem label="Доцент"/>
                 <comboitem label="Старший преподаватель"/>

@@ -21,4 +21,9 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public  List<String> getDepartments() {
         return entityManagerStudyLoad.getDepartments();
     }
+
+    @Override
+    public List<String> getPosition() {
+        return entityManagerStudyLoad.getPosition();
+    }
 }

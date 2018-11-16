@@ -36,16 +36,22 @@
                                 <listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>
                             </listhead>
                             <listitem>
-                                <listcell label="Название кафедры"/>
-                                <listcell label="Совместительство"/>
-                                <listcell label="Должность"/>
-                                <listcell label="Ставок"/>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
+                                <listcell>
+                                    <textbox hflex="1"/>
+                                </listcell>
                                 <listcell>
                                     <spinner style="text-align: center" value="44" hflex="1"></spinner>
                                 </listcell>
                                 <listcell>
-                                    <label>Максимальная нагрузка</label>
+                                    <textbox hflex="1"/>
                                 </listcell>
+                                <listcell label="нагрузка"/>
                                 <listcell>
                                     <slider width="90%" curpos="1" maxpos="20"/>
                                 </listcell>
@@ -951,26 +957,18 @@
                 <!-- / Информация о выбранном преподавателе -->
                 <!-- Преподаватели (основное) -->
                 <vbox width="100%" vflex="1" id="col2">
-                    <hbox>
-                        <button id="btnSaveTeachersTabs" label="Сохранить"/>
-                        <button id="btnUpdateTeachersTabs" label="Обновить"/>
-                    </hbox>
                     <vbox width="100%">
                         <label value="Кафедра" style="font-size: 1vw;"/>
-                        <combobox vflex="1" id="cmbFaculty" width="50%" readonly="true">
-                            <comboitem label="ИСУ"/>
-                            <comboitem label="И"/>
-                            <comboitem label="ИБ"/>
-                        </combobox>
+                        <combobox vflex="1" id="cmbFaculty" width="50%" readonly="true"></combobox>
                     </vbox>
                     <hbox width="100%" vflex="1">
                         <!-- Таблица с преподавателями -->
-                        <listbox width="100%" vflex="1" hflex="1" id="lbTeachers">
+                        <listbox vflex="1" hflex="1" id="lbTeachers">
                             <auxhead>
                                 <auxheader align="center" colspan="3" label="Преподаватели"/>
                             </auxhead>
                             <listhead menupopup="auto">
-                                <listheader width="33%" id="lhLastName" align="center" label="Фамилия"/>
+                                <listheader width="33%" sort="auto" id="lhLastName" align="center" label="Фамилия"/>
                                 <listheader width="33%" id="lhFirstName" align="center" label="Имя"/>
                                 <listheader width="34%" id="lhMiddleName" align="center" label="Отчество"/>
                             </listhead>
@@ -982,7 +980,7 @@
                                 <button id="btnRemoveRate" label="Удалить ставку"/>
                             </hbox>
                             <!-- Таблица с вакансиями -->
-                            <listbox id="lbVacancy" vflex="1" hflex="1">
+                            <listbox width="100%" id="lbVacancy" vflex="1" hflex="1">
                                 <listhead menupopup="auto"><!-- make it invisible -->
                                     <listheader id="lhVacancy" align="center" label="Вакансии" sort="auto"
                                                 width=""/>
@@ -1007,13 +1005,11 @@
                 <!-- Учебная нагрузка -->
                 <vlayout vflex="1" style="overflow-y:auto;">
                     <hbox>
-                        <button id="btnSaveStudyLoadTabs" label="Сохранить"/>
-                        <button id="btnUpdateStudyLoadTabs" label="Обновить"/>
                         <button id="btnPrintStudyLoadTabs" label="Печать"/>
                         <button id="btnExportStudyLoadTabs" label="Экспорт"/>
                     </hbox>
-                    <hbox width="100%">
-                        <groupbox hflex="1">
+                    <hbox width="80%">
+                        <groupbox hflex="1" vflex="1">
                             <caption>
                                 <label value="Команды"/>
                             </caption>
@@ -1021,10 +1017,9 @@
                                 <button id="btnSplitLine" label="Разбить строку"/>
                                 <button id="btnCollect" label="Собрать"/>
                                 <button id="btnSwitch" label="Вкл/Выкл"/>
-                                <button id="btnCreateThread" label="Создать поток"/>
                             </hbox>
                         </groupbox>
-                        <groupbox hflex="2">
+                        <groupbox hflex="2" vflex="1">
                             <caption>
                                 <label value="Просмотр"/>
                             </caption>
@@ -1539,7 +1534,6 @@
                 <!-- Поручения -->
                 <vlayout vflex="1">
                     <hbox>
-                        <button id="btnUpdateAssignmentsTabs" label="Обновить"/>
                         <button id="btnPrintAssignmentsTabs" label="Печать"/>
                         <button id="btnExportAssignmentsTabs" label="Экспорт"/>
                     </hbox>

@@ -34,4 +34,10 @@ public class EntityManagerStudyLoad extends DAO {
         Query q = getSession().createSQLQuery(query);
         return (List<String>) getList(q);
     }
+
+    public List<String> getPosition() {
+        String query = "SELECT  ER.rolename FROM public.employee_role ER";
+        Query q = getSession().createSQLQuery(query);
+        return (List<String>) getList(q);
+    }
 }

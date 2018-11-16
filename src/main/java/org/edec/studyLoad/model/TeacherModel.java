@@ -17,7 +17,7 @@ public class TeacherModel {
     private String family;
     private String patronymic;
 
-    private List<TeacherModel> teachers = new ArrayList<>();
+   // private List<TeacherModel> teachers = new ArrayList<>();
 
     public TeacherModel(String firstName, String lastName, String middleName)
     {
@@ -26,4 +26,8 @@ public class TeacherModel {
         patronymic = middleName;
     }
 
+    @Override
+    public String toString() {
+        return family + " " + name + " " + patronymic;
+    }
 }

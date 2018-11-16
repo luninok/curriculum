@@ -7,15 +7,12 @@ import java.util.List;
 import java.util.ArrayList;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Grid;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.Row;
-import org.zkoss.zul.Textbox;
+import org.zkoss.zul.*;
 
 public class WinRateDialogCtrl extends CabinetSelector {
 
     @Wire
-    private Grid lbRate;
+    private Listbox lbRate;
 
     @Wire
     Textbox tbLastName, tbFirstName, tbMiddleName;
@@ -30,11 +27,10 @@ public class WinRateDialogCtrl extends CabinetSelector {
     }
 
 
-    @Listen("onOK = #tbLastName; onOK = #tbFirstName; onOK = #tbtbMiddleName;")
-    public void search() {
+   // @Listen("onOK = #tbLastName; onOK = #tbFirstName; onOK = #tbtbMiddleName;")
+   // public void search() {
 
-
-    }
+  //  }
 
     //  public static final String REGISTER_COMMISSION = "register_commission";
 

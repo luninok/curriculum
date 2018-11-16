@@ -9,4 +9,5 @@ import java.util.List;
 public interface StudyLoadService {
     List<TeacherModel> getTeachers (String department);
     List<String> getDepartments();
+    List<String> getPosition();
 }

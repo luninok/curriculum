@@ -69,7 +69,6 @@ public class IndexPageCtrl extends SelectorComposer<Component> {
         if (lbOrderRule.getSelectedItem() != null) {
             Runnable updateListOrderRule = this::fillListOrderRule;
             Map<String, Object> arg = new HashMap<>();
-
             arg.put("fillListOrderRule", updateListOrderRule);
             arg.put("rule", lbOrderRule.getSelectedItem().getValue());
 
