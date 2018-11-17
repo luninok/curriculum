@@ -4,9 +4,11 @@ package org.edec.studyLoad.ctrl;
 import javafx.scene.control.ComboBox;
 import org.edec.commission.model.SubjectDebtModel;
 import org.edec.model.SemesterModel;
+import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
+import org.edec.studyLoad.model.AssignmentModel;
 import org.edec.studyLoad.model.TeacherModel;
 import org.edec.studyLoad.model.VacancyModal;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
@@ -31,7 +33,7 @@ public class IndexPageCtrl extends CabinetSelector {
     // public static final String SELECTED_POSITION = "selected_position";
     // public static final String SELECTED_RATE = "selected_rate";
     @Wire
-    private Listbox lbTeachers, lbVacancy;
+    private Listbox lbTeachers, lbVacancy, lbAssignments;
     @Wire
     private Combobox cmbFaculty;
     @Wire
@@ -48,6 +50,7 @@ public class IndexPageCtrl extends CabinetSelector {
     private Spinner selectedRate;
     private List<VacancyModal> vacancyModals = new ArrayList<>();
     private List<TeacherModel> teacherModels = new ArrayList<>();
+    private List<AssignmentModel> assignmentModels = new ArrayList<>();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -59,22 +62,19 @@ public class IndexPageCtrl extends CabinetSelector {
     protected void fill() {
 
         fillCmbFaculty();
-        /*Clients.showBusy("Загрузка данных");
-        Events.echoEvent("onLater", vbCalendar, null);
-        Events.echoEvent("onFirstRun", vbCalendar, null);
-        Events.echoEvent("onLater", cmbSemesterForTabDay, null);
-        Events.echoEvent("onLater", cmbGroupForTabDay, null);*/
-
+        fillLbAssignment();
     }
 
     private void fillCmbFaculty() {
 
-        List<String> list = studyLoadService.getDepartments();
-        for (String department : list) {
+        List<DepartmentModel> list = studyLoadService.getDepartments();
+        for (DepartmentModel department : list) {
             Comboitem comboitem = new Comboitem();
-            comboitem.setLabel(department);
+            comboitem.setLabel(department.getFulltitle());
+            comboitem.setValue(department);
             cmbFaculty.getItems().add(comboitem);
         }
+        if(cmbFaculty.getItems().size() != 0) { cmbFaculty.setSelectedIndex(0); }
         /*List<TeacherModel> teacherModelList = new ArrayList<>();
         teacherModelList.add(new TeacherModel("d", "b", "c"));
         teacherModelList.add(new TeacherModel("f", "d", "s"));
@@ -139,6 +139,7 @@ public class IndexPageCtrl extends CabinetSelector {
         ListModelList<TeacherModel> teacherListModelList = new ListModelList<>(teacherModels);
         lbTeachers.setModel(teacherListModelList);
         lbTeachers.renderAll();
+        fillLbAssignment();
         /*
         for (TeacherModel teacher : list) {
             Listitem listitem = new Listitem();
@@ -183,7 +184,6 @@ public class IndexPageCtrl extends CabinetSelector {
         } else {
             PopupUtil.showInfo("Выберите вакансию!");
         }
-
     }
 
 
@@ -195,6 +195,26 @@ public class IndexPageCtrl extends CabinetSelector {
         lbVacancy.renderAll();
     }
 
+    public void fillLbAssignment() {
+        // TODO Создать отдельный renderer, добавить семестр как текущий
+        lbAssignments.getItems().clear();
+        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel)cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
+        for (int i = 0; i < assignmentModels.size();i++) {
+            AssignmentModel assignmentModel = assignmentModels.get(i);
+            Listitem listitem = new Listitem();
+            listitem.setValue(assignmentModel);
+            new Listcell(String.valueOf(i)).setParent(listitem);
+            new Listcell(assignmentModel.getFio()).setParent(listitem);
+            new Listcell(assignmentModel.nameDiscipline).setParent(listitem);
+            new Listcell(assignmentModel.getTypeInstructionString()).setParent(listitem);
+            new Listcell(assignmentModel.getGroupName()).setParent(listitem);
+            new Listcell(assignmentModel.getTypeControl()).setParent(listitem);
+            new Listcell(String.valueOf(assignmentModel.getCourse())).setParent(listitem);
+            new Listcell(String.valueOf(assignmentModel.getHourSaudCount())).setParent(listitem);
+            new Listcell(String.valueOf(assignmentModel.getHoursCount())).setParent(listitem);
+            lbAssignments.getItems().add(listitem);
+        }
+    }
 
     public void updateLbVacancy(String position, String rate) {
         VacancyModal changeVacancy = new VacancyModal(position, rate, lbVacancy.getSelectedIndex());
@@ -210,4 +230,5 @@ public class IndexPageCtrl extends CabinetSelector {
         lbVacancy.setModel(vacancyListModelList);
         lbVacancy.renderAll();
     }
+
 }
