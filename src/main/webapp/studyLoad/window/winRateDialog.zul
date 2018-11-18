@@ -7,6 +7,7 @@
         <textbox id="tbFirstName" value="" width="90%" tabindex="1"/>
         <label value="Отчество" width="50%"/>
         <textbox id="tbMiddleName" value="" width="90%" tabindex="1"/>
+        <button id="btnSearch" label="Поиск"/>
     </hbox>
     <listbox id="lbRate" vflex="1" style="margin:1%;">
         <listhead menupopup="auto"><!-- make it invisible -->

@@ -12,17 +12,18 @@ import java.util.List;
 
 public class EntityManagerStudyLoad extends DAO {
     public List<TeacherModel> getTeachers(String department) {
-        String query = "SELECT HF.family, HF.name, HF.patronymic\n" +
+        String query = "SELECT HF.family, HF.name, HF.patronymic, E.id_employee\n" +
                 "from employee E \n" +
                 "inner join link_employee_department LED using (id_employee) \n" +
                 "inner join department D using (id_department) \n" +
                 "inner join humanface HF using (id_humanface) \n" +
                 "where D.fulltitle = '" + department + "'\n" +
-                "group by HF.family, HF.name, HF.patronymic";
+                "group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
                 .addScalar("name")
                 .addScalar("patronymic")
+                .addScalar("id_employee", LongType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(TeacherModel.class));
         return (List<TeacherModel>) getList(q);
     }

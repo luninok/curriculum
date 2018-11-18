@@ -1,7 +1,7 @@
 package org.edec.studyLoad.ctrl.windowCtrl;
 
 import org.edec.studyLoad.ctrl.IndexPageCtrl;
-import org.edec.studyLoad.model.VacancyModal;
+import org.edec.studyLoad.model.VacancyModel;
 import org.edec.studyLoad.service.StudyLoadService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.utility.zk.CabinetSelector;
@@ -12,9 +12,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WinVacancyDialogCtrl extends CabinetSelector {
     public static final String INDEX_PAGE = "index_page";
@@ -28,16 +26,16 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private IndexPageCtrl indexPageCtrl;
-    private VacancyModal vacancyModal;
+    private VacancyModel vacancyModel;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         indexPageCtrl = (IndexPageCtrl) Executions.getCurrent().getArg().get(INDEX_PAGE);
-        vacancyModal = (VacancyModal) Executions.getCurrent().getArg().get(SELECT_VACANCY);
-        if (vacancyModal != null) {
-            cmbPosition.setValue(vacancyModal.getPosition());
-            spinnerCountRate.setValue(Integer.valueOf(vacancyModal.getRate()));
+        vacancyModel = (VacancyModel) Executions.getCurrent().getArg().get(SELECT_VACANCY);
+        if (vacancyModel != null) {
+            cmbPosition.setValue(vacancyModel.getPosition());
+            spinnerCountRate.setValue(Integer.valueOf(vacancyModel.getRate()));
         }
     }
 
@@ -62,7 +60,7 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
         }
         String position = cmbPosition.getValue();
         String rate = spinnerCountRate.getValue().toString();
-          if (vacancyModal != null) {
+          if (vacancyModel != null) {
            indexPageCtrl.updateLbVacancy(position, rate);
         } else {
             indexPageCtrl.fillLbVacancy(position, rate);

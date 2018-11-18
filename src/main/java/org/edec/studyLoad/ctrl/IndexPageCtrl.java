@@ -1,14 +1,11 @@
 package org.edec.studyLoad.ctrl;
 
 
-import javafx.scene.control.ComboBox;
-import org.edec.commission.model.SubjectDebtModel;
-import org.edec.model.SemesterModel;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
 import org.edec.studyLoad.model.TeacherModel;
-import org.edec.studyLoad.model.VacancyModal;
+import org.edec.studyLoad.model.VacancyModel;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.studyLoad.service.StudyLoadService;
 import org.edec.utility.zk.CabinetSelector;
@@ -16,10 +13,8 @@ import org.edec.utility.zk.PopupUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import java.util.ArrayList;
@@ -46,7 +41,7 @@ public class IndexPageCtrl extends CabinetSelector {
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private Combobox selectedPosition;
     private Spinner selectedRate;
-    private List<VacancyModal> vacancyModals = new ArrayList<>();
+    private List<VacancyModel> vacancyModels = new ArrayList<>();
     private List<TeacherModel> teacherModels = new ArrayList<>();
 
     @Override
@@ -96,7 +91,7 @@ public class IndexPageCtrl extends CabinetSelector {
         //Events.echoEvent("onLater", lbTeachers, null);
     }
 
-    @Listen("onSelect = #lbTeachers")
+    @Listen("onDoubleClick = #lbTeachers")
     public void teacherRowClick() {
         labelFIO.setValue("");
         col1.setVisible(true);
@@ -109,7 +104,7 @@ public class IndexPageCtrl extends CabinetSelector {
     @Listen("onClick = #btnRemoveVacancy")
     public void removeVacancyClick() {
         if (lbVacancy.getSelectedItem() != null) {
-            vacancyModals.remove(lbVacancy.getSelectedIndex());
+            vacancyModels.remove(lbVacancy.getSelectedIndex());
             lbVacancy.removeItemAt(lbVacancy.getSelectedIndex());
             PopupUtil.showInfo("Вакансия успешно удалена");
         } else {
@@ -188,25 +183,25 @@ public class IndexPageCtrl extends CabinetSelector {
 
 
     public void fillLbVacancy(String position, String rate) {
-        VacancyModal selectVacancy = new VacancyModal(position, rate, lbVacancy.getItemCount());
-        vacancyModals.add(selectVacancy);
-        ListModelList<VacancyModal> vacancyListModelList = new ListModelList<>(vacancyModals);
+        VacancyModel selectVacancy = new VacancyModel(position, rate, lbVacancy.getItemCount());
+        vacancyModels.add(selectVacancy);
+        ListModelList<VacancyModel> vacancyListModelList = new ListModelList<>(vacancyModels);
         lbVacancy.setModel(vacancyListModelList);
         lbVacancy.renderAll();
     }
 
 
     public void updateLbVacancy(String position, String rate) {
-        VacancyModal changeVacancy = new VacancyModal(position, rate, lbVacancy.getSelectedIndex());
-        for (VacancyModal vacancyModal : vacancyModals) {
-            if (changeVacancy.getVacancy().equals(vacancyModal.getVacancy())) {
-                vacancyModal.setVacancy(changeVacancy.getVacancy());
-                vacancyModal.setRate(changeVacancy.getRate());
-                vacancyModal.setPosition(changeVacancy.getPosition());
+        VacancyModel changeVacancy = new VacancyModel(position, rate, lbVacancy.getSelectedIndex());
+        for (VacancyModel vacancyModel : vacancyModels) {
+            if (changeVacancy.getVacancy().equals(vacancyModel.getVacancy())) {
+                vacancyModel.setVacancy(changeVacancy.getVacancy());
+                vacancyModel.setRate(changeVacancy.getRate());
+                vacancyModel.setPosition(changeVacancy.getPosition());
             }
         }
         lbVacancy.clearSelection();
-        ListModelList<VacancyModal> vacancyListModelList = new ListModelList<>(vacancyModals);
+        ListModelList<VacancyModel> vacancyListModelList = new ListModelList<>(vacancyModels);
         lbVacancy.setModel(vacancyListModelList);
         lbVacancy.renderAll();
     }
