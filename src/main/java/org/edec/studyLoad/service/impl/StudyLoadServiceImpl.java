@@ -1,9 +1,8 @@
 package org.edec.studyLoad.service.impl;
 
-import org.edec.commission.manager.EntityManagerCommission;
-import org.edec.commission.model.PeriodCommissionModel;
-import org.edec.commission.model.SubjectDebtModel;
+import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.manager.EntityManagerStudyLoad;
+import org.edec.studyLoad.model.AssignmentModel;
 import org.edec.studyLoad.model.TeacherModel;
 import org.edec.studyLoad.service.StudyLoadService;
 
@@ -18,12 +17,17 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public  List<String> getDepartments() {
+    public  List<DepartmentModel> getDepartments() {
         return entityManagerStudyLoad.getDepartments();
     }
 
     @Override
     public List<String> getPosition() {
         return entityManagerStudyLoad.getPosition();
+    }
+
+    @Override
+    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment){
+        return entityManagerStudyLoad.getInstructions(idSem, idDepartment);
     }
 }
