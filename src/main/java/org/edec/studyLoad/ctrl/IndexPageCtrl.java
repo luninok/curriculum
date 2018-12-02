@@ -51,6 +51,8 @@ public class IndexPageCtrl extends CabinetSelector {
     private List<VacancyModal> vacancyModals = new ArrayList<>();
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private List<AssignmentModel> assignmentModels = new ArrayList<>();
+    private List<DepartmentModel> departmentModels = new ArrayList<>();
+    private DepartmentModel selectedDepartmentModel = new DepartmentModel();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -67,43 +69,25 @@ public class IndexPageCtrl extends CabinetSelector {
 
     private void fillCmbFaculty() {
 
-        List<DepartmentModel> list = studyLoadService.getDepartments();
-        for (DepartmentModel department : list) {
+        departmentModels = studyLoadService.getDepartments();
+        for (DepartmentModel department : departmentModels) {
             Comboitem comboitem = new Comboitem();
             comboitem.setLabel(department.getFulltitle());
             comboitem.setValue(department);
             cmbFaculty.getItems().add(comboitem);
         }
         if(cmbFaculty.getItems().size() != 0) { cmbFaculty.setSelectedIndex(0); }
-        /*List<TeacherModel> teacherModelList = new ArrayList<>();
-        teacherModelList.add(new TeacherModel("d", "b", "c"));
-        teacherModelList.add(new TeacherModel("f", "d", "s"));
-        teacherModelList.add(new TeacherModel("f", "d", "s"));
-        teacherModelList.add(new TeacherModel("f", "d", "s"));
-        teacherModelList.add(new TeacherModel("f", "d", "s"));
-        teacherModelList.add(new TeacherModel("f", "d", "s"));
-        teacherModelList.add(new TeacherModel("f", "d", "s"));
 
-        for (TeacherModel teacherModel : teacherModelList) {
-            Row row = new Row();
-            new Label(teacherModel.getLastName()).setParent(row);
-            new Label(teacherModel.getFirstName()).setParent(row);
-            new Label(teacherModel.getMiddleName()).setParent(row);
-
-            lbTeachers.getRows().appendChild(row);
-        }*/
-        //Clients.showBusy(lbTeachers, "Загрузка данных из БД");
-        //Events.echoEvent("onLater", lbTeachers, null);
     }
 
-    @Listen("onSelect = #lbTeachers")
+    @Listen("onDoubleClick = #lbTeachers")
     public void teacherRowClick() {
         labelFIO.setValue("");
         col1.setVisible(true);
         col2.setVisible(false);
-        TeacherModel selectTeacher = lbTeachers.getSelectedItem().getValue();
+        TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
         lbTeachers.getSelectedItem().setSelected(false);
-        labelFIO.setValue(selectTeacher.toString());
+        labelFIO.setValue(selectedTeacher.toString());
     }
 
     @Listen("onClick = #btnRemoveVacancy")
@@ -131,35 +115,23 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     @Listen("onChange = #cmbFaculty")
-    public void laterForTeachers() {
+    public void updateLbTeachers() {
+        selectedDepartmentModel = cmbFaculty.getSelectedItem().getValue();
         lbTeachers.clearSelection();
         teacherModels.clear();
-        List<TeacherModel> list = studyLoadService.getTeachers((String) cmbFaculty.getValue());
-        teacherModels = list;
+        teacherModels = studyLoadService.getTeachers((String) cmbFaculty.getValue());
         ListModelList<TeacherModel> teacherListModelList = new ListModelList<>(teacherModels);
         lbTeachers.setModel(teacherListModelList);
         lbTeachers.renderAll();
         fillLbAssignment();
-        /*
-        for (TeacherModel teacher : list) {
-            Listitem listitem = new Listitem();
-            listitem.setValue(teacher);
-            new Listcell(teacher.getFamily()).setParent(listitem);
-            new Listcell(teacher.getName()).setParent(listitem);
-            new Listcell(teacher.getPatronymic()).setParent(listitem);
-            Listcell cell = new Listcell();
-            cell.setParent(listitem);
-            lbTeachers.getItems().add(listitem);
-        } */
-
-        /*lbShowCommission.setModel(new ListModelList<>(list));
-        lbShowCommission.renderAll();
-        Clients.clearBusy(lbShowCommission);*/
     }
 
     @Listen("onClick = #btnAddRate")
     public void openWinRateStructure() {
         Map arg = new HashMap();
+        arg.put("teacherModels", teacherModels);
+        arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
+        arg.put("indexPageCtrl", this);
         Window win = (Window) Executions.createComponents("window/winRateDialog.zul", null, arg);
         win.doModal();
     }
@@ -175,7 +147,6 @@ public class IndexPageCtrl extends CabinetSelector {
     @Listen("onClick = #btnChangeVacancy")
     public void changeVacancyClick() {
         if (lbVacancy.getSelectedItem() != null) {
-
             Map arg = new HashMap();
             arg.put(WinVacancyDialogCtrl.INDEX_PAGE, this);
             arg.put(WinVacancyDialogCtrl.SELECT_VACANCY, lbVacancy.getSelectedItem().getValue());
@@ -184,6 +155,12 @@ public class IndexPageCtrl extends CabinetSelector {
         } else {
             PopupUtil.showInfo("Выберите вакансию!");
         }
+    }
+
+    @Listen("onClick = #btnFillRate")
+    public void fillRateClick()
+    {
+
     }
 
 
@@ -229,6 +206,20 @@ public class IndexPageCtrl extends CabinetSelector {
         ListModelList<VacancyModal> vacancyListModelList = new ListModelList<>(vacancyModals);
         lbVacancy.setModel(vacancyListModelList);
         lbVacancy.renderAll();
+    }
+
+    @Listen("onClick = #btnRemoveRate")
+    public void removeRate()
+    {
+        if (lbTeachers.getSelectedItems().isEmpty()) {
+            Messagebox.show("Выберите преподавателя, которого хотите удалить!");
+            return;
+        }
+        TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
+        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment()))
+            updateLbTeachers();
+        else
+            Messagebox.show("Ошибка удаления преподавателя");
     }
 
 }

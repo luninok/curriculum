@@ -2,11 +2,14 @@
         apply="org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <hbox style="margin:1%">
         <label value="Фамилия" width="50%"/>
-        <textbox id="tbLastName" value="" width="90%" tabindex="1"/>
+        <textbox id="tbFamily" value="" width="90%" tabindex="1"/>
         <label value="Имя" width="50%"/>
-        <textbox id="tbFirstName" value="" width="90%" tabindex="1"/>
+        <textbox id="tbName" value="" width="90%" tabindex="1"/>
         <label value="Отчество" width="50%"/>
-        <textbox id="tbMiddleName" value="" width="90%" tabindex="1"/>
+        <textbox id="tbPatronymic" value="" width="90%" tabindex="1"/>
+        <label id="tbPosition" value="Должность" width="50%" />
+        <combobox id="cmbPosition" width="50%" readonly="true"/>
+        <button id="btnSearch" label="Поиск"/>
     </hbox>
     <listbox id="lbRate" vflex="1" style="margin:1%;">
         <listhead menupopup="auto"><!-- make it invisible -->

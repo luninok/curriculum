@@ -73,7 +73,7 @@ public class IndexPageCtrl extends CabinetSelector {
     private List<GroupSubjectLesson> lessonsTabPeriod;
 
     protected void fill() {
-        try {
+        /*try {
             attendanceService = new AttendanceImpl();
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,7 +101,7 @@ public class IndexPageCtrl extends CabinetSelector {
         Events.echoEvent("onLater", cmbGroupForTabDay, null);
 
         Events.echoEvent("onLater", cmbSemesterForTabPeriod, null);
-        Events.echoEvent("onLater", cmbGroupForTabPeriod, null);
+        Events.echoEvent("onLater", cmbGroupForTabPeriod, null);*/
     }
 
     private void initCmbFormOfStudyForTabDay() {
@@ -155,7 +155,7 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     private void initCmbGroupForTabDay() {
-        initCmbGroup(cmbSemesterForTabDay, cmbQualificationForTabDay, cmbCourseForTabDay, cmbGroupForTabDay);
+        //initCmbGroup(cmbSemesterForTabDay, cmbQualificationForTabDay, cmbCourseForTabDay, cmbGroupForTabDay);
         uploadingDataWhenChangingTabDay();
     }
 
@@ -193,32 +193,32 @@ public class IndexPageCtrl extends CabinetSelector {
         cmbFormOfStudyForTabPeriod.setSelectedIndex(0);
     }
 
-    @Listen("onChange = #cmbFormOfStudyForTabPeriod")
+    /*@Listen("onChange = #cmbFormOfStudyForTabPeriod")
     public void onChangeCmbFormOfStudyForTabPeriod() {
         initCmbSemesterForTabPeriod();
         Events.echoEvent("onLater", cmbSemesterForTabPeriod, null);
         initCmbGroupForTabPeriod();
         Events.echoEvent("onLater", cmbGroupForTabPeriod, null);
-    }
+    }*/
 
     private void initCmbSemesterForTabPeriod() {
         int formOfStudy = ((FormOfStudy) cmbFormOfStudyForTabPeriod.getSelectedItem().getValue()).getType();
         componentService.fillCmbSem(cmbSemesterForTabPeriod, new Long(1), formOfStudy, null);
     }
 
-    @Listen("onChange = #cmbSemesterForTabPeriod")
+    /*@Listen("onChange = #cmbSemesterForTabPeriod")
     public void onChangeCmbSemesterForTabPeriod() {
         initCmbGroupForTabPeriod();
         Events.echoEvent("onLater", cmbGroupForTabPeriod, null);
         initDateBox();
-    }
+    }*/
 
     @Listen("onLater = #cmbSemesterForTabPeriod")
     public void onLaterCmbSemesterForTabPeriod() {
         cmbSemesterForTabPeriod.setSelectedIndex(0);
     }
 
-    @Listen("onChange = #cmbQualificationForTabPeriod")
+    /*@Listen("onChange = #cmbQualificationForTabPeriod")
     public void onChangeCmbQualificationForTabPeriod() {
         try {
             checkCompatibilityQualificationAndCourse(cmbCourseForTabPeriod, cmbQualificationForTabPeriod);
@@ -227,25 +227,25 @@ public class IndexPageCtrl extends CabinetSelector {
         } catch (Exception e) {
             Messagebox.show("Выберите другую квалификацию");
         }
-    }
+    }*/
 
     @Listen("onChange = #cmbCourseForTabPeriod")
     public void onChangeCmbCourseForTabPeriod() {
-        initCmbGroupForTabPeriod();
+        //initCmbGroupForTabPeriod();
         Events.echoEvent("onLater", cmbGroupForTabPeriod, null);
     }
 
-    private void initCmbGroupForTabPeriod() {
+    /*private void initCmbGroupForTabPeriod() {
         initCmbGroup(cmbSemesterForTabPeriod, cmbQualificationForTabPeriod, cmbCourseForTabPeriod, cmbGroupForTabPeriod);
         uploadingDataWhenChangingTabPeriod();
-    }
+    }*/
 
     @Listen("onLater = #cmbGroupForTabPeriod")
     public void onLaterCmbGroupForTabPeriod() {
         cmbGroupForTabPeriod.setSelectedIndex(0);
     }
 
-    private void initDateBox() {
+    /*private void initDateBox() {
         dbBeginPeriod.setValue(currentGroupTabPeriod.getDateOfBeginSemester());
         dbEndPeriod.setValue(currentGroupTabPeriod.getDateOfEndSemester());
     }
@@ -277,7 +277,7 @@ public class IndexPageCtrl extends CabinetSelector {
         String qualification = cmbQualification.getSelectedItem().getValue();
         String courses = cmbCourse.getSelectedItem().getValue();
         componentGroupService.fillCmbGroupsWithSemester(cmbGroup, idSem, courses, qualification);
-    }
+    }*/
 
 
     private void checkCompatibilityQualificationAndCourse(Combobox cmbCourse, Combobox cmbQualification) {
@@ -414,13 +414,13 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     private void refreshJournal() {
-        if (dbBeginPeriod.getValue().getTime() > dbEndPeriod.getValue().getTime()) {
+        /*if (dbBeginPeriod.getValue().getTime() > dbEndPeriod.getValue().getTime()) {
             Messagebox.show("Неверно выбран период");
             return;
         }
         periodAttendance = journalOfAttendanceService.getMonthAttendModel(currentGroupTabPeriod.getIdLGS(), dbBeginPeriod.getValue(), dbEndPeriod.getValue());
         journalOfAttendanceService.fillMonthAttendance(periodAttendance, firstWeekSem, lessonsTabPeriod);
-        fillStudentsForPeriod();
+        fillStudentsForPeriod();*/
 
     }
 
