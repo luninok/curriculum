@@ -15,6 +15,12 @@ public class VacancyModel {
     private String rolename;
     private double wagerate;
 
+    public VacancyModel(Long id_vacancy, String rolename, double wagerate) {
+        this.id_vacancy = id_vacancy;
+        this.rolename = rolename;
+        this.wagerate = wagerate;
+    }
+
     //private List<VacancyModel> teachers = new ArrayList<>();
 
 }

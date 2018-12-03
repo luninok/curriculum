@@ -2,10 +2,8 @@ package org.edec.studyLoad.manager;
 
 import org.edec.main.model.DepartmentModel;
 import org.edec.dao.DAO;
-import org.edec.studyLoad.model.AssignmentModel;
-import org.edec.studyLoad.model.EmploymentModel;
-import org.edec.studyLoad.model.TeacherModel;
-import org.edec.studyLoad.model.VacancyModel;
+import org.edec.studyLoad.model.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.DoubleType;
@@ -23,6 +21,23 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join humanface HF using (id_humanface) \n" +
                 "where D.fulltitle = '" + department + "'\n" +
                 "group by HF.family, HF.name, HF.patronymic, E.id_employee";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("family")
+                .addScalar("name")
+                .addScalar("patronymic")
+                .addScalar("id_employee", LongType.INSTANCE)
+                .setResultTransformer(Transformers.aliasToBean(TeacherModel.class));
+        return (List<TeacherModel>) getList(q);
+    }
+
+    public List<TeacherModel> searchTeachers(String family, String name, String patronymic) {
+        String query = "SELECT HF.family, HF.name, HF.patronymic, E.id_employee\n" +
+                "from employee E\n" +
+                "inner join link_employee_department LED using (id_employee)\n" +
+                "inner join department D using (id_department)\n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "where HF.Name Like '%" + name+"%' AND HF.family Like '%"+family+"%' AND HF.patronymic Like '%"+patronymic+"%' \n" +
+                "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
                 .addScalar("name")
@@ -69,6 +84,15 @@ public class EntityManagerStudyLoad extends DAO {
         String query = "SELECT  ER.rolename FROM public.employee_role ER";
         Query q = getSession().createSQLQuery(query);
         return (List<String>) getList(q);
+    }
+
+    public List<PositionModel> getPositions() {
+        String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("idPosition", LongType.INSTANCE)
+                .addScalar("positionName")
+                .setResultTransformer(Transformers.aliasToBean(PositionModel.class));
+        return (List<PositionModel>) getList(q);
     }
 
     public List<String> getByworker() {
@@ -139,5 +163,67 @@ public class EntityManagerStudyLoad extends DAO {
     public void updateEmployment(Long id_vacancy, String shorttitle, String byworker, String rolename, Double wagerate, Double time_wagerate) {
         String query = "update link_employee_department set rolename = '"+rolename+"', wagerate = "+wagerate+" where id_vacancy="+id_vacancy+"";
         executeUpdate(getSession().createSQLQuery(query));
+    }
+
+    public boolean addRate(Long id_employee, Long id_department, Long id_position)
+    {
+        try {
+            begin();
+            String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
+                    "is_permanency, employee_position, is_hide)\n" +
+                    "VALUES (" + id_employee + ", " + id_department + ", " + id_position + ", '0', NULL, NULL, false)";
+
+            Query q = getSession().createSQLQuery(query);
+            q.executeUpdate();
+            commit();
+            return true;
+        } catch (HibernateException e) {
+            rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            close();
+        }
+    }
+
+    public boolean addRateBasedOnVacancy(Long id_employee, Long id_department, Long id_position, Double rate)
+    {
+        try {
+            begin();
+            String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
+                    "is_permanency, employee_position, is_hide)\n" +
+                    "VALUES (" + id_employee + ", " + id_department + ", " + id_position + ", '" + rate + "', NULL, NULL, false)";
+
+            Query q = getSession().createSQLQuery(query);
+            q.executeUpdate();
+            commit();
+            return true;
+        } catch (HibernateException e) {
+            rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            close();
+        }
+    }
+
+    public boolean removeRate(Long id_employee, Long id_department)
+    {
+        try {
+            begin();
+            String query = "DELETE FROM link_employee_department LED " +
+                    "WHERE LED.id_employee = "+id_employee+" AND LED.id_department = "+id_department;
+
+            Query q = getSession().createSQLQuery(query);
+            q.executeUpdate();
+            commit();
+            return true;
+        } catch (HibernateException e) {
+            rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            close();
+        }
     }
 }

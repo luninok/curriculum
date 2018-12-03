@@ -1,5 +1,5 @@
-<window id="winRateDialog" closable="true" title="Добавить нового преподавателя" style="margin:1" width="60%" height="50%"
-        apply="org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
+<window id="winFillVacancyDialog" closable="true" title="Заполнить вакансию" style="margin:1" width="60%" height="50%"
+        apply="org.edec.studyLoad.ctrl.windowCtrl.WinFillVacancyDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <hbox style="margin:1%">
         <label value="Фамилия" width="50%"/>
         <textbox id="tbFamily" value="" width="90%" tabindex="1"/>
@@ -7,8 +7,6 @@
         <textbox id="tbName" value="" width="90%" tabindex="1"/>
         <label value="Отчество" width="50%"/>
         <textbox id="tbPatronymic" value="" width="90%" tabindex="1"/>
-        <label id="tbPosition" value="Должность" width="50%" />
-        <combobox id="cmbPosition" width="50%" readonly="true"/>
         <button id="btnSearch" label="Поиск"/>
     </hbox>
     <listbox id="lbRate" vflex="1" style="margin:1%;">
@@ -19,6 +17,6 @@
         </listhead>
     </listbox>
     <hbox style="margin:1%; ">
-        <button id="btnTakeRate" label="Принять" autodisable="self"/>
+        <button id="btnFillVacancy" label="Принять" autodisable="self"/>
     </hbox>
 </window>
