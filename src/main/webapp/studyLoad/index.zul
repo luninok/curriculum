@@ -17,45 +17,50 @@
                         <button id="btnBackward" image="/imgs/backward-arrow.png"/>
                         <label id="labelFIO"/>
                     </hbox>
-                    <button label="Печать плана"/>
-                    <!-- Таблица занятости на кафедре -->
+                    <hbox>
+                        <button id="btnPrintAnIndividualPlan" label="Печать плана"/>
+                        <button id="btnSaveEmployment" label="Сохранить"/>
+                    </hbox>
+                                        <!-- Таблица занятости на кафедре -->
                     <hbox width="100%" vflex="1">
-                        <listbox id="lbEmployment">
+                        <listbox  id="lbEmployment">
                             <listhead menupopup="auto"><!-- make it invisible -->
                                 <listheader id="lhNameFaculty" align="center" label="Название кафедры" sort="auto"
                                             width=""/>
-                                <listheader id="lhPartTime" align="center" label="Совместительство" sort="auto"
+                                <listheader id="lhByWorker" align="center" label="Совместительство" sort="auto"
                                             width=""/>
+                               <!-- <listheader id="lhPartTime" align="center" label="Совместительство" sort="auto"
+                                            width=""/> -->
                                 <listheader id="lhPositionTeacher" align="center" label="Должность" sort="auto"
                                             width=""/>
                                 <listheader id="lhRateTeacher" align="center" label="Ставок" sort="auto" width=""/>
                                 <listheader id="lhRateTime" align="center" label="Норма времени на ставку" sort="auto"
                                             width=""/>
-                                <listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" sort="auto"
-                                            width=""/>
-                                <listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>
+                                <!--<listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" sort="auto"
+                                            width=""/>-->
+                                <!--<listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>-->
                             </listhead>
-                            <listitem>
+                            <!--<listitem>
+                               <listcell>
+                                   <textbox hflex="1"/>
+                               </listcell>
+                              <listcell>
+                                   <textbox hflex="1"/>
+                               </listcell>
                                 <listcell>
                                     <textbox hflex="1"/>
                                 </listcell>
                                 <listcell>
-                                    <textbox hflex="1"/>
+                                    <doublebox hflex="1"/>
                                 </listcell>
                                 <listcell>
-                                    <textbox hflex="1"/>
-                                </listcell>
-                                <listcell>
-                                    <spinner style="text-align: center" value="44" hflex="1"></spinner>
-                                </listcell>
-                                <listcell>
-                                    <textbox hflex="1"/>
+                                    <spinner style="text-align: center" hflex="1"></spinner>
                                 </listcell>
                                 <listcell label="нагрузка"/>
                                 <listcell>
                                     <slider width="90%" curpos="1" maxpos="20"/>
                                 </listcell>
-                            </listitem>
+                            </listitem>-->
                         </listbox>
                     </hbox>
                     <!-- / Таблица занятости на кафедре -->
@@ -961,16 +966,16 @@
                         <label value="Кафедра" style="font-size: 1vw;"/>
                         <combobox vflex="1" id="cmbFaculty" width="50%" readonly="true"></combobox>
                     </vbox>
-                    <hbox width="100%" vflex="1">
+                    <hbox width="100%" vflex ="1">
                         <!-- Таблица с преподавателями -->
-                        <listbox vflex="1" hflex="1" id="lbTeachers">
+                        <listbox width="100%" vflex="1" hflex="1" id="lbTeachers">
                             <auxhead>
                                 <auxheader align="center" colspan="3" label="Преподаватели"/>
                             </auxhead>
                             <listhead menupopup="auto">
-                                <listheader width="33%" sort="auto" id="lhLastName" align="center" label="Фамилия"/>
-                                <listheader width="33%" id="lhFirstName" align="center" label="Имя"/>
-                                <listheader width="34%" id="lhMiddleName" align="center" label="Отчество"/>
+                                <listheader  sort="auto" id="lhLastName" align="center" label="Фамилия"/>
+                                <listheader id="lhFirstName" align="center" label="Имя"/>
+                                <listheader id="lhMiddleName" align="center" label="Отчество"/>
                             </listhead>
                         </listbox>
                         <!-- / Таблица с преподавателями -->

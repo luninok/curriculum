@@ -1,13 +1,14 @@
 <window id="winRateDialog" closable="true" title="Добавить нового преподавателя" style="margin:1" width="60%" height="50%"
         apply="org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <hbox style="margin:1%">
-        <label value="Фамилия" width="50%"/>
-        <textbox id="tbLastName" value="" width="90%" tabindex="1"/>
-        <label value="Имя" width="50%"/>
-        <textbox id="tbFirstName" value="" width="90%" tabindex="1"/>
-        <label value="Отчество" width="50%"/>
-        <textbox id="tbMiddleName" value="" width="90%" tabindex="1"/>
+        <label value="Фамилия" width="25%"/>
+        <textbox id="tbLastName" value="" width="70%" tabindex="1"/>
+        <label value="Имя" width="25%"/>
+        <textbox id="tbFirstName" value="" width="70%" tabindex="1"/>
+        <label value="Отчество" width="25%"/>
+        <textbox id="tbMiddleName" value="" width="70%" tabindex="1"/>
         <button id="btnSearch" label="Поиск"/>
+        <combobox vflex="1" id="cmbPosition" width="25%" readonly="true"></combobox>
     </hbox>
     <listbox id="lbRate" vflex="1" style="margin:1%;">
         <listhead menupopup="auto"><!-- make it invisible -->
