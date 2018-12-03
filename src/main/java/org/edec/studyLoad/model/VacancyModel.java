@@ -21,6 +21,4 @@ public class VacancyModel {
         this.wagerate = wagerate;
     }
 
-    //private List<VacancyModel> teachers = new ArrayList<>();
-
 }

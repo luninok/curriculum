@@ -2,6 +2,7 @@ package org.edec.studyLoad.ctrl.renderer;
 
 
 import org.edec.studyLoad.model.EmploymentModel;
+import org.edec.studyLoad.model.PositionModel;
 import org.edec.studyLoad.service.StudyLoadService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.zkoss.zul.*;
@@ -15,7 +16,6 @@ public class EmploymentRenderer implements ListitemRenderer<EmploymentModel> {
         Listcell byworkerCell = new Listcell();
         Combobox byworkerCombobox = new Combobox(employmentModel.getByworker());
         List<String> listByworker = studyLoadService.getByworker();
-        //byWorkerCombobox.setReadonly(true);
         byworkerCombobox.setId("cmbByWorker");
         for (String byworker : listByworker) {
             Comboitem comboitem = new Comboitem();
@@ -26,12 +26,11 @@ public class EmploymentRenderer implements ListitemRenderer<EmploymentModel> {
         byworkerCell.setParent(listitem);
         Listcell rolenameCell = new Listcell();
         Combobox rolenameCombobox = new Combobox(employmentModel.getRolename());
-        //rolenameCombobox.setReadonly(true);
         rolenameCombobox.setId("cmbPosition");
-        List<String> listPosition = studyLoadService.getPosition();
-        for (String position : listPosition) {
+        List<PositionModel> listPosition = studyLoadService.getPositions();
+        for (PositionModel position : listPosition) {
             Comboitem comboitem = new Comboitem();
-            comboitem.setLabel( position);
+            comboitem.setLabel(position.getPositionName());
             rolenameCombobox.getItems().add(comboitem);
         }
         rolenameCell.appendChild(rolenameCombobox);
