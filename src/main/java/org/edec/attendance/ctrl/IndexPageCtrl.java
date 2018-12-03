@@ -245,9 +245,9 @@ public class IndexPageCtrl extends CabinetSelector {
         cmbGroupForTabPeriod.setSelectedIndex(0);
     }
 
-    private void initDateBox() {
+  private void initDateBox() {  /*
         dbBeginPeriod.setValue(currentGroupTabPeriod.getDateOfBeginSemester());
-        dbEndPeriod.setValue(currentGroupTabPeriod.getDateOfEndSemester());
+        dbEndPeriod.setValue(currentGroupTabPeriod.getDateOfEndSemester()); */
     }
 
     @Listen("onClick = #btnSearchForTabPeriod")
@@ -370,7 +370,7 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     private void refreshCalendar() {
-        vbCalendar.getChildren().clear();
+      /*  vbCalendar.getChildren().clear();
         Date dateBegin = DateConverter.getFirstDateOfMonthByCalendar(chooseMonth);
         btnPrevMonth.setDisabled(dateBegin.before(currentGroupTabDay.getDateOfBeginSemester()));
         Date dateEnd = DateConverter.getLastDateOfMonthByCalendar(chooseMonth);
@@ -391,7 +391,7 @@ public class IndexPageCtrl extends CabinetSelector {
             count++;
             fillHboxDay((Hbox) vbCalendar.getChildren().get(vbCalendar.getChildren().size() - 1), monthAttend);
             if (count == 7) count = 0;
-        }
+        }*/
     }
 
     private void refreshJournal(MonthAttendSubjectsModel attendDay) {
@@ -414,13 +414,13 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     private void refreshJournal() {
-        if (dbBeginPeriod.getValue().getTime() > dbEndPeriod.getValue().getTime()) {
+      /*  if (dbBeginPeriod.getValue().getTime() > dbEndPeriod.getValue().getTime()) {
             Messagebox.show("Неверно выбран период");
             return;
         }
         periodAttendance = journalOfAttendanceService.getMonthAttendModel(currentGroupTabPeriod.getIdLGS(), dbBeginPeriod.getValue(), dbEndPeriod.getValue());
         journalOfAttendanceService.fillMonthAttendance(periodAttendance, firstWeekSem, lessonsTabPeriod);
-        fillStudentsForPeriod();
+        fillStudentsForPeriod();*/
 
     }
 
