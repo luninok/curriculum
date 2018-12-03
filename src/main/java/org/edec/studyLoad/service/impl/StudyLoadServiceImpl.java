@@ -29,12 +29,6 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
         return entityManagerStudyLoad.getEmployment(selectTeacher, department); }
 
-
-    @Override
-    public List<String> getPosition() {
-        return entityManagerStudyLoad.getPosition();
-    }
-
     @Override
     public List<PositionModel> getPositions() {
         return entityManagerStudyLoad.getPositions();
@@ -56,13 +50,13 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public void updateVacancy(Long id_vacancy, String rolename, String wagerate) {
-        entityManagerStudyLoad.updateVacancy(id_vacancy, rolename, wagerate);
+    public void updateVacancy(Long id_vacancy, Long id_employee_role, String wagerate) {
+        entityManagerStudyLoad.updateVacancy(id_vacancy, id_employee_role, wagerate);
     }
 
     @Override
-    public void createVacancy(String rolename, String wagerate) {
-        entityManagerStudyLoad.createVacancy(rolename, wagerate);
+    public void createVacancy(Long id_employee_role, String wagerate) {
+        entityManagerStudyLoad.createVacancy(id_employee_role, wagerate);
     }
 
     @Override

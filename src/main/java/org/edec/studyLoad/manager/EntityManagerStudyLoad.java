@@ -80,12 +80,6 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<DepartmentModel>) getList(q);
     }
 
-    public List<String> getPosition() {
-        String query = "SELECT  ER.rolename FROM public.employee_role ER";
-        Query q = getSession().createSQLQuery(query);
-        return (List<String>) getList(q);
-    }
-
     public List<PositionModel> getPositions() {
         String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER";
         Query q = getSession().createSQLQuery(query)
@@ -135,7 +129,8 @@ public class EntityManagerStudyLoad extends DAO {
     }
 
     public List<VacancyModel> getVacancy() {
-        String query = "SELECT id_vacancy,rolename, wagerate FROM public.vacancies";
+        String query = "SELECT id_vacancy, ER.rolename, wagerate FROM public.vacancies  \n" +
+                "inner join employee_role ER using (id_employee_role)";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("id_vacancy", LongType.INSTANCE)
                 .addScalar("rolename")
@@ -144,13 +139,13 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<VacancyModel>) getList(q);
     }
 
-    public void updateVacancy(Long id_vacancy, String rolename, String wagerate) {
-        String query = "update vacancies set rolename = '"+rolename+"', wagerate = "+wagerate+" where id_vacancy="+id_vacancy+"";
+    public void updateVacancy(Long id_vacancy, Long id_employee_role, String wagerate) {
+        String query = "update vacancies set id_employee_role = "+id_employee_role+", wagerate = "+wagerate+" where id_vacancy="+id_vacancy+"";
         executeUpdate(getSession().createSQLQuery(query));
     }
 
-    public void createVacancy(String rolename, String wagerate) {
-        String query = "insert into vacancies (rolename, wagerate) values ('"+rolename+"', "+wagerate+")";
+    public void createVacancy(Long id_employee_role, String wagerate) {
+        String query = "insert into vacancies (id_employee_role, wagerate) values ("+id_employee_role+", "+wagerate+")";
 
         executeUpdate(getSession().createSQLQuery(query));
     }

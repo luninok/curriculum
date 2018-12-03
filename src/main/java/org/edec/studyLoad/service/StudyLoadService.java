@@ -14,8 +14,6 @@ public interface StudyLoadService {
 
     List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department);
 
-    List<String> getPosition();
-
     List<PositionModel> getPositions();
 
     List<String> getByworker();
@@ -24,9 +22,9 @@ public interface StudyLoadService {
 
     List<VacancyModel> getVacancy();
 
-    void updateVacancy(Long id_vacancy, String rolename, String wagerate);
+    void updateVacancy(Long id_vacancy, Long id_employee_role, String wagerate);
 
-    void createVacancy(String rolename, String wagerate);
+    void createVacancy(Long id_employee_role, String wagerate);
 
     void updateEmployment(Long id_vacancy, String shorttitle, String byworker, String rolename, Double wagerate, Double time_wagerate);
 
