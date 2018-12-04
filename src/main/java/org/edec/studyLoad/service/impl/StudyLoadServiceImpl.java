@@ -48,7 +48,14 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
+    public boolean addRateBasedOnVacancy(Long idEmployee, Long idDepartment, Long idPosition, Double rate) {
+        return entityManagerStudyLoad.addRateBasedOnVacancy(idEmployee, idDepartment, idPosition, rate);
+    }
+
+    @Override
     public boolean removeRate(Long idEmployee, Long idDepartment){
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
     }
+
+
 }

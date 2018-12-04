@@ -1,16 +1,14 @@
 package org.edec.studyLoad.ctrl;
 
 
-import javafx.scene.control.ComboBox;
-import org.edec.commission.model.SubjectDebtModel;
-import org.edec.model.SemesterModel;
 import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
 import org.edec.studyLoad.model.AssignmentModel;
+import org.edec.studyLoad.model.PositionModel;
 import org.edec.studyLoad.model.TeacherModel;
-import org.edec.studyLoad.model.VacancyModal;
+import org.edec.studyLoad.model.VacancyModel;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.studyLoad.service.StudyLoadService;
 import org.edec.utility.zk.CabinetSelector;
@@ -18,10 +16,8 @@ import org.edec.utility.zk.PopupUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.*;
 
 import java.util.ArrayList;
@@ -48,9 +44,9 @@ public class IndexPageCtrl extends CabinetSelector {
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private Combobox selectedPosition;
     private Spinner selectedRate;
-    private List<VacancyModal> vacancyModals = new ArrayList<>();
+    private List<VacancyModel> vacancyModels = new ArrayList<>();
     private List<TeacherModel> teacherModels = new ArrayList<>();
-    private List<AssignmentModel> assignmentModels = new ArrayList<>();
+    private List<PositionModel> positionModels = new ArrayList<>();
     private List<DepartmentModel> departmentModels = new ArrayList<>();
     private DepartmentModel selectedDepartmentModel = new DepartmentModel();
 
@@ -62,7 +58,7 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     protected void fill() {
-
+        positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
         fillLbAssignment();
     }
@@ -93,7 +89,7 @@ public class IndexPageCtrl extends CabinetSelector {
     @Listen("onClick = #btnRemoveVacancy")
     public void removeVacancyClick() {
         if (lbVacancy.getSelectedItem() != null) {
-            vacancyModals.remove(lbVacancy.getSelectedIndex());
+            vacancyModels.remove(lbVacancy.getSelectedIndex());
             lbVacancy.removeItemAt(lbVacancy.getSelectedIndex());
             PopupUtil.showInfo("Вакансия успешно удалена");
         } else {
@@ -157,17 +153,50 @@ public class IndexPageCtrl extends CabinetSelector {
         }
     }
 
+    @Listen("onClick = #btnRemoveRate")
+    public void removeRate()
+    {
+        if (lbTeachers.getSelectedItems().isEmpty()) {
+            Messagebox.show("Выберите преподавателя, которого хотите удалить!");
+            return;
+        }
+        TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
+        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment()))
+            updateLbTeachers();
+        else
+            Messagebox.show("Ошибка удаления преподавателя");
+    }
+
     @Listen("onClick = #btnFillRate")
     public void fillRateClick()
     {
-
+        if (lbVacancy.getSelectedItems().isEmpty()) {
+            Messagebox.show("Выберите вакансию, которую хотите заполнить!");
+            return;
+        }
+        VacancyModel selectedVacancy = lbVacancy.getSelectedItem().getValue();
+        Long idPosition = null;
+        for (PositionModel position : positionModels) {
+            if(selectedVacancy.getPosition().equals(position.getPositionName())) {
+                idPosition = position.getIdPosition();
+                break;
+            }
+        }
+        Map arg = new HashMap();
+        arg.put("idPosition", idPosition);
+        arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
+        arg.put("rate", selectedVacancy.getRate());
+        arg.put("teacherModels", teacherModels);
+        arg.put("indexPageCtrl", this);
+        Window win = (Window) Executions.createComponents("window/winFillVacancyDialog.zul", null, arg);
+        win.doModal();
     }
 
 
-    public void fillLbVacancy(String position, String rate) {
-        VacancyModal selectVacancy = new VacancyModal(position, rate, lbVacancy.getItemCount());
-        vacancyModals.add(selectVacancy);
-        ListModelList<VacancyModal> vacancyListModelList = new ListModelList<>(vacancyModals);
+    public void fillLbVacancy(String position, Double rate) {
+        VacancyModel selectVacancy = new VacancyModel(position, rate, lbVacancy.getItemCount());
+        vacancyModels.add(selectVacancy);
+        ListModelList<VacancyModel> vacancyListModelList = new ListModelList<>(vacancyModels);
         lbVacancy.setModel(vacancyListModelList);
         lbVacancy.renderAll();
     }
@@ -193,33 +222,21 @@ public class IndexPageCtrl extends CabinetSelector {
         }
     }
 
-    public void updateLbVacancy(String position, String rate) {
-        VacancyModal changeVacancy = new VacancyModal(position, rate, lbVacancy.getSelectedIndex());
-        for (VacancyModal vacancyModal : vacancyModals) {
-            if (changeVacancy.getVacancy().equals(vacancyModal.getVacancy())) {
-                vacancyModal.setVacancy(changeVacancy.getVacancy());
-                vacancyModal.setRate(changeVacancy.getRate());
-                vacancyModal.setPosition(changeVacancy.getPosition());
+    public void updateLbVacancy(String position, Double rate) {
+        VacancyModel changeVacancy = new VacancyModel(position, rate, lbVacancy.getSelectedIndex());
+        for (VacancyModel vacancyModel : vacancyModels) {
+            if (changeVacancy.getVacancy().equals(vacancyModel.getVacancy())) {
+                vacancyModel.setVacancy(changeVacancy.getVacancy());
+                vacancyModel.setRate(changeVacancy.getRate());
+                vacancyModel.setPosition(changeVacancy.getPosition());
             }
         }
         lbVacancy.clearSelection();
-        ListModelList<VacancyModal> vacancyListModelList = new ListModelList<>(vacancyModals);
+        ListModelList<VacancyModel> vacancyListModelList = new ListModelList<>(vacancyModels);
         lbVacancy.setModel(vacancyListModelList);
         lbVacancy.renderAll();
     }
 
-    @Listen("onClick = #btnRemoveRate")
-    public void removeRate()
-    {
-        if (lbTeachers.getSelectedItems().isEmpty()) {
-            Messagebox.show("Выберите преподавателя, которого хотите удалить!");
-            return;
-        }
-        TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
-        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment()))
-            updateLbTeachers();
-        else
-            Messagebox.show("Ошибка удаления преподавателя");
-    }
+
 
 }

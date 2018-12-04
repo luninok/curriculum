@@ -134,6 +134,28 @@ public class EntityManagerStudyLoad extends DAO {
 
     }
 
+    public boolean addRateBasedOnVacancy(Long id_employee, Long id_department, Long id_position, Double wagerate)
+    {
+        try {
+            begin();
+            String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
+                    "is_permanency, employee_position, is_hide)\n" +
+                    "VALUES (" + id_employee + ", " + id_department + ", " + id_position + ", '" + wagerate + "', NULL, NULL, false)";
+
+            Query q = getSession().createSQLQuery(query);
+            q.executeUpdate();
+            commit();
+            return true;
+        } catch (HibernateException e) {
+            rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            close();
+        }
+
+    }
+
     public boolean removeRate(Long id_employee, Long id_department)
     {
         try {

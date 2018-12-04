@@ -10,14 +10,14 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class VacancyModal {
+public class VacancyModel {
     private String vacancy;
     private String position;
-    private String rate;
+    private Double rate;
 
-    //private List<VacancyModal> teachers = new ArrayList<>();
+    //private List<VacancyModel> teachers = new ArrayList<>();
 
-    public VacancyModal(String position, String rate, int number)
+    public VacancyModel(String position, Double rate, int number)
     {
         vacancy = "Вакансия " + number;
         this.position = position;

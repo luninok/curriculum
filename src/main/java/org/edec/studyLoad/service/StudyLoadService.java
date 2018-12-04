@@ -15,6 +15,7 @@ public interface StudyLoadService {
     List<PositionModel> getPositions();
     List<AssignmentModel> getInstructions(Long idSem, Long idDepartment);
     boolean addRate(Long idEmployee, Long idDepartment, Long idPosition);
+    boolean addRateBasedOnVacancy(Long idEmployee, Long idDepartment, Long idPosition, Double rate);
     boolean removeRate(Long idEmployee, Long idDepartment);
     //boolean fillRate(Long idEmployee, Long idDepartment, );
 }
