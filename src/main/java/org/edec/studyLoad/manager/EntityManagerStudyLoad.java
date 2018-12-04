@@ -36,7 +36,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "where HF.Name Like '%" + name+"%' AND HF.family Like '%"+family+"%' AND HF.patronymic Like '%"+patronymic+"%' \n" +
+                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" + patronymic + "%' \n" +
                 "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -48,19 +48,21 @@ public class EntityManagerStudyLoad extends DAO {
     }
 
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
-        String query = "SELECT  D.shorttitle, ER.rolename, LED.wagerate, LED.time_wagerate\n" +
+        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate\n" +
                 "from link_employee_department LED \n" +
                 "inner join employee_role ER using (id_employee_role) \n" +
                 "inner join employee E using (id_employee) \n" +
                 "inner join humanface HF using (id_humanface)\n" +
                 "inner join department D using (id_department) \n" +
+                "inner join employee_byworker EB using (id_employee_byworker) \n" +
                 "where D.fulltitle = '" + department + "' and HF.family = '" + selectTeacher.getFamily() +
                 "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("shorttitle")
+                .addScalar("byworker")
                 .addScalar("rolename")
                 .addScalar("wagerate", DoubleType.INSTANCE)
-                .addScalar("time_wagerate",DoubleType.INSTANCE)
+                .addScalar("time_wagerate", DoubleType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(EmploymentModel.class));
         return (List<EmploymentModel>) getList(q);
     }
@@ -89,10 +91,13 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<PositionModel>) getList(q);
     }
 
-    public List<String> getByworker() {
-        String query = "SELECT  EB.byworker FROM public.employee_byworker EB";
-        Query q = getSession().createSQLQuery(query);
-        return (List<String>) getList(q);
+    public List<ByworkerModel> getByworker() {
+        String query = "SELECT EB.id_employee_byworker AS idByworker, EB.byworker AS byworker FROM public.employee_byworker EB";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("idByworker", LongType.INSTANCE)
+                .addScalar("byworker")
+                .setResultTransformer(Transformers.aliasToBean(ByworkerModel.class));
+        return (List<ByworkerModel>) getList(q);
     }
 
     public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
@@ -140,28 +145,27 @@ public class EntityManagerStudyLoad extends DAO {
     }
 
     public void updateVacancy(Long id_vacancy, Long id_employee_role, String wagerate) {
-        String query = "update vacancies set id_employee_role = "+id_employee_role+", wagerate = "+wagerate+" where id_vacancy="+id_vacancy+"";
+        String query = "update vacancies set id_employee_role = " + id_employee_role + ", wagerate = " + wagerate + " where id_vacancy=" + id_vacancy + "";
         executeUpdate(getSession().createSQLQuery(query));
     }
 
     public void createVacancy(Long id_employee_role, String wagerate) {
-        String query = "insert into vacancies (id_employee_role, wagerate) values ("+id_employee_role+", "+wagerate+")";
+        String query = "insert into vacancies (id_employee_role, wagerate) values (" + id_employee_role + ", " + wagerate + ")";
 
         executeUpdate(getSession().createSQLQuery(query));
     }
 
     public void deleteVacancy(Long id_vacancy) {
-        String querySection = "delete from vacancies where id_vacancy= "+id_vacancy;
-        executeUpdate(getSession().createSQLQuery(querySection));
-    }
-
-    public void updateEmployment(Long id_vacancy, String shorttitle, String byworker, String rolename, Double wagerate, Double time_wagerate) {
-        String query = "update link_employee_department set rolename = '"+rolename+"', wagerate = "+wagerate+" where id_vacancy="+id_vacancy+"";
+        String query = "delete from vacancies where id_vacancy= " + id_vacancy;
         executeUpdate(getSession().createSQLQuery(query));
     }
 
-    public boolean addRate(Long id_employee, Long id_department, Long id_position)
-    {
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
+        String queryVacancy = "update link_employee_department set id_employee_byworker = " + idByworker + ", id_employee_role = " + idRole + ", wagerate = " + wagerate + ", time_wagerate = " + time_wagerate + " where id_employee=" + id_employee + "";
+        executeUpdate(getSession().createSQLQuery(queryVacancy));
+    }
+
+    public boolean addRate(Long id_employee, Long id_department, Long id_position) {
         try {
             begin();
             String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
@@ -181,8 +185,7 @@ public class EntityManagerStudyLoad extends DAO {
         }
     }
 
-    public boolean addRateBasedOnVacancy(Long id_employee, Long id_department, Long id_position, Double rate)
-    {
+    public boolean addRateBasedOnVacancy(Long id_employee, Long id_department, Long id_position, Double rate) {
         try {
             begin();
             String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
@@ -202,12 +205,11 @@ public class EntityManagerStudyLoad extends DAO {
         }
     }
 
-    public boolean removeRate(Long id_employee, Long id_department)
-    {
+    public boolean removeRate(Long id_employee, Long id_department) {
         try {
             begin();
             String query = "DELETE FROM link_employee_department LED " +
-                    "WHERE LED.id_employee = "+id_employee+" AND LED.id_department = "+id_department;
+                    "WHERE LED.id_employee = " + id_employee + " AND LED.id_department = " + id_department;
 
             Query q = getSession().createSQLQuery(query);
             q.executeUpdate();

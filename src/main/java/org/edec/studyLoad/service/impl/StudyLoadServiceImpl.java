@@ -35,7 +35,7 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<String> getByworker() {
+    public List<ByworkerModel> getByworker() {
         return entityManagerStudyLoad.getByworker();
     }
 
@@ -60,8 +60,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public void updateEmployment(Long id_vacancy, String shorttitle, String byworker, String rolename, Double wagerate, Double time_wagerate) {
-        entityManagerStudyLoad.updateEmployment(id_vacancy, shorttitle, byworker, rolename, wagerate, time_wagerate);
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
+        entityManagerStudyLoad.updateEmployment(id_employee, idByworker, idRole, wagerate, time_wagerate);
     }
 
     @Override
