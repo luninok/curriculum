@@ -1,6 +1,7 @@
 package org.edec.studyLoad.ctrl;
 
 
+import javafx.scene.control.ListCell;
 import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
@@ -25,7 +26,7 @@ public class IndexPageCtrl extends CabinetSelector {
     @Wire
     private Combobox cmbFaculty;
     @Wire
-    private Combobox cmbPosition;
+    private Listheader lhByWorker, lhPositionTeacher, lhRateTeacher, lhRateTime;
     @Wire
     private Vbox col2;
     @Wire
@@ -43,6 +44,7 @@ public class IndexPageCtrl extends CabinetSelector {
     private List<DepartmentModel> departmentModels = new ArrayList<>();
     private List<PositionModel> positionModels = new ArrayList<>();
     private DepartmentModel selectedDepartmentModel = new DepartmentModel();
+    private TeacherModel selectedTeacher;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -78,7 +80,7 @@ public class IndexPageCtrl extends CabinetSelector {
         labelFIO.setValue("");
         col1.setVisible(true);
         col2.setVisible(false);
-        TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
+        selectedTeacher = lbTeachers.getSelectedItem().getValue();
         fillLbEmployment(selectedTeacher);
         lbTeachers.getSelectedItem().setSelected(false);
         labelFIO.setValue(selectedTeacher.toString());
@@ -86,7 +88,8 @@ public class IndexPageCtrl extends CabinetSelector {
 
     private void fillLbEmployment(TeacherModel selectTeacher) {
         List<EmploymentModel> list = studyLoadService.getEmployment(selectTeacher, (String) cmbFaculty.getValue());
-        employmentModels = list;
+        employmentModels = new ArrayList<>();
+        employmentModels.add(list.get(0));
         ListModelList<EmploymentModel> employmentListModelList = new ListModelList<>(employmentModels);
         lbEmployment.setModel(employmentListModelList);
         lbEmployment.renderAll();
@@ -101,8 +104,23 @@ public class IndexPageCtrl extends CabinetSelector {
 
     @Listen("onClick = #btnSaveEmployment")
     public void saveEmploymentClick() {
-        /*studyLoadService.updateEmployment(selectEmployee.getId_employee(), shorttitle, byworker, rolename, wagerate, time_wagerate);
-        fillLbEmployment(selectEmployee);*/
+        //List<ByworkerModel> listByworker = studyLoadService.getByworker();
+        Listitem item = lbEmployment.getItems().get(0);
+        Listcell cellByworker = (Listcell)item.getChildren().get(1);
+        Combobox comboboxByworker = (Combobox) cellByworker.getChildren().get(0);
+        ByworkerModel byworkerModel = comboboxByworker.getSelectedItem().getValue();
+        Long idByworker = byworkerModel.getIdByworker();
+        Listcell cellPosition = (Listcell)item.getChildren().get(2);
+        Combobox comboboxPosition = (Combobox) cellPosition.getChildren().get(0);
+        PositionModel position = comboboxPosition.getSelectedItem().getValue();
+        Long idPosition = position.getIdPosition();
+        Listcell cellWagerate = (Listcell)item.getChildren().get(3);
+        Double doubleWagerate = ((Doublebox)cellWagerate.getChildren().get(0)).getValue();
+        Listcell cellWagerateTime = (Listcell)item.getChildren().get(4);
+        Double doubleWagerateTime = ((Doublebox)cellWagerateTime.getChildren().get(0)).getValue();
+
+        studyLoadService.updateEmployment(selectedTeacher.getId_employee(), idByworker, idPosition, doubleWagerate, doubleWagerateTime);
+        fillLbEmployment(selectedTeacher);
     }
 
     @Listen("onClick = #btnRemoveVacancy")
@@ -113,7 +131,7 @@ public class IndexPageCtrl extends CabinetSelector {
             fillLbVacancy();
             PopupUtil.showInfo("Вакансия успешно удалена");
         } else {
-            PopupUtil.showError("Выберити вакансию для удаления!");
+            PopupUtil.showError("Выберите вакансию для удаления!");
         }
 
     }
