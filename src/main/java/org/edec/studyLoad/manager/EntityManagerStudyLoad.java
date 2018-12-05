@@ -19,7 +19,8 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee) \n" +
                 "inner join department D using (id_department) \n" +
                 "inner join humanface HF using (id_humanface) \n" +
-                "where D.fulltitle = '" + department + "'\n" +
+                "inner join employee_role ER using (id_employee_role)" +
+                "where D.fulltitle = '" + department + "'\n" + "and ER.group='" + 1 + "'" +
                 "group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -36,7 +37,8 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" + patronymic + "%' \n" +
+                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" +
+                patronymic + "%' \n" +
                 "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -56,7 +58,8 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join department D using (id_department) \n" +
                 "inner join employee_byworker EB using (id_employee_byworker) \n" +
                 "where D.fulltitle = '" + department + "' and HF.family = '" + selectTeacher.getFamily() +
-                "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "'";
+                "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() +
+                "' and ER.group='" + 1 + "'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("shorttitle")
                 .addScalar("byworker")
@@ -72,7 +75,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "D.shorttitle AS shorttitle, D.id_chair AS idChair,\n" +
                 "D.id_institute FROM public.department D \n" +
                 "inner join institute I using (id_institute)\n" +
-                "where I.shorttitle = 'ИКИТ'";
+                "where I.shorttitle = 'ИКИТ' and D.fulltitle Like '%Кафедра%'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("idDepartment", LongType.INSTANCE)
                 .addScalar("fulltitle")
@@ -83,7 +86,7 @@ public class EntityManagerStudyLoad extends DAO {
     }
 
     public List<PositionModel> getPositions() {
-        String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER";
+        String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER where ER.group='" + 1 + "'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("idPosition", LongType.INSTANCE)
                 .addScalar("positionName")

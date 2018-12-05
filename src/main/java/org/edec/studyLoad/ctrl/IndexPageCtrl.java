@@ -24,17 +24,9 @@ public class IndexPageCtrl extends CabinetSelector {
     @Wire
     private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment;
     @Wire
-    private Combobox cmbFaculty;
-    @Wire
-    private Listheader lhByWorker, lhPositionTeacher, lhRateTeacher, lhRateTime;
-    @Wire
-    private Vbox col2;
-    @Wire
-    private Vbox col1;
-    @Wire
     private Label labelFIO;
-
-    private String selectFIO = "";
+    @Wire
+    private Combobox cmbFaculty;
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private List<VacancyModel> vacancyModels = new ArrayList<>();
@@ -78,12 +70,15 @@ public class IndexPageCtrl extends CabinetSelector {
     @Listen("onDoubleClick = #lbTeachers")
     public void teacherRowClick() {
         labelFIO.setValue("");
-        col1.setVisible(true);
-        col2.setVisible(false);
+        if (lbTeachers.getSelectedItem() == null)
+        {
+            PopupUtil.showWarning("Выберите преподавателя!");
+            return;
+        }
         selectedTeacher = lbTeachers.getSelectedItem().getValue();
+        labelFIO.setValue(selectedTeacher.toString());
         fillLbEmployment(selectedTeacher);
         lbTeachers.getSelectedItem().setSelected(false);
-        labelFIO.setValue(selectedTeacher.toString());
     }
 
     private void fillLbEmployment(TeacherModel selectTeacher) {
@@ -131,15 +126,9 @@ public class IndexPageCtrl extends CabinetSelector {
             fillLbVacancy();
             PopupUtil.showInfo("Вакансия успешно удалена");
         } else {
-            PopupUtil.showError("Выберите вакансию для удаления!");
+            PopupUtil.showWarning("Выберите вакансию для удаления!");
         }
 
-    }
-
-    @Listen("onClick = #btnBackward")
-    public void labelFIOClick() {
-        col2.setVisible(true);
-        col1.setVisible(false);
     }
 
     @Listen("onChange = #cmbFaculty")
@@ -202,21 +191,21 @@ public class IndexPageCtrl extends CabinetSelector {
             arg.put("vacancy", lbVacancy.getSelectedItem().getValue());
             ComponentHelper.createWindow("window/winVacancyDialog.zul", "winVacancyDialog", arg).doModal();
         } else {
-            PopupUtil.showInfo("Выберите вакансию!");
+            PopupUtil.showWarning("Выберите вакансию!");
         }
     }
 
     @Listen("onClick = #btnRemoveRate")
     public void removeRate() {
         if (lbTeachers.getSelectedItems().isEmpty()) {
-            Messagebox.show("Выберите преподавателя, которого хотите удалить!");
+            PopupUtil.showWarning("Выберите преподавателя, которого хотите удалить!");
             return;
         }
         TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
         if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment()))
             updateLbTeachers();
         else
-            Messagebox.show("Ошибка удаления преподавателя");
+            PopupUtil.showError("Ошибка удаления преподавателя!");
     }
 
 
