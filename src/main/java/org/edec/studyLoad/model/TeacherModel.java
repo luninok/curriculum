@@ -16,15 +16,15 @@ public class TeacherModel {
     private String name;
     private String family;
     private String patronymic;
+    private Long id_employee;
 
-   // private List<TeacherModel> teachers = new ArrayList<>();
-
-    public TeacherModel(String firstName, String lastName, String middleName)
-    {
-        name = firstName;
-        family = lastName;
-        patronymic = middleName;
+    public TeacherModel(String name, String family, String patronymic, Long id_employee) {
+        this.name = name;
+        this.family = family;
+        this.patronymic = patronymic;
+        this.id_employee = id_employee;
     }
+
 
     @Override
     public String toString() {
