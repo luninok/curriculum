@@ -19,6 +19,6 @@
         </listhead>
     </listbox>
     <hbox style="margin:1%; ">
-    <button id="btnTakeRate" label="Принять" autodisable="self"/>
+        <button id="btnTakeRate" label="Принять" autodisable="self"/>
     </hbox>
 </window>

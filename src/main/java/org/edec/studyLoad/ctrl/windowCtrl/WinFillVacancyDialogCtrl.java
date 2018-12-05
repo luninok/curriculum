@@ -4,9 +4,15 @@ import org.edec.studyLoad.ctrl.IndexPageCtrl;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.model.PositionModel;
 import org.edec.studyLoad.model.TeacherModel;
+import org.edec.studyLoad.model.VacancyModel;
 import org.edec.studyLoad.service.StudyLoadService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.utility.zk.CabinetSelector;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -50,7 +56,10 @@ public class WinFillVacancyDialogCtrl extends CabinetSelector {
 
     }
 
-    private void fillTable() {}
+    private void fillTable() {
+
+
+    }
 
     @Listen("onClick = #btnSearch")
     public void searchTeacher() {
@@ -65,17 +74,19 @@ public class WinFillVacancyDialogCtrl extends CabinetSelector {
         lbRate.renderAll();
     }
 
-    @Listen("onClick = #btnTakeRate")
-    public void addRate() {
+    @Listen("onClick = #btnFillVacancy")
+    public void addRateBasedOnVacancy() {
         TeacherModel selectedTeacher = searchTeacherModels.get(lbRate.getSelectedIndex());
-        for(TeacherModel teacher : departmentTeacherModels)
+        for(TeacherModel teacher : departmentTeacherModels) {
             if (teacher.getId_employee().equals(selectedTeacher.getId_employee())) {
                 Messagebox.show("Выбранный преподаватель уже работает на этой кафедре!");
                 return;
             }
+        }
 
-        if (!studyLoadService.addRateBasedOnVacancy(selectedTeacher.getId_employee(), idDepartment, idPosition, rate))
-            Messagebox.show("Ошибка добавления преподавателя");
+        if (!studyLoadService.addRateBasedOnVacancy(selectedTeacher.getId_employee(), idDepartment, idPosition, rate)) {
+            Messagebox.show("Ошибка заполнения вакансии");
+        }
     }
 
     @Listen("onClose = #winFillVacancyDialog")

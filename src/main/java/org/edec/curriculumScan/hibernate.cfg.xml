@@ -7,7 +7,7 @@
 		<!-- Локальная версия-->
 		<property name="hibernate.connection.username">postgres</property>
 		<property name="connection.password">1234</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/eDecanat</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/eDecanat</property>
 		<!--<property name="hibernate.show_sql">true</property>-->
 		<!-- серверная версия-->
 		<!--<property name="hibernate.connection.url">jdbc:postgresql://193.218.136.174:5432/eDecanat</property>-->

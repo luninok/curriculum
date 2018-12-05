@@ -2,12 +2,11 @@ package org.edec.studyLoad.manager;
 
 import org.edec.main.model.DepartmentModel;
 import org.edec.dao.DAO;
-import org.edec.studyLoad.model.AssignmentModel;
-import org.edec.studyLoad.model.PositionModel;
-import org.edec.studyLoad.model.TeacherModel;
+import org.edec.studyLoad.model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.DoubleType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
 
@@ -37,7 +36,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "where HF.Name Like '%" + name+"%' AND HF.family Like '%"+family+"%' AND HF.patronymic Like '%"+patronymic+"%' \n" +
+                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" + patronymic + "%' \n" +
                 "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -48,8 +47,28 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<TeacherModel>) getList(q);
     }
 
+    public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
+        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate\n" +
+                "from link_employee_department LED \n" +
+                "inner join employee_role ER using (id_employee_role) \n" +
+                "inner join employee E using (id_employee) \n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "inner join department D using (id_department) \n" +
+                "inner join employee_byworker EB using (id_employee_byworker) \n" +
+                "where D.fulltitle = '" + department + "' and HF.family = '" + selectTeacher.getFamily() +
+                "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "'";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("shorttitle")
+                .addScalar("byworker")
+                .addScalar("rolename")
+                .addScalar("wagerate", DoubleType.INSTANCE)
+                .addScalar("time_wagerate", DoubleType.INSTANCE)
+                .setResultTransformer(Transformers.aliasToBean(EmploymentModel.class));
+        return (List<EmploymentModel>) getList(q);
+    }
+
     public List<DepartmentModel> getDepartments() {
-        String query = "SELECT D.id_department AS idDepartment, D.fulltitle AS fulltitle,\n"+
+        String query = "SELECT D.id_department AS idDepartment, D.fulltitle AS fulltitle,\n" +
                 "D.shorttitle AS shorttitle, D.id_chair AS idChair,\n" +
                 "D.id_institute FROM public.department D \n" +
                 "inner join institute I using (id_institute)\n" +
@@ -63,12 +82,6 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<DepartmentModel>) getList(q);
     }
 
-    public List<String> getPosition() {
-        String query = "SELECT  ER.rolename FROM public.employee_role ER";
-        Query q = getSession().createSQLQuery(query);
-        return (List<String>) getList(q);
-    }
-
     public List<PositionModel> getPositions() {
         String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER";
         Query q = getSession().createSQLQuery(query)
@@ -78,8 +91,16 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<PositionModel>) getList(q);
     }
 
-    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment)
-    {
+    public List<ByworkerModel> getByworker() {
+        String query = "SELECT EB.id_employee_byworker AS idByworker, EB.byworker AS byworker FROM public.employee_byworker EB";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("idByworker", LongType.INSTANCE)
+                .addScalar("byworker")
+                .setResultTransformer(Transformers.aliasToBean(ByworkerModel.class));
+        return (List<ByworkerModel>) getList(q);
+    }
+
+    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
         String query = "SELECT HF.family || ' ' || HF.name || ' ' || HF.patronymic AS fio, DS.subjectname AS nameDiscipline,\n" +
                 "LESG.tutoringtype AS typeInstructionInt, DG.groupname AS groupname, LGS.course AS course,\n" +
                 "SUB.is_exam, SUB.is_pass, SUB.is_courseproject, SUB.is_coursework, SUB.is_practic, SUB.hoursaudcount as hourSaudCount, SUB.hourscount as hoursCount\n" +
@@ -100,20 +121,51 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("nameDiscipline")
                 .addScalar("groupName")
                 .addScalar("course", IntegerType.INSTANCE)
-                .addScalar("hoursCount",IntegerType.INSTANCE)
-                .addScalar("hourSaudCount",IntegerType.INSTANCE)
+                .addScalar("hoursCount", IntegerType.INSTANCE)
+                .addScalar("hourSaudCount", IntegerType.INSTANCE)
                 .addScalar("is_exam", IntegerType.INSTANCE)
-                .addScalar("is_pass",IntegerType.INSTANCE)
-                .addScalar("is_courseproject",IntegerType.INSTANCE)
-                .addScalar("is_coursework",IntegerType.INSTANCE)
-                .addScalar("is_practic",IntegerType.INSTANCE)
-                .addScalar("typeInstructionInt",IntegerType.INSTANCE)
+                .addScalar("is_pass", IntegerType.INSTANCE)
+                .addScalar("is_courseproject", IntegerType.INSTANCE)
+                .addScalar("is_coursework", IntegerType.INSTANCE)
+                .addScalar("is_practic", IntegerType.INSTANCE)
+                .addScalar("typeInstructionInt", IntegerType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(AssignmentModel.class));
         return (List<AssignmentModel>) getList(q);
     }
 
-    public boolean addRate(Long id_employee, Long id_department, Long id_position)
-    {
+    public List<VacancyModel> getVacancy() {
+        String query = "SELECT id_vacancy, ER.rolename, wagerate FROM public.vacancies  \n" +
+                "inner join employee_role ER using (id_employee_role)";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("id_vacancy", LongType.INSTANCE)
+                .addScalar("rolename")
+                .addScalar("wagerate", DoubleType.INSTANCE)
+                .setResultTransformer(Transformers.aliasToBean(VacancyModel.class));
+        return (List<VacancyModel>) getList(q);
+    }
+
+    public void updateVacancy(Long id_vacancy, Long id_employee_role, String wagerate) {
+        String query = "update vacancies set id_employee_role = " + id_employee_role + ", wagerate = " + wagerate + " where id_vacancy=" + id_vacancy + "";
+        executeUpdate(getSession().createSQLQuery(query));
+    }
+
+    public void createVacancy(Long id_employee_role, String wagerate) {
+        String query = "insert into vacancies (id_employee_role, wagerate) values (" + id_employee_role + ", " + wagerate + ")";
+
+        executeUpdate(getSession().createSQLQuery(query));
+    }
+
+    public void deleteVacancy(Long id_vacancy) {
+        String query = "delete from vacancies where id_vacancy= " + id_vacancy;
+        executeUpdate(getSession().createSQLQuery(query));
+    }
+
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
+        String queryVacancy = "update link_employee_department set id_employee_byworker = " + idByworker + ", id_employee_role = " + idRole + ", wagerate = " + wagerate + ", time_wagerate = " + time_wagerate + " where id_employee=" + id_employee + "";
+        executeUpdate(getSession().createSQLQuery(queryVacancy));
+    }
+
+    public boolean addRate(Long id_employee, Long id_department, Long id_position) {
         try {
             begin();
             String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
@@ -131,16 +183,14 @@ public class EntityManagerStudyLoad extends DAO {
         } finally {
             close();
         }
-
     }
 
-    public boolean addRateBasedOnVacancy(Long id_employee, Long id_department, Long id_position, Double wagerate)
-    {
+    public boolean addRateBasedOnVacancy(Long id_employee, Long id_department, Long id_position, Double rate) {
         try {
             begin();
             String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
                     "is_permanency, employee_position, is_hide)\n" +
-                    "VALUES (" + id_employee + ", " + id_department + ", " + id_position + ", '" + wagerate + "', NULL, NULL, false)";
+                    "VALUES (" + id_employee + ", " + id_department + ", " + id_position + ", '" + rate + "', NULL, NULL, false)";
 
             Query q = getSession().createSQLQuery(query);
             q.executeUpdate();
@@ -153,15 +203,13 @@ public class EntityManagerStudyLoad extends DAO {
         } finally {
             close();
         }
-
     }
 
-    public boolean removeRate(Long id_employee, Long id_department)
-    {
+    public boolean removeRate(Long id_employee, Long id_department) {
         try {
             begin();
             String query = "DELETE FROM link_employee_department LED " +
-                    "WHERE LED.id_employee = "+id_employee+" AND LED.id_department = "+id_department;
+                    "WHERE LED.id_employee = " + id_employee + " AND LED.id_department = " + id_department;
 
             Query q = getSession().createSQLQuery(query);
             q.executeUpdate();
@@ -174,6 +222,5 @@ public class EntityManagerStudyLoad extends DAO {
         } finally {
             close();
         }
-
     }
 }

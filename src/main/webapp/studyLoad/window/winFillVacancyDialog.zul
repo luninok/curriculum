@@ -1,4 +1,4 @@
-<window id="winFillVacancyDialog" closable="true" title="Добавить нового преподавателя на основе вакансии" style="margin:1" width="60%" height="50%"
+<window id="winFillVacancyDialog" closable="true" title="Заполнить вакансию" style="margin:1" width="60%" height="50%"
         apply="org.edec.studyLoad.ctrl.windowCtrl.WinFillVacancyDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <hbox style="margin:1%">
         <label value="Фамилия" width="50%"/>
@@ -17,6 +17,6 @@
         </listhead>
     </listbox>
     <hbox style="margin:1%; ">
-        <button id="btnTakeRate" label="Принять" autodisable="self"/>
+        <button id="btnFillVacancy" label="Принять" autodisable="self"/>
     </hbox>
 </window>

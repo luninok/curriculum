@@ -25,8 +25,6 @@ public class TeacherModel {
         this.id_employee = id_employee;
     }
 
-    // private List<TeacherModel> teachers = new ArrayList<>();
-
 
     @Override
     public String toString() {

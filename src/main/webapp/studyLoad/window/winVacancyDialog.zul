@@ -3,11 +3,12 @@
     <vbox style="margin:1%">
         <hbox width="100%" style="margin:3% 2% 0">
             <label style="margin-right:0%" value="Количество ставок" width="50%"/>
-            <doublespinner id="spinnerCountRate" style="text-align: center" hflex="1"></doublespinner>
+            <doublebox id="dbCountRate" style="text-align: center" hflex="1"/>
         </hbox>
         <hbox width="100%" style="margin:3% 2% 1%">
             <label value="Должность"/>
-            <combobox readonly="true" id="cmbPosition" hflex="1" style="text-align: center"/>
+            <combobox readonly="true" id="cmbPosition" hflex="1" style="text-align: center">
+            </combobox>
         </hbox>
     </vbox>
     <hbox style="margin: 3% 2% 0;">

@@ -8,9 +8,9 @@ import org.zkoss.zul.ListitemRenderer;
 public class VacancyRenderer implements ListitemRenderer<VacancyModel> {
 
     public void render(Listitem listitem, VacancyModel vacancyModel, int i) throws Exception {
-        listitem.appendChild(new Listcell(vacancyModel.getVacancy()));
-        listitem.appendChild(new Listcell(vacancyModel.getPosition()));
-        listitem.appendChild(new Listcell(vacancyModel.getRate().toString()));
+        listitem.appendChild(new Listcell(String.valueOf(vacancyModel.getId_vacancy())));
+        listitem.appendChild(new Listcell(vacancyModel.getRolename()));
+        listitem.appendChild(new Listcell(String.valueOf(vacancyModel.getWagerate())));
         listitem.setValue(vacancyModel);
     }
 }

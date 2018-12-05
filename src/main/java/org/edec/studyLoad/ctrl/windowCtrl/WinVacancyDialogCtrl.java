@@ -1,6 +1,7 @@
 package org.edec.studyLoad.ctrl.windowCtrl;
 
 import org.edec.studyLoad.ctrl.IndexPageCtrl;
+import org.edec.studyLoad.model.PositionModel;
 import org.edec.studyLoad.model.VacancyModel;
 import org.edec.studyLoad.service.StudyLoadService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
@@ -12,30 +13,30 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WinVacancyDialogCtrl extends CabinetSelector {
-    public static final String INDEX_PAGE = "index_page";
-    public static final String SELECT_VACANCY = "select_vacancy";
     @Wire
-    private Doublespinner spinnerCountRate;
+    private Doublebox dbCountRate;
     @Wire
     private Combobox cmbPosition;
     @Wire
     Window winVacancyDialog;
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
-    private IndexPageCtrl indexPageCtrl;
+    private Runnable updateLbVacancy;
     private VacancyModel vacancyModel;
+    private List<PositionModel> positionModels = new ArrayList<>();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-        indexPageCtrl = (IndexPageCtrl) Executions.getCurrent().getArg().get(INDEX_PAGE);
-        vacancyModel = (VacancyModel) Executions.getCurrent().getArg().get(SELECT_VACANCY);
+        updateLbVacancy = (Runnable) Executions.getCurrent().getArg().get("fillLbVacancy");
+        vacancyModel = (VacancyModel) Executions.getCurrent().getArg().get("vacancy");
         if (vacancyModel != null) {
-            cmbPosition.setValue(vacancyModel.getPosition());
-            spinnerCountRate.setValue(vacancyModel.getRate());
+            cmbPosition.setValue(vacancyModel.getRolename());
+            dbCountRate.setValue(Double.valueOf((vacancyModel.getWagerate())));
         }
     }
 
@@ -44,28 +45,35 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
     }
 
     private void fillCmbPosition() {
-        List<String> list = studyLoadService.getPosition();
-        for (String position : list) {
+        positionModels = studyLoadService.getPositions();
+        for (PositionModel position : positionModels) {
             Comboitem comboitem = new Comboitem();
-            comboitem.setLabel(position);
+            comboitem.setLabel(position.getPositionName());
             cmbPosition.getItems().add(comboitem);
         }
     }
 
     @Listen("onClick = #btnTakeVacancy")
     public void onTakeVacancy() {
-        if (cmbPosition.getSelectedItem() == null || spinnerCountRate.getValue() == null) {
+        if (cmbPosition.getSelectedItem() == null || dbCountRate.getValue() == null) {
             PopupUtil.showWarning("Введите указанные значения!");
             return;
         }
-        String position = cmbPosition.getValue();
-        Double rate = spinnerCountRate.getValue();
-          if (vacancyModel != null) {
-           indexPageCtrl.updateLbVacancy(position, rate);
-        } else {
-            indexPageCtrl.fillLbVacancy(position, rate);
+        String rolename = cmbPosition.getValue();
+        String wagerate = dbCountRate.getValue().toString();
+        Long idEmployeeRole = null;
+        for (PositionModel position : positionModels) {
+            if (position.getPositionName().equals(rolename)) {
+                idEmployeeRole = position.getIdPosition();
+            }
         }
-        winVacancyDialog.detach();
+        if (vacancyModel != null) {
+            studyLoadService.updateVacancy(vacancyModel.getId_vacancy(), idEmployeeRole, wagerate);
+            updateLbVacancy.run();
+        } else {
+            studyLoadService.createVacancy(idEmployeeRole, wagerate);
+            updateLbVacancy.run();
+        }
     }
 
 }
