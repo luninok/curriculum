@@ -234,7 +234,7 @@ public class IndexPageCtrl extends CabinetSelector {
         VacancyModel selectedVacancy = lbVacancy.getSelectedItem().getValue();
         Long idPosition = null;
         for (PositionModel position : positionModels) {
-            if(selectedVacancy.getPosition().equals(position.getPositionName())) {
+            if(selectedVacancy.getRolename().equals(position.getPositionName())) {
                 idPosition = position.getIdPosition();
                 break;
             }
@@ -242,22 +242,12 @@ public class IndexPageCtrl extends CabinetSelector {
         Map arg = new HashMap();
         arg.put("idPosition", idPosition);
         arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
-        arg.put("rate", selectedVacancy.getRate());
+        arg.put("rate", selectedVacancy.getWagerate());
         arg.put("teacherModels", teacherModels);
         arg.put("indexPageCtrl", this);
         Window win = (Window) Executions.createComponents("window/winFillVacancyDialog.zul", null, arg);
         win.doModal();
     }
-
-
-    public void fillLbVacancy(String position, Double rate) {
-        VacancyModel selectVacancy = new VacancyModel(position, rate, lbVacancy.getItemCount());
-        vacancyModels.add(selectVacancy);
-        ListModelList<VacancyModel> vacancyListModelList = new ListModelList<>(vacancyModels);
-        lbVacancy.setModel(vacancyListModelList);
-        lbVacancy.renderAll();
-    }
-
 
     public void fillLbAssignment() {
         // TODO Создать отдельный renderer, добавить семестр как текущий
@@ -279,22 +269,5 @@ public class IndexPageCtrl extends CabinetSelector {
             lbAssignments.getItems().add(listitem);
         }
     }
-
-    public void updateLbVacancy(String position, Double rate) {
-        VacancyModel changeVacancy = new VacancyModel(position, rate, lbVacancy.getSelectedIndex());
-        for (VacancyModel vacancyModel : vacancyModels) {
-            if (changeVacancy.getVacancy().equals(vacancyModel.getVacancy())) {
-                vacancyModel.setVacancy(changeVacancy.getVacancy());
-                vacancyModel.setRate(changeVacancy.getRate());
-                vacancyModel.setPosition(changeVacancy.getPosition());
-            }
-        }
-        lbVacancy.clearSelection();
-        ListModelList<VacancyModel> vacancyListModelList = new ListModelList<>(vacancyModels);
-        lbVacancy.setModel(vacancyListModelList);
-        lbVacancy.renderAll();
-    }
-
-
 
 }

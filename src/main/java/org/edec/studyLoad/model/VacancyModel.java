@@ -11,16 +11,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class VacancyModel {
-    private String vacancy;
-    private String position;
-    private Double rate;
+    private Long id_vacancy;
+    private String rolename;
+    private double wagerate;
 
-    //private List<VacancyModel> teachers = new ArrayList<>();
-
-    public VacancyModel(String position, Double rate, int number)
-    {
-        vacancy = "Вакансия " + number;
-        this.position = position;
-        this.rate = rate;
+    public VacancyModel(Long id_vacancy, String rolename, double wagerate) {
+        this.id_vacancy = id_vacancy;
+        this.rolename = rolename;
+        this.wagerate = wagerate;
     }
 }
