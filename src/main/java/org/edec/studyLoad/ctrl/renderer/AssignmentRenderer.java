@@ -10,7 +10,7 @@ public class AssignmentRenderer implements ListitemRenderer<AssignmentModel> {
 
     public void render(Listitem listitem, AssignmentModel assignmentModel, int i) throws Exception {
         listitem.appendChild(new Listcell(String.valueOf(i+1)));
-        listitem.appendChild(new Listcell(assignmentModel.getFio()));
+        listitem.appendChild(new Listcell(assignmentModel.getFioWithShortInitials()));
         listitem.appendChild(new Listcell(assignmentModel.getNameDiscipline()));
         listitem.appendChild(new Listcell(assignmentModel.getTypeInstructionString()));
         listitem.appendChild(new Listcell(assignmentModel.getGroupName()));

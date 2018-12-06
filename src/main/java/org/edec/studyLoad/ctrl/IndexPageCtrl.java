@@ -3,16 +3,15 @@ package org.edec.studyLoad.ctrl;
 
 import javafx.scene.control.ListCell;
 import org.edec.main.model.DepartmentModel;
-<<<<<<< HEAD
 import org.edec.studyLoad.ctrl.renderer.AssignmentRenderer;
-=======
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
->>>>>>> 4267f21af7011a8e8762a18dae5420ca752e4f77
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.model.*;
+import org.edec.studyLoad.report.ReportService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.studyLoad.service.StudyLoadService;
+import org.edec.utility.report.model.jasperReport.JasperReport;
 import org.edec.utility.zk.CabinetSelector;
 import org.edec.utility.zk.ComponentHelper;
 import org.edec.utility.zk.PopupUtil;
@@ -55,21 +54,14 @@ public class IndexPageCtrl extends CabinetSelector {
         super.doAfterCompose(comp);
         lbVacancy.setItemRenderer(new VacancyRenderer());
         lbTeachers.setItemRenderer(new TeachersRenderer());
-<<<<<<< HEAD
-        lbAssignments.setItemRenderer(new AssignmentRenderer());
-    }
-
-    protected void fill() {
-=======
         lbEmployment.setItemRenderer(new EmploymentRenderer());
+        lbAssignments.setItemRenderer(new AssignmentRenderer());
         fillLbVacancy();
     }
 
     protected void fill() {
         positionModels = studyLoadService.getPositions();
->>>>>>> 4267f21af7011a8e8762a18dae5420ca752e4f77
         fillCmbFaculty();
-        fillLbTeacher();
         fillLbAssignment();
         updateLbTeachers();
     }
@@ -82,19 +74,12 @@ public class IndexPageCtrl extends CabinetSelector {
             comboitem.setValue(department);
             cmbFaculty.getItems().add(comboitem);
         }
-<<<<<<< HEAD
-        if(cmbFaculty.getItems().size() != 0) { cmbFaculty.setSelectedIndex(0); }
-    }
-
-    @Listen("onSelect = #lbTeachers")
-=======
         if (cmbFaculty.getItems().size() != 0) {
             cmbFaculty.setSelectedIndex(0);
         }
     }
 
     @Listen("onDoubleClick = #lbTeachers")
->>>>>>> 4267f21af7011a8e8762a18dae5420ca752e4f77
     public void teacherRowClick() {
         labelFIO.setValue("");
         col1.setVisible(true);
@@ -125,18 +110,18 @@ public class IndexPageCtrl extends CabinetSelector {
     public void saveEmploymentClick() {
         //List<ByworkerModel> listByworker = studyLoadService.getByworker();
         Listitem item = lbEmployment.getItems().get(0);
-        Listcell cellByworker = (Listcell)item.getChildren().get(1);
+        Listcell cellByworker = (Listcell) item.getChildren().get(1);
         Combobox comboboxByworker = (Combobox) cellByworker.getChildren().get(0);
         ByworkerModel byworkerModel = comboboxByworker.getSelectedItem().getValue();
         Long idByworker = byworkerModel.getIdByworker();
-        Listcell cellPosition = (Listcell)item.getChildren().get(2);
+        Listcell cellPosition = (Listcell) item.getChildren().get(2);
         Combobox comboboxPosition = (Combobox) cellPosition.getChildren().get(0);
         PositionModel position = comboboxPosition.getSelectedItem().getValue();
         Long idPosition = position.getIdPosition();
-        Listcell cellWagerate = (Listcell)item.getChildren().get(3);
-        Double doubleWagerate = ((Doublebox)cellWagerate.getChildren().get(0)).getValue();
-        Listcell cellWagerateTime = (Listcell)item.getChildren().get(4);
-        Double doubleWagerateTime = ((Doublebox)cellWagerateTime.getChildren().get(0)).getValue();
+        Listcell cellWagerate = (Listcell) item.getChildren().get(3);
+        Double doubleWagerate = ((Doublebox) cellWagerate.getChildren().get(0)).getValue();
+        Listcell cellWagerateTime = (Listcell) item.getChildren().get(4);
+        Double doubleWagerateTime = ((Doublebox) cellWagerateTime.getChildren().get(0)).getValue();
 
         studyLoadService.updateEmployment(selectedTeacher.getId_employee(), idByworker, idPosition, doubleWagerate, doubleWagerateTime);
         fillLbEmployment(selectedTeacher);
@@ -162,10 +147,6 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     @Listen("onChange = #cmbFaculty")
-<<<<<<< HEAD
-    public void laterForTeachers() {
-        fillLbTeacher();
-=======
     public void updateLbTeachers() {
         selectedDepartmentModel = cmbFaculty.getSelectedItem().getValue();
         lbTeachers.clearSelection();
@@ -174,7 +155,6 @@ public class IndexPageCtrl extends CabinetSelector {
         ListModelList<TeacherModel> teacherListModelList = new ListModelList<>(teacherModels);
         lbTeachers.setModel(teacherListModelList);
         lbTeachers.renderAll();
->>>>>>> 4267f21af7011a8e8762a18dae5420ca752e4f77
         fillLbAssignment();
     }
 
@@ -230,34 +210,6 @@ public class IndexPageCtrl extends CabinetSelector {
         }
     }
 
-<<<<<<< HEAD
-    private void fillLbTeacher() {
-        lbTeachers.clearSelection();
-        teacherModels.clear();
-        List<TeacherModel> list = studyLoadService.getTeachers((String) cmbFaculty.getValue());
-        teacherModels = list;
-        ListModelList<TeacherModel> teacherListModelList = new ListModelList<>(teacherModels);
-        lbTeachers.setModel(teacherListModelList);
-        lbTeachers.renderAll();
-    }
-
-    public void fillLbVacancy(String position, String rate) {
-        VacancyModal selectVacancy = new VacancyModal(position, rate, lbVacancy.getItemCount());
-        vacancyModals.add(selectVacancy);
-        ListModelList<VacancyModal> vacancyListModelList = new ListModelList<>(vacancyModals);
-        lbVacancy.setModel(vacancyListModelList);
-        lbVacancy.renderAll();
-    }
-
-    private void fillLbAssignment() {
-        // TODO Создать отдельный renderer, добавить семестр как текущий
-        lbAssignments.getItems().clear();
-        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel)cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
-        ListModelList<AssignmentModel> assignmentModelListModelList = new ListModelList<>(assignmentModels);
-        lbAssignments.setModel(assignmentModelListModelList);
-        lbAssignments.renderAll();
-        /*for (int i = 0; i < assignmentModels.size();i++) {
-=======
     @Listen("onClick = #btnRemoveRate")
     public void removeRate() {
         if (lbTeachers.getSelectedItems().isEmpty()) {
@@ -271,27 +223,18 @@ public class IndexPageCtrl extends CabinetSelector {
             Messagebox.show("Ошибка удаления преподавателя");
     }
 
-
-    public void fillLbAssignment() {
-        // TODO Создать отдельный renderer, добавить семестр как текущий
-        lbAssignments.getItems().clear();
-        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
-        for (int i = 0; i < assignmentModels.size(); i++) {
->>>>>>> 4267f21af7011a8e8762a18dae5420ca752e4f77
-            AssignmentModel assignmentModel = assignmentModels.get(i);
-            Listitem listitem = new Listitem();
-            listitem.setValue(assignmentModel);
-            new Listcell(String.valueOf(i)).setParent(listitem);
-            new Listcell(assignmentModel.getFio()).setParent(listitem);
-            new Listcell(assignmentModel.nameDiscipline).setParent(listitem);
-            new Listcell(assignmentModel.getTypeInstructionString()).setParent(listitem);
-            new Listcell(assignmentModel.getGroupName()).setParent(listitem);
-            new Listcell(assignmentModel.getTypeControl()).setParent(listitem);
-            new Listcell(String.valueOf(assignmentModel.getCourse())).setParent(listitem);
-            new Listcell(String.valueOf(assignmentModel.getHourSaudCount())).setParent(listitem);
-            new Listcell(String.valueOf(assignmentModel.getHoursCount())).setParent(listitem);
-            lbAssignments.getItems().add(listitem);
-        }*/
+    @Listen("onClick = #btnShowPdfAssignmentsTabs")
+    public void showAssignments() {
+        JasperReport jasperReport = new ReportService().getJasperForAssignments("/studyLoad/assigmentsPDF.jasper",56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment(), ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getFulltitle());
+        jasperReport.showPdf();
     }
 
+    public void fillLbAssignment() {
+        lbAssignments.getItems().clear();
+        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
+        ListModelList<AssignmentModel> assignmentModelListModelList = new ListModelList<>(assignmentModels);
+        lbAssignments.setModel(assignmentModelListModelList);
+        lbAssignments.renderAll();
+    }
 }
+

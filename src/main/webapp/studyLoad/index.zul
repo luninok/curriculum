@@ -1539,8 +1539,8 @@
                 <!-- Поручения -->
                 <vlayout vflex="1">
                     <hbox>
-                        <button id="btnPrintAssignmentsTabs" label="Печать"/>
-                        <button id="btnExportAssignmentsTabs" label="Экспорт"/>
+                        <button id="btnShowPdfAssignmentsTabs" label="Печать" image="/imgs/pdf.png" hflex="1"/>
+                        <button id="btnDownloadExcelAssignmentsTabs" label="Скачать EXCEL" image="/imgs/excel.png"/>
                     </hbox>
                     <listbox id="lbAssignments" vflex="1" hflex="1" width="99%" mold="paging">
                         <listhead>

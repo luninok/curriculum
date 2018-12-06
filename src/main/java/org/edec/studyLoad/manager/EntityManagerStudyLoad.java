@@ -20,12 +20,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join department D using (id_department) \n" +
                 "inner join humanface HF using (id_humanface) \n" +
                 "where D.fulltitle = '" + department + "'\n" +
-<<<<<<< HEAD
-                "group by HF.family, HF.name, HF.patronymic\n" +
-                "order by HF.family";
-=======
                 "group by HF.family, HF.name, HF.patronymic, E.id_employee";
->>>>>>> 4267f21af7011a8e8762a18dae5420ca752e4f77
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
                 .addScalar("name")
@@ -120,8 +115,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join subject SUB using (id_subject)\n" +
                 "inner join dic_subject DS using (id_dic_subject)\n" +
                 "WHERE id_department =" + idDepartment + "  AND SEM.id_semester = " + idSem + " AND SUB.is_active = 1\n" +
-                "GROUP BY FIO, groupname, nameDiscipline, typeInstructionInt, course, SUB.is_exam, SUB.is_pass, SUB.is_courseproject, SUB.is_coursework, SUB.is_practic, hourSaudCount, hoursCount\n" +
-                "ORDER BY FIO";
+                "ORDER BY fio\n";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("fio")
                 .addScalar("nameDiscipline")
