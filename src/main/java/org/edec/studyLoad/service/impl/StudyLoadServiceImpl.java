@@ -11,23 +11,24 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     private EntityManagerStudyLoad entityManagerStudyLoad = new EntityManagerStudyLoad();
 
     @Override
-    public List<TeacherModel> getTeachers (String department) {
+    public List<TeacherModel> getTeachers(String department) {
         return entityManagerStudyLoad.getTeachers(department);
     }
 
     @Override
-    public List<TeacherModel> searchTeachers (String family, String name, String patronymic) {
+    public List<TeacherModel> searchTeachers(String family, String name, String patronymic) {
         return entityManagerStudyLoad.searchTeachers(family, name, patronymic);
     }
 
     @Override
-    public  List<DepartmentModel> getDepartments() {
+    public List<DepartmentModel> getDepartments() {
         return entityManagerStudyLoad.getDepartments();
     }
 
     @Override
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
-        return entityManagerStudyLoad.getEmployment(selectTeacher, department); }
+        return entityManagerStudyLoad.getEmployment(selectTeacher, department);
+    }
 
     @Override
     public List<PositionModel> getPositions() {
@@ -40,7 +41,7 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment){
+    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
         return entityManagerStudyLoad.getInstructions(idSem, idDepartment);
     }
 
@@ -80,7 +81,7 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public boolean removeRate(Long idEmployee, Long idDepartment){
+    public boolean removeRate(Long idEmployee, Long idDepartment) {
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
     }
 }
