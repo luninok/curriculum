@@ -15,7 +15,7 @@ public class VacancyModel {
     private String rolename;
     private double wagerate;
 
-    public VacancyModel(Long id_vacancy, String rolename, double wagerate) {
+    public VacancyModel(Long id_vacancy, String rolename, double wagerate, int number) {
         this.id_vacancy = id_vacancy;
         this.rolename = rolename;
         this.wagerate = wagerate;

@@ -13,5 +13,5 @@ public class EmploymentModel {
     private String rolename;
     private double wagerate;
     private double time_wagerate;
-
+    private double maximum_load;
 }

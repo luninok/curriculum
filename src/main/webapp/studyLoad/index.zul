@@ -68,18 +68,13 @@
                     </hbox>
                     <hbox width="100%" vflex="1">
                         <listbox id="lbEmployment">
-                            <listhead menupopup="auto"><!-- make it invisible -->
-                                <listheader id="lhNameFaculty" align="center" label="Название кафедры" sort="auto"
-                                            width=""/>
-                                <listheader id="lhByWorker" align="center" label="Совместительство" sort="auto"
-                                            width=""/>
-                                <listheader id="lhPositionTeacher" align="center" label="Должность" sort="auto"
-                                            width=""/>
-                                <listheader id="lhRateTeacher" align="center" label="Ставка" sort="auto" width=""/>
-                                <listheader id="lhRateTime" align="center" label="Норма времени на ставку" sort="auto"
-                                            width=""/>
-                                <!--<listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" sort="auto"
-                                            width=""/>-->
+                            <listhead><!-- make it invisible -->
+                                <listheader id="lhNameFaculty" align="center" label="Название кафедры" width=""/>
+                                <listheader id="lhByWorker" align="center" label="Совместительство" width=""/>
+                                <listheader id="lhPositionTeacher" align="center" label="Должность" width=""/>
+                                <listheader id="lhRateTeacher" align="center" label="Ставка" width=""/>
+                                <listheader id="lhRateTime" align="center" label="Норма времени на ставку" width=""/>
+                                <listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" width=""/>
                                 <!--<listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>-->
                             </listhead>
                         </listbox>

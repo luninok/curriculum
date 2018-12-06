@@ -50,8 +50,8 @@ public class IndexPageCtrl extends CabinetSelector {
     protected void fill() {
         positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
-        fillLbAssignment();
-        updateLbTeachers();
+       // fillLbAssignment();
+       //updateLbTeachers();
     }
 
     private void fillCmbFaculty() {
@@ -62,16 +62,15 @@ public class IndexPageCtrl extends CabinetSelector {
             comboitem.setValue(department);
             cmbFaculty.getItems().add(comboitem);
         }
-        if (cmbFaculty.getItems().size() != 0) {
+        /*if (cmbFaculty.getItems().size() != 0) {
             cmbFaculty.setSelectedIndex(0);
-        }
+        } */
     }
 
     @Listen("onDoubleClick = #lbTeachers")
     public void teacherRowClick() {
         labelFIO.setValue("");
-        if (lbTeachers.getSelectedItem() == null)
-        {
+        if (lbTeachers.getSelectedItem() == null) {
             PopupUtil.showWarning("Выберите преподавателя!");
             return;
         }
@@ -101,19 +100,18 @@ public class IndexPageCtrl extends CabinetSelector {
     public void saveEmploymentClick() {
         //List<ByworkerModel> listByworker = studyLoadService.getByworker();
         Listitem item = lbEmployment.getItems().get(0);
-        Listcell cellByworker = (Listcell)item.getChildren().get(1);
+        Listcell cellByworker = (Listcell) item.getChildren().get(1);
         Combobox comboboxByworker = (Combobox) cellByworker.getChildren().get(0);
         ByworkerModel byworkerModel = comboboxByworker.getSelectedItem().getValue();
         Long idByworker = byworkerModel.getIdByworker();
-        Listcell cellPosition = (Listcell)item.getChildren().get(2);
+        Listcell cellPosition = (Listcell) item.getChildren().get(2);
         Combobox comboboxPosition = (Combobox) cellPosition.getChildren().get(0);
         PositionModel position = comboboxPosition.getSelectedItem().getValue();
         Long idPosition = position.getIdPosition();
-        Listcell cellWagerate = (Listcell)item.getChildren().get(3);
-        Double doubleWagerate = ((Doublebox)cellWagerate.getChildren().get(0)).getValue();
-        Listcell cellWagerateTime = (Listcell)item.getChildren().get(4);
-        Double doubleWagerateTime = ((Doublebox)cellWagerateTime.getChildren().get(0)).getValue();
-
+        Listcell cellWagerate = (Listcell) item.getChildren().get(3);
+        Double doubleWagerate = ((Doublebox) cellWagerate.getChildren().get(0)).getValue();
+        Listcell cellWagerateTime = (Listcell) item.getChildren().get(4);
+        Double doubleWagerateTime = ((Doublebox) cellWagerateTime.getChildren().get(0)).getValue();
         studyLoadService.updateEmployment(selectedTeacher.getId_employee(), idByworker, idPosition, doubleWagerate, doubleWagerateTime);
         fillLbEmployment(selectedTeacher);
     }
