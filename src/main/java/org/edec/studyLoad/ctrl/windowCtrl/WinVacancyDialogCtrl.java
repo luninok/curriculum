@@ -74,6 +74,7 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
             studyLoadService.createVacancy(idEmployeeRole, wagerate);
             updateLbVacancy.run();
         }
+        PopupUtil.showInfo("Вакансия была успешно добавлена.");
     }
 
 }

@@ -36,7 +36,9 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" + patronymic + "%' \n" +
+                "where lower(HF.Name) Like lower('%" + name + "%')" +
+                " AND lower(HF.family) Like lower('%" + family + "%')" +
+                " AND lower(HF.patronymic) Like lower('%" + patronymic + "%') \n" +
                 "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")

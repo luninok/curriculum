@@ -168,27 +168,6 @@ public class IndexPageCtrl extends CabinetSelector {
         win.doModal();
     }
 
-    @Listen("onClick = #btnFillRate")
-    public void fillRate() {
-
-        Long idPosition = null;
-        for (PositionModel position : positionModels) {
-            if (position.getPositionName().equals(vacancyModels.get(lbVacancy.getSelectedIndex()).getRolename())) {
-                idPosition = position.getIdPosition();
-                break;
-            }
-        }
-
-        Map arg = new HashMap();
-        arg.put("teacherModels", teacherModels);
-        arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
-        arg.put("idPosition", idPosition);
-        arg.put("rate", vacancyModels.get(lbVacancy.getSelectedIndex()).getWagerate());
-        arg.put("indexPageCtrl", this);
-        Window win = (Window) Executions.createComponents("window/winFillVacancyDialog.zul", null, arg);
-        win.doModal();
-    }
-
     @Listen("onClick = #btnAddVacancy")
     public void openWinVacancyStructure() {
         Runnable updateLbVacancy = this::fillLbVacancy;
@@ -214,21 +193,23 @@ public class IndexPageCtrl extends CabinetSelector {
     public void removeRate()
     {
         if (lbTeachers.getSelectedItems().isEmpty()) {
-            Messagebox.show("Выберите преподавателя, которого хотите удалить!");
+            PopupUtil.showWarning("Выберите преподавателя, которого хотите удалить!");
             return;
         }
         TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
-        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment()))
+        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment())) {
             updateLbTeachers();
+            PopupUtil.showInfo("Сотрудник был успешно удалён.");
+        }
         else
-            Messagebox.show("Ошибка удаления преподавателя");
+            PopupUtil.showError("Ошибка удаления преподавателя");
     }
 
     @Listen("onClick = #btnFillRate")
     public void fillRateClick()
     {
         if (lbVacancy.getSelectedItems().isEmpty()) {
-            Messagebox.show("Выберите вакансию, которую хотите заполнить!");
+            PopupUtil.showWarning("Выберите вакансию, которую хотите заполнить!");
             return;
         }
         VacancyModel selectedVacancy = lbVacancy.getSelectedItem().getValue();
@@ -240,6 +221,7 @@ public class IndexPageCtrl extends CabinetSelector {
             }
         }
         Map arg = new HashMap();
+        arg.put("idVacancy", vacancyModels.get(lbVacancy.getSelectedIndex()).getId_vacancy());
         arg.put("idPosition", idPosition);
         arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
         arg.put("rate", selectedVacancy.getWagerate());

@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.edec.utility.zk.PopupUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -30,21 +31,24 @@ public class WinFillVacancyDialogCtrl extends CabinetSelector {
     @Wire
     Textbox tbFamily, tbName, tbPatronymic;
 
+    @Wire
+    Window winFillVacancyDialog;
+
     private List<TeacherModel> searchTeacherModels = new ArrayList<>();
     private List<TeacherModel> departmentTeacherModels = new ArrayList<>();
     private List<PositionModel> positionModels = new ArrayList<>();
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
 
     private IndexPageCtrl indexPageCtrl;
-    private Long idDepartment;
+    private Long idDepartment, idPosition, idVacancy;
     private Double rate;
-    private Long idPosition;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         idDepartment = (Long) Executions.getCurrent().getArg().get("idDepartment");
         idPosition = (Long) Executions.getCurrent().getArg().get("idPosition");
+        idVacancy = (Long) Executions.getCurrent().getArg().get("idVacancy");
         rate = (Double) Executions.getCurrent().getArg().get("rate");
         departmentTeacherModels = (List<TeacherModel>) Executions.getCurrent().getArg().get("teacherModels");
         indexPageCtrl = (IndexPageCtrl) Executions.getCurrent().getArg().get("indexPageCtrl");
@@ -64,7 +68,7 @@ public class WinFillVacancyDialogCtrl extends CabinetSelector {
     @Listen("onClick = #btnSearch")
     public void searchTeacher() {
         if (tbFamily.getText().equals("") && tbName.getText().equals("") && tbPatronymic.getText().equals("")) {
-            Messagebox.show("Заполните хотя бы одно поле!");
+            PopupUtil.showWarning("Заполните хотя бы одно поле!");
             return;
         }
 
@@ -76,22 +80,28 @@ public class WinFillVacancyDialogCtrl extends CabinetSelector {
 
     @Listen("onClick = #btnFillVacancy")
     public void addRateBasedOnVacancy() {
+        if (lbRate.getSelectedItems().isEmpty()){
+            PopupUtil.showInfo("Выберите преподавателя, которого хотите добавить.");
+            return;
+        }
+
         TeacherModel selectedTeacher = searchTeacherModels.get(lbRate.getSelectedIndex());
         for(TeacherModel teacher : departmentTeacherModels) {
             if (teacher.getId_employee().equals(selectedTeacher.getId_employee())) {
-                Messagebox.show("Выбранный преподаватель уже работает на этой кафедре!");
+                PopupUtil.showWarning("Выбранный преподаватель уже работает на этой кафедре!");
                 return;
             }
         }
 
         if (!studyLoadService.addRateBasedOnVacancy(selectedTeacher.getId_employee(), idDepartment, idPosition, rate)) {
-            Messagebox.show("Ошибка заполнения вакансии");
+            PopupUtil.showError("Ошибка заполнения вакансии");
         }
-    }
-
-    @Listen("onClose = #winFillVacancyDialog")
-    public void updateLbTeachers()
-    {
-        indexPageCtrl.updateLbTeachers();
+        else {
+            studyLoadService.deleteVacancy(idVacancy);
+            indexPageCtrl.fillLbVacancy();
+            indexPageCtrl.updateLbTeachers();
+            winFillVacancyDialog.onClose();
+            PopupUtil.showInfo("Сотрудник был добавлен успешно!");
+        }
     }
 }
