@@ -74,6 +74,7 @@
                                 <listheader id="lhPositionTeacher" align="center" label="Должность" width=""/>
                                 <listheader id="lhRateTeacher" align="center" label="Ставка" width=""/>
                                 <listheader id="lhRateTime" align="center" label="Норма времени на ставку" width=""/>
+                                <listheader id="lhdeviation" align="center" label="Отклонение" width=""/>
                                 <listheader id="lhMaximumLoad" align="center" label="Максимальная нагрузка" width=""/>
                                 <!--<listheader id="lhPriority" align="center" label="Приоритет" sort="auto" width=""/>-->
                             </listhead>

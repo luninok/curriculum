@@ -40,8 +40,9 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" +
-                patronymic + "%' \n" +
+                "where lower(HF.Name) Like lower('%" + name + "%')" +
+                " AND lower(HF.family) Like lower('%" + family + "%')" +
+                " AND lower(HF.patronymic) Like lower('%" + patronymic + "%') \n" +
                 "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -64,20 +65,17 @@ public class EntityManagerStudyLoad extends DAO {
         return (Double) getList(q).get(0);
     }
 
-    public List<LoadTeacherModel> getLoad(TeacherModel selectTeacher) {
-        String query = "SELECT LED.time_wagerate, id_department\n" +
+    public Double getSumLoad(TeacherModel selectTeacher) {
+        String query = "SELECT SUM(LED.time_wagerate)\n" +
                 "from link_employee_department LED\n" +
                 "inner join employee_role ER using (id_employee_role)\n" +
                 "inner join employee E using (id_employee)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join employee_byworker EB using (id_employee_byworker)\n" +
-                "where HF.family = '" + selectTeacher.getFamily() + "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "' and ER.group=1";
-        Query q = getSession().createSQLQuery(query)
-                .addScalar("time_wagerate", DoubleType.INSTANCE)
-                .addScalar("id_department", LongType.INSTANCE)
-                .setResultTransformer(Transformers.aliasToBean(LoadTeacherModel.class));
-        return (List<LoadTeacherModel>) getList(q);
+                "where HF.family = '"+selectTeacher.getFamily()+"' and HF.name ='"+selectTeacher.getName()+"' and HF.patronymic='"+selectTeacher.getPatronymic()+"' and ER.group=1";
+        Query q = getSession().createSQLQuery(query);
+        return (Double) getList(q).get(0);
     }
 
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {

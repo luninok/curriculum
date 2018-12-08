@@ -36,8 +36,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<LoadTeacherModel> getLoad (TeacherModel selectTeacher){
-        return entityManagerStudyLoad.getLoad(selectTeacher);
+    public Double getSumLoad (TeacherModel selectTeacher){
+        return entityManagerStudyLoad.getSumLoad(selectTeacher);
     }
 
     @Override
@@ -94,4 +94,6 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public boolean removeRate(Long idEmployee, Long idDepartment) {
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
     }
+
+
 }
