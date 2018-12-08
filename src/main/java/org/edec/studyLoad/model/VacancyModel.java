@@ -20,5 +20,4 @@ public class VacancyModel {
         this.rolename = rolename;
         this.wagerate = wagerate;
     }
-
 }

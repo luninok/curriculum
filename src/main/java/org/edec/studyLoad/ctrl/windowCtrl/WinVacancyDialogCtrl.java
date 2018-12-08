@@ -76,6 +76,7 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
             updateLbVacancy.run();
             PopupUtil.showInfo("Вакансия успешно добавлена!");
         }
+        PopupUtil.showInfo("Вакансия была успешно добавлена.");
     }
 
 }

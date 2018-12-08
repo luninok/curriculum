@@ -94,4 +94,6 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public boolean removeRate(Long idEmployee, Long idDepartment) {
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
     }
+
+
 }

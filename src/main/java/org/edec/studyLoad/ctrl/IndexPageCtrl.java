@@ -6,6 +6,7 @@ import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
+import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
 import org.edec.studyLoad.model.*;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.studyLoad.service.StudyLoadService;
@@ -14,6 +15,7 @@ import org.edec.utility.zk.ComponentHelper;
 import org.edec.utility.zk.PopupUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
@@ -29,6 +31,8 @@ public class IndexPageCtrl extends CabinetSelector {
     private Combobox cmbFaculty;
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
+    private Combobox selectedPosition;
+    private Spinner selectedRate;
     private List<VacancyModel> vacancyModels = new ArrayList<>();
     private List<TeacherModel> teacherModels = new ArrayList<>();
     private List<EmploymentModel> employmentModels = new ArrayList<>();
@@ -207,29 +211,57 @@ public class IndexPageCtrl extends CabinetSelector {
             arg.put("vacancy", lbVacancy.getSelectedItem().getValue());
             ComponentHelper.createWindow("window/winVacancyDialog.zul", "winVacancyDialog", arg).doModal();
         } else {
-            PopupUtil.showWarning("Выберите вакансию!");
+            PopupUtil.showInfo("Выберите вакансию!");
         }
     }
 
     @Listen("onClick = #btnRemoveRate")
-    public void removeRate() {
+    public void removeRate()
+    {
         if (lbTeachers.getSelectedItems().isEmpty()) {
             PopupUtil.showWarning("Выберите преподавателя, которого хотите удалить!");
             return;
         }
         TeacherModel selectedTeacher = lbTeachers.getSelectedItem().getValue();
-        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment()))
+        if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment())) {
             updateLbTeachers();
+            PopupUtil.showInfo("Сотрудник был успешно удалён.");
+        }
         else
-            PopupUtil.showError("Ошибка удаления преподавателя!");
+            PopupUtil.showError("Ошибка удаления преподавателя");
     }
 
+    @Listen("onClick = #btnFillRate")
+    public void fillRateClick()
+    {
+        if (lbVacancy.getSelectedItems().isEmpty()) {
+            PopupUtil.showWarning("Выберите вакансию, которую хотите заполнить!");
+            return;
+        }
+        VacancyModel selectedVacancy = lbVacancy.getSelectedItem().getValue();
+        Long idPosition = null;
+        for (PositionModel position : positionModels) {
+            if(selectedVacancy.getRolename().equals(position.getPositionName())) {
+                idPosition = position.getIdPosition();
+                break;
+            }
+        }
+        Map arg = new HashMap();
+        arg.put("idVacancy", vacancyModels.get(lbVacancy.getSelectedIndex()).getId_vacancy());
+        arg.put("idPosition", idPosition);
+        arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
+        arg.put("rate", selectedVacancy.getWagerate());
+        arg.put("teacherModels", teacherModels);
+        arg.put("indexPageCtrl", this);
+        Window win = (Window) Executions.createComponents("window/winFillVacancyDialog.zul", null, arg);
+        win.doModal();
+    }
 
     public void fillLbAssignment() {
         // TODO Создать отдельный renderer, добавить семестр как текущий
         lbAssignments.getItems().clear();
-        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
-        for (int i = 0; i < assignmentModels.size(); i++) {
+        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel)cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
+        for (int i = 0; i < assignmentModels.size();i++) {
             AssignmentModel assignmentModel = assignmentModels.get(i);
             Listitem listitem = new Listitem();
             listitem.setValue(assignmentModel);
