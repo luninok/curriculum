@@ -31,6 +31,16 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
+    public Double getMaxload (TeacherModel selectTeacher) {
+        return entityManagerStudyLoad.getMaxload(selectTeacher);
+    }
+
+    @Override
+    public List<LoadTeacherModel> getLoad (TeacherModel selectTeacher){
+        return entityManagerStudyLoad.getLoad(selectTeacher);
+    }
+
+    @Override
     public List<PositionModel> getPositions() {
         return entityManagerStudyLoad.getPositions();
     }
@@ -61,8 +71,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
-        entityManagerStudyLoad.updateEmployment(id_employee, idByworker, idRole, wagerate, time_wagerate);
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate, Long id_department) {
+        entityManagerStudyLoad.updateEmployment(id_employee, idByworker, idRole, wagerate, time_wagerate, id_department);
     }
 
     @Override
