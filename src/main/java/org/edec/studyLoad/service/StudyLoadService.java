@@ -14,7 +14,7 @@ public interface StudyLoadService {
 
     List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department);
 
-    List<LoadTeacherModel> getLoad (TeacherModel selectTeacher);
+    Double getSumLoad (TeacherModel selectTeacher);
 
     Double getMaxload (TeacherModel selectTeacher);
 

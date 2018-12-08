@@ -38,7 +38,6 @@ public class IndexPageCtrl extends CabinetSelector {
     private List<EmploymentModel> employmentModels = new ArrayList<>();
     private List<AssignmentModel> assignmentModels = new ArrayList<>();
     private List<DepartmentModel> departmentModels = new ArrayList<>();
-    List<LoadTeacherModel> loadList = new ArrayList<>();
     private List<PositionModel> positionModels = new ArrayList<>();
     private DepartmentModel selectedDepartmentModel = new DepartmentModel();
     private TeacherModel selectedTeacher;
@@ -83,20 +82,21 @@ public class IndexPageCtrl extends CabinetSelector {
     private void fillLbEmployment(TeacherModel selectTeacher) {
         List<EmploymentModel> list = studyLoadService.getEmployment(selectTeacher, (String) cmbFaculty.getValue());
         Double maxLoad = studyLoadService.getMaxload(selectTeacher);
-        loadList = studyLoadService.getLoad(selectTeacher);
-        double sumLoad = 0;
-        for (LoadTeacherModel loadTeacher : loadList) {
-            sumLoad += loadTeacher.getTime_wagerate();
-        }
-        Double maxWagerate = maxLoad - sumLoad;
+        Double sumLoad = studyLoadService.getSumLoad(selectTeacher);
+        double deviation = maxLoad - sumLoad;
         employmentModels = new ArrayList<>();
         employmentModels.add(list.get(0));
         ListModelList<EmploymentModel> employmentListModelList = new ListModelList<>(employmentModels);
         lbEmployment.setModel(employmentListModelList);
         lbEmployment.renderAll();
         Listitem item = lbEmployment.getItems().get(0);
-        Listcell cellMaxLoad = (Listcell) item.getChildren().get(5);
-        ((Doublebox)cellMaxLoad.getChildren().get(0)).setValue(maxWagerate);
+        Listcell cellDeviation = (Listcell) item.getChildren().get(5);
+        if (deviation < 0) {
+            ((Doublebox)cellDeviation.getChildren().get(0)).setStyle("background: red; color:white");
+        }
+        ((Doublebox)cellDeviation.getChildren().get(0)).setValue(deviation);
+        Listcell cellMaxLoad = (Listcell) item.getChildren().get(6);
+        ((Doublebox)cellMaxLoad.getChildren().get(0)).setValue(maxLoad);
     }
 
     public void fillLbVacancy() {
@@ -121,18 +121,6 @@ public class IndexPageCtrl extends CabinetSelector {
         Double doubleWagerate = ((Doublebox) cellWagerate.getChildren().get(0)).getValue();
         Listcell cellWagerateTime = (Listcell) item.getChildren().get(4);
         Double doubleWagerateTime = ((Doublebox) cellWagerateTime.getChildren().get(0)).getValue();
-        double otherLoad = 0;
-        for (LoadTeacherModel loadTeacher : loadList) {
-            if (loadTeacher.getId_department() != selectedDepartmentModel.getIdDepartment() )
-            otherLoad += loadTeacher.getTime_wagerate();
-        }
-       double newSumLoad = 0;
-        newSumLoad = doubleWagerateTime + otherLoad;
-        Double maxLoad = studyLoadService.getMaxload(selectedTeacher);
-        if (newSumLoad > maxLoad){
-            PopupUtil.showError("Норма времени превышает максимальную нагрузку!");
-            return;
-        }
         studyLoadService.updateEmployment(selectedTeacher.getId_employee(), idByworker, idPosition, doubleWagerate, doubleWagerateTime, selectedDepartmentModel.getIdDepartment());
         PopupUtil.showInfo("Данные успешно обновлены!");
         fillLbEmployment(selectedTeacher);
@@ -170,27 +158,6 @@ public class IndexPageCtrl extends CabinetSelector {
         arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
         arg.put("indexPageCtrl", this);
         Window win = (Window) Executions.createComponents("window/winRateDialog.zul", null, arg);
-        win.doModal();
-    }
-
-    @Listen("onClick = #btnFillRate")
-    public void fillRate() {
-
-        Long idPosition = null;
-        for (PositionModel position : positionModels) {
-            if (position.getPositionName().equals(vacancyModels.get(lbVacancy.getSelectedIndex()).getRolename())) {
-                idPosition = position.getIdPosition();
-                break;
-            }
-        }
-
-        Map arg = new HashMap();
-        arg.put("teacherModels", teacherModels);
-        arg.put("idDepartment", selectedDepartmentModel.getIdDepartment());
-        arg.put("idPosition", idPosition);
-        arg.put("rate", vacancyModels.get(lbVacancy.getSelectedIndex()).getWagerate());
-        arg.put("indexPageCtrl", this);
-        Window win = (Window) Executions.createComponents("window/winFillVacancyDialog.zul", null, arg);
         win.doModal();
     }
 

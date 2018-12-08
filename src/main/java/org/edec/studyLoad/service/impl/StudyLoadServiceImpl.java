@@ -36,8 +36,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<LoadTeacherModel> getLoad (TeacherModel selectTeacher){
-        return entityManagerStudyLoad.getLoad(selectTeacher);
+    public Double getSumLoad (TeacherModel selectTeacher){
+        return entityManagerStudyLoad.getSumLoad(selectTeacher);
     }
 
     @Override
