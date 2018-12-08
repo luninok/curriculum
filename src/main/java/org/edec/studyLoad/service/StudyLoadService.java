@@ -14,6 +14,10 @@ public interface StudyLoadService {
 
     List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department);
 
+    List<LoadTeacherModel> getLoad (TeacherModel selectTeacher);
+
+    Double getMaxload (TeacherModel selectTeacher);
+
     List<PositionModel> getPositions();
 
     List<ByworkerModel> getByworker();
@@ -26,7 +30,7 @@ public interface StudyLoadService {
 
     void createVacancy(Long id_employee_role, String wagerate);
 
-    void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate);
+    void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate, Long id_department);
 
     void deleteVacancy(Long id_vacancy);
 

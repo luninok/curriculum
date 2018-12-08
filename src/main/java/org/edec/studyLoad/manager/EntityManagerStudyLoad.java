@@ -12,6 +12,8 @@ import org.hibernate.type.LongType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 public class EntityManagerStudyLoad extends DAO {
     public List<TeacherModel> getTeachers(String department) {
@@ -50,26 +52,36 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<TeacherModel>) getList(q);
     }
 
-    public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
-       /* String queryLoad = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate, ER.maximum_load\n" +
-                "from link_employee_department LED \n" +
-                "inner join employee_role ER using (id_employee_role) \n" +
-                "inner join employee E using (id_employee) \n" +
+    public Double getMaxload(TeacherModel selectTeacher) {
+        String query = "SELECT ER.maximum_load\n" +
+                "from link_employee_department LED\n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "inner join employee E using (id_employee)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "inner join department D using (id_department) \n" +
-                "inner join employee_byworker EB using (id_employee_byworker) \n" +
-                "where D.fulltitle = '" + department + "' and HF.family = '" + selectTeacher.getFamily() +
-                "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() +
-                "' and ER.group='" + 1 + "'";
-        Query qLoad = getSession().createSQLQuery(queryLoad)
-                .addScalar("family")
-                .addScalar("name")
-                .addScalar("patronymic")
-                .addScalar("id_employee", LongType.INSTANCE)
-                .setResultTransformer(Transformers.aliasToBean(TeacherModel.class));
-        List<Double> loadList = new ArrayList<>();
-        loadList = qLoad.list(); */
-        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate, ER.maximum_load\n" +
+                "where HF.family = '" + selectTeacher.getFamily() + "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "' and ER.group=1";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("maximum_load", DoubleType.INSTANCE);
+        return (Double) getList(q).get(0);
+    }
+
+    public List<LoadTeacherModel> getLoad(TeacherModel selectTeacher) {
+        String query = "SELECT LED.time_wagerate, id_department\n" +
+                "from link_employee_department LED\n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "inner join employee E using (id_employee)\n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "inner join department D using (id_department)\n" +
+                "inner join employee_byworker EB using (id_employee_byworker)\n" +
+                "where HF.family = '" + selectTeacher.getFamily() + "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "' and ER.group=1";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("time_wagerate", DoubleType.INSTANCE)
+                .addScalar("id_department", LongType.INSTANCE)
+                .setResultTransformer(Transformers.aliasToBean(LoadTeacherModel.class));
+        return (List<LoadTeacherModel>) getList(q);
+    }
+
+    public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
+        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate\n" +
                 "from link_employee_department LED \n" +
                 "inner join employee_role ER using (id_employee_role) \n" +
                 "inner join employee E using (id_employee) \n" +
@@ -83,10 +95,13 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("shorttitle")
                 .addScalar("byworker")
                 .addScalar("rolename")
-                .addScalar("wagerate", DoubleType.INSTANCE)
-                .addScalar("time_wagerate", DoubleType.INSTANCE)
-                .addScalar("maximum_load", DoubleType.INSTANCE)
+                .addScalar("wagerate")
+                .addScalar("time_wagerate")
                 .setResultTransformer(Transformers.aliasToBean(EmploymentModel.class));
+
+        // List<EmploymentModel> employmentModels = q.list();
+        //  employmentModels.get(0).setMaximum_load(maxWagerate);
+        //return employmentModels;
         return (List<EmploymentModel>) getList(q);
     }
 
@@ -183,10 +198,10 @@ public class EntityManagerStudyLoad extends DAO {
         executeUpdate(getSession().createSQLQuery(query));
     }
 
-    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate, Long id_department) {
         String queryVacancy = "update link_employee_department set id_employee_byworker = " + idByworker +
                 ", id_employee_role = " + idRole + ", wagerate = " + wagerate + ", time_wagerate = " +
-                time_wagerate + " where id_employee=" + id_employee + "";
+                time_wagerate + " where id_employee=" + id_employee + " and id_department=" + id_department + "";
         executeUpdate(getSession().createSQLQuery(queryVacancy));
     }
 
