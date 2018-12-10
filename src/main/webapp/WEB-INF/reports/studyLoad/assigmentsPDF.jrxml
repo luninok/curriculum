@@ -57,6 +57,9 @@
 		</field>
 		<field name="course" class="java.lang.String"/>
 		<field name="hours" class="java.lang.String"/>
+		<field name="assignment" class="java.lang.String">
+			<fieldDescription><![CDATA[assignment]]></fieldDescription>
+		</field>
 		<variable name="number" class="java.lang.Integer" calculation="Count">
 			<variableExpression><![CDATA[Boolean.TRUE]]></variableExpression>
 			<initialValueExpression><![CDATA[1]]></initialValueExpression>
@@ -84,7 +87,7 @@
 	<title>
 		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="140" y="-6" width="550" height="15" uuid="4a80c931-ae8f-4cc1-8104-11221e3e094c"/>
+				<reportElement x="140" y="-1" width="550" height="15" uuid="4a80c931-ae8f-4cc1-8104-11221e3e094c"/>
 				<box>
 					<pen lineColor="#FFFFFF"/>
 				</box>
@@ -94,19 +97,19 @@
 				<text><![CDATA[ПОРУЧЕНИЯ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="140" y="9" width="550" height="15" uuid="632e785f-67bc-4ac9-a4f2-d4a0dff0251a"/>
+				<reportElement x="140" y="15" width="550" height="15" uuid="632e785f-67bc-4ac9-a4f2-d4a0dff0251a"/>
 				<box>
 					<pen lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["Кафедра " + $F{nameDepartment} + " от " + $F{dateNow} + " г."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nameDepartment} + " от " + $F{dateNow} + " г."]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
 		<band height="75">
 			<componentElement>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="10" width="630" height="39" uuid="a58d4d0f-2200-4c65-82c3-3f1d21eedd2f">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="2" width="809" height="39" uuid="a58d4d0f-2200-4c65-82c3-3f1d21eedd2f">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
@@ -138,11 +141,11 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="180" uuid="5d014931-e066-4703-85e4-424d8105e7b6">
+					<jr:column width="130" uuid="5d014931-e066-4703-85e4-424d8105e7b6">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 						<jr:columnHeader style="Table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="180" height="20" uuid="6ae96c33-dd31-406f-b2e6-ef30754cad54"/>
+								<reportElement x="0" y="0" width="130" height="20" uuid="6ae96c33-dd31-406f-b2e6-ef30754cad54"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
@@ -152,7 +155,7 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="20">
 							<textField isStretchWithOverflow="true">
-								<reportElement x="0" y="0" width="180" height="20" uuid="b8545362-d827-4320-a3bf-287c705d10f4"/>
+								<reportElement x="0" y="0" width="130" height="20" uuid="b8545362-d827-4320-a3bf-287c705d10f4"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement>
 									<paragraph lineSpacing="Single"/>
@@ -161,11 +164,11 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="150" uuid="4af2e4a7-519b-491a-869a-5edfaf6b4ef9">
+					<jr:column width="130" uuid="4af2e4a7-519b-491a-869a-5edfaf6b4ef9">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:columnHeader style="Table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="150" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
+								<reportElement x="0" y="0" width="130" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
@@ -175,18 +178,18 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="20">
 							<textField isStretchWithOverflow="true">
-								<reportElement x="0" y="0" width="150" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
+								<reportElement x="0" y="0" width="130" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$F{nameDiscipline}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="81" uuid="1e188c79-fbd9-4a0f-9893-31080f7e18cb">
+					<jr:column width="79" uuid="1e188c79-fbd9-4a0f-9893-31080f7e18cb">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
 						<jr:columnHeader style="Table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="81" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
+								<reportElement x="0" y="0" width="79" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
 								<box topPadding="3"/>
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
@@ -196,7 +199,7 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="20">
 							<textField isStretchWithOverflow="true">
-								<reportElement x="0" y="0" width="81" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
+								<reportElement x="0" y="0" width="79" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$F{groupname}]]></textFieldExpression>
@@ -224,11 +227,11 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50" uuid="7c28c582-cbe6-402b-9f49-5ba818b15ab6">
+					<jr:column width="42" uuid="7c28c582-cbe6-402b-9f49-5ba818b15ab6">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
 						<jr:columnHeader style="Table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
+								<reportElement x="0" y="0" width="42" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
 								<box topPadding="3"/>
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
@@ -238,18 +241,18 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="20">
 							<textField isStretchWithOverflow="true">
-								<reportElement x="0" y="0" width="50" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
+								<reportElement x="0" y="0" width="42" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$F{course}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="60" uuid="b1066e49-f58c-4335-a390-13f7c03a7fa5">
+					<jr:column width="50" uuid="b1066e49-f58c-4335-a390-13f7c03a7fa5">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
 						<jr:columnHeader style="Table_TH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="60" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
 								<box topPadding="3"/>
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
@@ -259,10 +262,31 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="20">
 							<textField isStretchWithOverflow="true">
-								<reportElement x="0" y="0" width="60" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
+								<reportElement x="0" y="0" width="50" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
 								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
 								<textElement textAlignment="Center"/>
 								<textFieldExpression><![CDATA[$F{hours}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="259" uuid="ccbeaee6-ba38-48e1-9a93-bbed5e895505">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="259" height="20" uuid="0fcd4956-b142-41aa-8734-3efc353bdf35"/>
+								<box topPadding="3"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[ Пожелания ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="20">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="259" height="20" uuid="94709e7c-c4e0-49a9-8861-a2e40df30154"/>
+								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{assignment}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

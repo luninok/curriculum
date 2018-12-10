@@ -20,9 +20,8 @@ public class ReportModelService {
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
 
-    public JRBeanCollectionDataSource getBeanDataForAssignments (Long idSem, Long idDepartment, String nameDepartment) {
+    public JRBeanCollectionDataSource getBeanDataForAssignments (List<AssignmentModel> assignments, String nameDepartment) {
 
-        List<AssignmentModel> assignments = studyLoadService.getInstructions(idSem,idDepartment);
         List<AssignmentModelReport> assignmentModelReports = new ArrayList<>();
 
         for(AssignmentModel assignment : assignments) {
@@ -33,6 +32,7 @@ public class ReportModelService {
             assignmentModelReport.setControl(assignment.getTypeControl());
             assignmentModelReport.setCourse(assignment.getCourse().toString());
             assignmentModelReport.setHours(assignment.getHoursCount().toString());
+            assignmentModelReport.setAssignment(assignment.getAssignment() == null ? "" : assignment.getAssignment());
             assignmentModelReports.add(assignmentModelReport);
         }
 

@@ -7,14 +7,17 @@ import org.edec.studyLoad.ctrl.renderer.AssignmentRenderer;
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
+import org.edec.studyLoad.manager.EntityManagerStudyLoad;
 import org.edec.studyLoad.model.*;
 import org.edec.studyLoad.report.ReportService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.studyLoad.service.StudyLoadService;
+import org.edec.utility.converter.DateConverter;
 import org.edec.utility.report.model.jasperReport.JasperReport;
 import org.edec.utility.zk.CabinetSelector;
 import org.edec.utility.zk.ComponentHelper;
 import org.edec.utility.zk.PopupUtil;
+import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -60,10 +63,9 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     protected void fill() {
+        EntityManagerStudyLoad ent = new EntityManagerStudyLoad();
         positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
-        fillLbAssignment();
-        updateLbTeachers();
     }
 
     private void fillCmbFaculty() {
@@ -73,9 +75,6 @@ public class IndexPageCtrl extends CabinetSelector {
             comboitem.setLabel(department.getFulltitle());
             comboitem.setValue(department);
             cmbFaculty.getItems().add(comboitem);
-        }
-        if (cmbFaculty.getItems().size() != 0) {
-            cmbFaculty.setSelectedIndex(0);
         }
     }
 
@@ -224,14 +223,36 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     @Listen("onClick = #btnShowPdfAssignmentsTabs")
-    public void showAssignments() {
-        JasperReport jasperReport = new ReportService().getJasperForAssignments("/studyLoad/assigmentsPDF.jasper",56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment(), ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getFulltitle());
+    public void showAssignmentsPDF() {
+        JasperReport jasperReport = new ReportService().getJasperForAssignments("/studyLoad/assigmentsPDF.jasper",assignmentModels,((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getFulltitle());
         jasperReport.showPdf();
+    }
+
+    @Listen("onClick = #btnDownloadExcelAssignmentsTabs")
+    public void showAssignmentsExcel() {
+        AMedia aMedia = new AMedia("Поручения  (" + DateConverter.convertDateToString(new Date()) + ").xls",
+                "xls", "application/xls", new ReportService().getXlsxForAssignments(assignmentModels));
+        Filedownload.save(aMedia);
+    }
+
+    @Listen("onClick = #btnSaveAssignmentsTabs")
+    public void saveAssignments() {
+         List<Listitem> listitems = lbAssignments.getItems();
+         for(int i = 0; i < listitems.size(); i++){
+            Listitem listitem = listitems.get(i);
+             AssignmentModel valueListItem = listitem.getValue();
+             String assignment = ((Textbox)listitem.getChildren().get(9).getFirstChild()).getValue();
+             if (!assignment.equals("") && !assignment.equals(valueListItem.getAssignment())) {
+                 if(studyLoadService.upsertRequests(valueListItem.getId_link_group_semester().longValue(),valueListItem.getId_link_employee_subject_group().longValue(), assignment)){
+                     assignmentModels.get(i).setAssignment(assignment);
+                 }
+             }
+         }
     }
 
     public void fillLbAssignment() {
         lbAssignments.getItems().clear();
-        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
+        assignmentModels = studyLoadService.getAssignments(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
         ListModelList<AssignmentModel> assignmentModelListModelList = new ListModelList<>(assignmentModels);
         lbAssignments.setModel(assignmentModelListModelList);
         lbAssignments.renderAll();

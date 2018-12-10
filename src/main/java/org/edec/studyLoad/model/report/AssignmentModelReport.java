@@ -15,4 +15,5 @@ public class AssignmentModelReport {
     private String control;
     private String course;
     private String hours;
+    private String assignment;
 }

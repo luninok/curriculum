@@ -14,7 +14,9 @@ public class AssignmentModel {
     public String typeInstructionString;
     public String groupName;
     public String typeControl;
+    public String assignment;
 
+    public Integer numberStudents;
     public Integer course;
     public Integer is_exam;
     public Integer is_pass;
@@ -24,11 +26,13 @@ public class AssignmentModel {
     public Integer typeInstructionInt;
     public Integer hoursCount;
     public Integer hourSaudCount;
+    public Integer id_link_group_semester;
+    public Integer id_link_employee_subject_group;
 
     public String getTypeInstructionString() {
-        if (typeInstructionInt.equals(0))
+        if (typeInstructionInt == 0)
             typeInstructionString = "Лекция";
-        else if (typeInstructionInt.equals(1))
+        else if (typeInstructionInt == 1)
             typeInstructionString = "Практика";
         else if (typeInstructionInt.equals(3))
             typeInstructionString = "Лабораторная";

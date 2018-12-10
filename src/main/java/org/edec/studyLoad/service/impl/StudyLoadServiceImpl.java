@@ -40,7 +40,7 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment){
+    public List<AssignmentModel> getAssignments(Long idSem, Long idDepartment){
         return entityManagerStudyLoad.getInstructions(idSem, idDepartment);
     }
 
@@ -82,5 +82,10 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     @Override
     public boolean removeRate(Long idEmployee, Long idDepartment){
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
+    }
+
+    @Override
+    public boolean upsertRequests(Long idlgs, Long idlesg, String requeststring){
+        return entityManagerStudyLoad.upsertRequests(idlgs,idlesg,requeststring);
     }
 }
