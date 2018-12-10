@@ -295,7 +295,7 @@ public class EntityManagerRegister extends DAO {
     }
 
     public boolean setRegisterNumber(Long idRegister, String tutor, String listSRH, Long idSemester, String suffix) {
-        return callFunction("select register_create_or_update(" +
+        return callFunction("select public.register_create_or_update(" +
                 idRegister + ", " +
                 "'" + tutor + "', " +
                 "'" + listSRH + "', " +

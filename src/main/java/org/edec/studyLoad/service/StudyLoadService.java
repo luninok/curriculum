@@ -6,9 +6,10 @@ import org.edec.studyLoad.model.*;
 import java.util.List;
 
 public interface StudyLoadService {
-    List<TeacherModel> getTeachers (String department);
 
-    List<TeacherModel> searchTeachers (String family, String name, String patronymic);
+    List<TeacherModel> getTeachers(String department);
+
+    List<TeacherModel> searchTeachers(String family, String name, String patronymic);
 
     List<DepartmentModel> getDepartments();
 
@@ -22,7 +23,7 @@ public interface StudyLoadService {
 
     List<ByworkerModel> getByworker();
 
-    List<AssignmentModel> getInstructions(Long idSem, Long idDepartment);
+    List<AssignmentModel> getAssignments(Long idSem, Long idDepartment);
 
     List<VacancyModel> getVacancy();
 
@@ -39,4 +40,6 @@ public interface StudyLoadService {
     boolean addRateBasedOnVacancy(Long idEmployee, Long idDepartment, Long idPosition, Double rate);
 
     boolean removeRate(Long idEmployee, Long idDepartment);
+
+    boolean upsertRequests(Long idlgs, Long idlesg, String requeststring);
 }
