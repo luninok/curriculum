@@ -70,10 +70,13 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
         if (vacancyModel != null) {
             studyLoadService.updateVacancy(vacancyModel.getId_vacancy(), idEmployeeRole, wagerate);
             updateLbVacancy.run();
+            PopupUtil.showInfo("Вакансия успешно обновлена!");
         } else {
             studyLoadService.createVacancy(idEmployeeRole, wagerate);
             updateLbVacancy.run();
+            PopupUtil.showInfo("Вакансия успешно добавлена!");
         }
+        PopupUtil.showInfo("Вакансия была успешно добавлена.");
     }
 
 }

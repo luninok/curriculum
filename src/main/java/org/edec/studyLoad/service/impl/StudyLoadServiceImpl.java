@@ -11,23 +11,34 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     private EntityManagerStudyLoad entityManagerStudyLoad = new EntityManagerStudyLoad();
 
     @Override
-    public List<TeacherModel> getTeachers (String department) {
+    public List<TeacherModel> getTeachers(String department) {
         return entityManagerStudyLoad.getTeachers(department);
     }
 
     @Override
-    public List<TeacherModel> searchTeachers (String family, String name, String patronymic) {
+    public List<TeacherModel> searchTeachers(String family, String name, String patronymic) {
         return entityManagerStudyLoad.searchTeachers(family, name, patronymic);
     }
 
     @Override
-    public  List<DepartmentModel> getDepartments() {
+    public List<DepartmentModel> getDepartments() {
         return entityManagerStudyLoad.getDepartments();
     }
 
     @Override
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
-        return entityManagerStudyLoad.getEmployment(selectTeacher, department); }
+        return entityManagerStudyLoad.getEmployment(selectTeacher, department);
+    }
+
+    @Override
+    public Double getMaxload (TeacherModel selectTeacher) {
+        return entityManagerStudyLoad.getMaxload(selectTeacher);
+    }
+
+    @Override
+    public Double getSumLoad (TeacherModel selectTeacher){
+        return entityManagerStudyLoad.getSumLoad(selectTeacher);
+    }
 
     @Override
     public List<PositionModel> getPositions() {
@@ -60,8 +71,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
-        entityManagerStudyLoad.updateEmployment(id_employee, idByworker, idRole, wagerate, time_wagerate);
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate, Long id_department) {
+        entityManagerStudyLoad.updateEmployment(id_employee, idByworker, idRole, wagerate, time_wagerate, id_department);
     }
 
     @Override
@@ -80,7 +91,7 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public boolean removeRate(Long idEmployee, Long idDepartment){
+    public boolean removeRate(Long idEmployee, Long idDepartment) {
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
     }
 
@@ -88,4 +99,6 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public boolean upsertRequests(Long idlgs, Long idlesg, String requeststring){
         return entityManagerStudyLoad.upsertRequests(idlgs,idlesg,requeststring);
     }
+
+
 }

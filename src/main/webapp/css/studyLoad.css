@@ -1,0 +1,11 @@
+.z-listheader {
+    background: linear-gradient(to bottom, #fefefe 0%, #eeeeee 100%)!important;
+}
+
+.z-listbox {
+    border: 1px solid #cfcfcf!important;
+}
+
+.z-listhead-bar {
+    background: linear-gradient(to bottom, #fefefe 0%, #eeeeee 100%)!important;
+}

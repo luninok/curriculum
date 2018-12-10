@@ -12,6 +12,7 @@ import java.util.List;
 
 public class EmploymentRenderer implements ListitemRenderer<EmploymentModel> {
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
+
     public void render(Listitem listitem, EmploymentModel employmentModel, int i) throws Exception {
         new Listcell(employmentModel.getShorttitle()).setParent(listitem);
         ////
@@ -47,6 +48,12 @@ public class EmploymentRenderer implements ListitemRenderer<EmploymentModel> {
         Listcell timeWagerateCell = new Listcell();
         timeWagerateCell.appendChild(new Doublebox(employmentModel.getTime_wagerate()));
         timeWagerateCell.setParent(listitem);
+        Listcell deviationCell = new Listcell();
+        deviationCell.appendChild(new Doublebox(employmentModel.getDeviation()));
+        deviationCell.setParent(listitem);
+        Listcell maximumLoadCell = new Listcell();
+        maximumLoadCell.appendChild(new Doublebox(employmentModel.getMaximum_load()));
+        maximumLoadCell.setParent(listitem);
         listitem.setValue(employmentModel);
     }
 }

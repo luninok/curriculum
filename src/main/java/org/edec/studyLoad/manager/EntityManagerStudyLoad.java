@@ -10,7 +10,10 @@ import org.hibernate.type.DoubleType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 public class EntityManagerStudyLoad extends DAO {
     public List<TeacherModel> getTeachers(String department) {
@@ -19,7 +22,8 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee) \n" +
                 "inner join department D using (id_department) \n" +
                 "inner join humanface HF using (id_humanface) \n" +
-                "where D.fulltitle = '" + department + "'\n" +
+                "inner join employee_role ER using (id_employee_role)" +
+                "where D.fulltitle = '" + department + "'\n" + "and ER.group='" + 1 + "'" +
                 "group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -36,7 +40,9 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join department D using (id_department)\n" +
                 "inner join humanface HF using (id_humanface)\n" +
-                "where HF.Name Like '%" + name + "%' AND HF.family Like '%" + family + "%' AND HF.patronymic Like '%" + patronymic + "%' \n" +
+                "where lower(HF.Name) Like lower('%" + name + "%')" +
+                " AND lower(HF.family) Like lower('%" + family + "%')" +
+                " AND lower(HF.patronymic) Like lower('%" + patronymic + "%') \n" +
                 "                group by HF.family, HF.name, HF.patronymic, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
@@ -45,6 +51,31 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("id_employee", LongType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(TeacherModel.class));
         return (List<TeacherModel>) getList(q);
+    }
+
+    public Double getMaxload(TeacherModel selectTeacher) {
+        String query = "SELECT ER.maximum_load\n" +
+                "from link_employee_department LED\n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "inner join employee E using (id_employee)\n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "where HF.family = '" + selectTeacher.getFamily() + "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "' and ER.group=1";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("maximum_load", DoubleType.INSTANCE);
+        return (Double) getList(q).get(0);
+    }
+
+    public Double getSumLoad(TeacherModel selectTeacher) {
+        String query = "SELECT SUM(LED.time_wagerate)\n" +
+                "from link_employee_department LED\n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "inner join employee E using (id_employee)\n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "inner join department D using (id_department)\n" +
+                "inner join employee_byworker EB using (id_employee_byworker)\n" +
+                "where HF.family = '"+selectTeacher.getFamily()+"' and HF.name ='"+selectTeacher.getName()+"' and HF.patronymic='"+selectTeacher.getPatronymic()+"' and ER.group=1";
+        Query q = getSession().createSQLQuery(query);
+        return (Double) getList(q).get(0);
     }
 
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
@@ -56,14 +87,19 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join department D using (id_department) \n" +
                 "inner join employee_byworker EB using (id_employee_byworker) \n" +
                 "where D.fulltitle = '" + department + "' and HF.family = '" + selectTeacher.getFamily() +
-                "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() + "'";
+                "' and HF.name ='" + selectTeacher.getName() + "' and HF.patronymic='" + selectTeacher.getPatronymic() +
+                "' and ER.group='" + 1 + "'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("shorttitle")
                 .addScalar("byworker")
                 .addScalar("rolename")
-                .addScalar("wagerate", DoubleType.INSTANCE)
-                .addScalar("time_wagerate", DoubleType.INSTANCE)
+                .addScalar("wagerate")
+                .addScalar("time_wagerate")
                 .setResultTransformer(Transformers.aliasToBean(EmploymentModel.class));
+
+        // List<EmploymentModel> employmentModels = q.list();
+        //  employmentModels.get(0).setMaximum_load(maxWagerate);
+        //return employmentModels;
         return (List<EmploymentModel>) getList(q);
     }
 
@@ -72,7 +108,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "D.shorttitle AS shorttitle, D.id_chair AS idChair,\n" +
                 "D.id_institute FROM public.department D \n" +
                 "inner join institute I using (id_institute)\n" +
-                "where I.shorttitle = 'ИКИТ'";
+                "where I.shorttitle = 'ИКИТ' and D.fulltitle Like '%Кафедра%'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("idDepartment", LongType.INSTANCE)
                 .addScalar("fulltitle")
@@ -83,7 +119,7 @@ public class EntityManagerStudyLoad extends DAO {
     }
 
     public List<PositionModel> getPositions() {
-        String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER";
+        String query = "SELECT ER.id_employee_role AS idPosition, ER.rolename AS positionName FROM public.employee_role ER where ER.group='" + 1 + "'";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("idPosition", LongType.INSTANCE)
                 .addScalar("positionName")
@@ -181,8 +217,10 @@ public class EntityManagerStudyLoad extends DAO {
         executeUpdate(getSession().createSQLQuery(query));
     }
 
-    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate) {
-        String queryVacancy = "update link_employee_department set id_employee_byworker = " + idByworker + ", id_employee_role = " + idRole + ", wagerate = " + wagerate + ", time_wagerate = " + time_wagerate + " where id_employee=" + id_employee + "";
+    public void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate, Long id_department) {
+        String queryVacancy = "update link_employee_department set id_employee_byworker = " + idByworker +
+                ", id_employee_role = " + idRole + ", wagerate = " + wagerate + ", time_wagerate = " +
+                time_wagerate + " where id_employee=" + id_employee + " and id_department=" + id_department + "";
         executeUpdate(getSession().createSQLQuery(queryVacancy));
     }
 
