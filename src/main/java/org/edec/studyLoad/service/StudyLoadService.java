@@ -35,4 +35,6 @@ public interface StudyLoadService {
     boolean addRateBasedOnVacancy(Long idEmployee, Long idDepartment, Long idPosition, Double rate);
 
     boolean removeRate(Long idEmployee, Long idDepartment);
+
+    List<StudyLoadModel> getStudyLoad();
 }

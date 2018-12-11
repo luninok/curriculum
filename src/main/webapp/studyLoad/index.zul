@@ -1039,8 +1039,8 @@
                             </hbox>
                         </groupbox>
                     </hbox>
-                    <!-- Таблца "Учебная нагрузка" -->
-                    <listbox vflex="2" hflex="1">
+                    <!-- Таблица "Учебная нагрузка" -->
+                    <listbox vflex="2" hflex="1" id="lbStudyLoad">
                         <auxhead>
                             <auxheader align="center" rowspan="2">
                                 <label id="labelNumber" value="Номер"/>
@@ -1066,12 +1066,12 @@
                             <auxheader align="center" rowspan="2">
                                 <label id="labelGroup" value="Группа"/>
                             </auxheader>
-                            <auxheader align="center" rowspan="2">
+                            <!--auxheader align="center" rowspan="2">
                                 <label id="labelCountStudents" value="Кол-во студентов"/>
-                            </auxheader>
-                            <auxheader align="center" rowspan="2">
+                            </auxheader-->
+                            <!--auxheader align="center" rowspan="2">
                                 <label id="labelWeek" value="Недель"/>
-                            </auxheader>
+                            </auxheader-->
                             <auxheader align="center" rowspan="2">
                                 <label id="labelTypeClasses" value="Вид занятий"/>
                             </auxheader>
@@ -1081,7 +1081,7 @@
                             <auxheader align="center" rowspan="2">
                                 <label id="labelTypeControl" value="Виды контроля"/>
                             </auxheader>
-                            <auxheader align="center" rowspan="2">
+                            <!--auxheader align="center" rowspan="2">
                                 <label id="labelKSR" value="КСР"/>
                             </auxheader>
                             <auxheader align="center" rowspan="2">
@@ -1107,12 +1107,12 @@
                             </auxheader>
                             <auxheader align="center" rowspan="2">
                                 <label id="labelConsultations(SPO)" value="Консультации (СПО)"/>
-                            </auxheader>
+                            </auxheader-->
                             <auxheader label="Нагрузка, час" align="center" colspan="4"/>
                             <auxheader align="center" rowspan="2">
                                 <label id="labelTeacher" value="Преподаватель"/>
                             </auxheader>
-                            <auxheader align="center" rowspan="2">
+                            <!--auxheader align="center" rowspan="2">
                                 <label id="labelThreadNumber" value="Номер потока"/>
                             </auxheader>
                             <auxheader align="center" rowspan="2">
@@ -1150,7 +1150,7 @@
                             </auxheader>
                             <auxheader align="center" rowspan="2">
                                 <label id="labelNormalizingFactor" value="Нормирующий коэф."/>
-                            </auxheader>
+                            </auxheader-->
                         </auxhead>
                         <auxhead>
                             <auxheader align="center">
@@ -1162,7 +1162,7 @@
                             <auxheader align="center">
                                 <label id="labelSubtotal" value="Итого"/>
                             </auxheader>
-                            <auxheader align="center">
+                            <!--auxheader align="center">
                                 <label id="labelStudentHours" value="Студента"/>
                             </auxheader>
                             <auxheader align="center">
@@ -1182,7 +1182,7 @@
                             </auxheader>
                             <auxheader align="center">
                                 <label id="labelForeigners" value="Иностр."/>
-                            </auxheader>
+                            </auxheader-->
                         </auxhead>
                         <listhead visible="false">
                             <listheader align="center" width="8vh"/>
@@ -1206,7 +1206,7 @@
                             <listheader align="center" width="7vh"/>
                             <listheader align="center" width="6vh"/>
                             <listheader align="center" width="29vh"/>
-                            <listheader align="center" width="21vh"/>
+                            <!--listheader align="center" width="21vh"/>
                             <listheader align="center" width="14vh"/>
                             <listheader align="center" width="11vh"/>
                             <listheader align="center" width="11vh"/>
@@ -1220,17 +1220,17 @@
                             <listheader align="center" width="23vh"/>
                             <listheader align="center" width="19vh"/>
                             <listheader align="center" width="20vh"/>
-                            <listheader align="center" width="15vh"/>
+                            <listheader align="center" width="15vh"/-->
                             <listheader align="center" width="15vh"/>
                             <listheader align="center" width="15vh"/>
                             <listheader align="center" width="19vh"/>
-                            <listheader align="center" width="15vh"/>
+                            <!--listheader align="center" width="15vh"/>
                             <listheader align="center" width="25vh"/>
                             <listheader align="center" width="25vh"/>
                             <listheader align="center" width="23vh"/>
                             <listheader align="center" width="15vh"/>
                             <listheader align="center" width="23vh"/>
-                            <listheader align="center" width="22vh"/>
+                            <listheader align="center" width="22vh"/-->
                         </listhead>
                     </listbox>
                     <!-- / Таблца "Учебная нагрузка" -->

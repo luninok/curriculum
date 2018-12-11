@@ -4,6 +4,7 @@ package org.edec.studyLoad.ctrl;
 import javafx.scene.control.ListCell;
 import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
+import org.edec.studyLoad.ctrl.renderer.StudyLoadRenderer;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
@@ -24,7 +25,7 @@ import java.util.*;
 
 public class IndexPageCtrl extends CabinetSelector {
     @Wire
-    private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment;
+    private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment, lbStudyLoad;
     @Wire
     private Combobox cmbFaculty;
     @Wire
@@ -47,6 +48,7 @@ public class IndexPageCtrl extends CabinetSelector {
     private List<AssignmentModel> assignmentModels = new ArrayList<>();
     private List<DepartmentModel> departmentModels = new ArrayList<>();
     private List<PositionModel> positionModels = new ArrayList<>();
+    private List<StudyLoadModel> studyLoadModels = new ArrayList<>();
     private DepartmentModel selectedDepartmentModel = new DepartmentModel();
     private TeacherModel selectedTeacher;
 
@@ -56,6 +58,7 @@ public class IndexPageCtrl extends CabinetSelector {
         lbVacancy.setItemRenderer(new VacancyRenderer());
         lbTeachers.setItemRenderer(new TeachersRenderer());
         lbEmployment.setItemRenderer(new EmploymentRenderer());
+        lbStudyLoad.setItemRenderer(new StudyLoadRenderer());
         fillLbVacancy();
     }
 
@@ -64,6 +67,11 @@ public class IndexPageCtrl extends CabinetSelector {
         fillCmbFaculty();
         fillLbAssignment();
         updateLbTeachers();
+
+        studyLoadModels = studyLoadService.getStudyLoad();
+        ListModelList<StudyLoadModel> studyLoadListModelList = new ListModelList<>(studyLoadModels);
+        lbStudyLoad.setModel(studyLoadListModelList);
+        lbStudyLoad.renderAll();
     }
 
     private void fillCmbFaculty() {
@@ -203,6 +211,7 @@ public class IndexPageCtrl extends CabinetSelector {
         }
         else
             PopupUtil.showError("Ошибка удаления преподавателя");
+
     }
 
     @Listen("onClick = #btnFillRate")

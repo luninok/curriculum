@@ -84,5 +84,9 @@ public class StudyLoadServiceImpl implements StudyLoadService {
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
     }
 
+    @Override
+    public List<StudyLoadModel> getStudyLoad() {
+        return entityManagerStudyLoad.getStudyLoad();
+    }
 
 }

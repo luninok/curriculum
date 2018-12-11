@@ -6,6 +6,7 @@ import org.edec.studyLoad.model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.BooleanType;
 import org.hibernate.type.DoubleType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
@@ -224,5 +225,47 @@ public class EntityManagerStudyLoad extends DAO {
         } finally {
             close();
         }
+    }
+
+    public List<StudyLoadModel> getStudyLoad() {
+        String query = "select CU.planfilename as planFileName, I.shorttitle as instituteShortTitle, S.subjectcode as subjectCode," +
+                " DS.subjectname as subjectName, D.shorttitle as departmentShortTitle,\n" +
+                "LGS.course as course, LGS.semesternumber as semester, DG.groupname as groupName, S.is_exam as isExam," +
+                " S.is_pass as isPass, LESG.tutoringtype as tutoringType,\n" +
+                "S.hourscount as hoursCount, HF.family as family, HF.name as name, HF.patronymic as patronymic, ER.rolename as roleName\n" +
+                "from subject S\n" +
+                "inner join department D using (id_chair)\n" +
+                "left join curriculum CU using (id_curriculum)\n" +
+                "inner join schoolyear SY ON CU.created_school_year = SY.id_schoolyear\n" +
+                "inner join dic_subject DS using (id_dic_subject)\n" +
+                "inner join institute I using (id_institute)\n" +
+                "inner join link_group_semester_subject LGSS using (id_subject)\n" +
+                "inner join link_group_semester LGS using (id_link_group_semester)\n" +
+                "inner join dic_group DG using (id_dic_group)\n" +
+                "inner join link_employee_subject_group LESG using (id_link_group_semester_subject)\n" +
+                "inner join employee E using (id_employee)\n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "inner join link_employee_department LED using (id_employee)\n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "where SY.current_year = true";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("planFileName")
+                .addScalar("instituteShortTitle")
+                .addScalar("subjectCode")
+                .addScalar("subjectName")
+                .addScalar("departmentShortTitle")
+                .addScalar("course", IntegerType.INSTANCE)
+                .addScalar("semester", IntegerType.INSTANCE)
+                .addScalar("groupName")
+                .addScalar("isExam", BooleanType.INSTANCE)
+                .addScalar("isPass", BooleanType.INSTANCE)
+                .addScalar("tutoringType", IntegerType.INSTANCE)
+                .addScalar("hoursCount", IntegerType.INSTANCE)
+                .addScalar("family")
+                .addScalar("name")
+                .addScalar("patronymic")
+                .addScalar("roleName")
+                .setResultTransformer(Transformers.aliasToBean(StudyLoadModel.class));
+        return (List<StudyLoadModel>) getList(q);
     }
 }
