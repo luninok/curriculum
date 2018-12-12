@@ -16,6 +16,7 @@ public class TeacherModel {
     private String name;
     private String family;
     private String patronymic;
+    private Integer sex;
     private Long id_employee;
 
     public TeacherModel(String name, String family, String patronymic, Long id_employee) {
@@ -28,6 +29,6 @@ public class TeacherModel {
 
     @Override
     public String toString() {
-        return family + " " + name + " " + patronymic;
+        return family + " " + name.charAt(0) + " " + patronymic.charAt(0);
     }
 }

@@ -41,6 +41,11 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
+    public List<SumLessonModel> getSumLesson(TeacherModel teacherModel, Long idDepartment) {
+        return  entityManagerStudyLoad.getSumLesson(teacherModel, idDepartment);
+    }
+
+    @Override
     public List<PositionModel> getPositions() {
         return entityManagerStudyLoad.getPositions();
     }
@@ -93,6 +98,11 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     @Override
     public boolean removeRate(Long idEmployee, Long idDepartment) {
         return entityManagerStudyLoad.removeRate(idEmployee, idDepartment);
+    }
+
+    @Override
+    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {
+        entityManagerStudyLoad.insertTeacherToTheDiscipline(selectCardTeacher);
     }
 
 

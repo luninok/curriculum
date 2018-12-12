@@ -16,6 +16,8 @@ public interface StudyLoadService {
 
     Double getSumLoad (TeacherModel selectTeacher);
 
+    List<SumLessonModel> getSumLesson(TeacherModel teacherModel, Long idDepartment);
+
     Double getMaxload (TeacherModel selectTeacher);
 
     List<PositionModel> getPositions();
@@ -39,4 +41,6 @@ public interface StudyLoadService {
     boolean addRateBasedOnVacancy(Long idEmployee, Long idDepartment, Long idPosition, Double rate);
 
     boolean removeRate(Long idEmployee, Long idDepartment);
+
+    void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher);
 }

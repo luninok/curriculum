@@ -60,7 +60,7 @@
                     </hbox>
                     <!-- Таблица занятости на кафедре -->
                     <hbox>
-                        <button id="btnPrintAnIndividualPlan" label="Печать плана"/>
+                       <!-- <button id="btnPrintAnIndividualPlan" label="Печать плана"/>-->
                         <button id="btnSaveEmployment" label="Сохранить"/>
                     </hbox>
                     <hbox>
@@ -87,6 +87,7 @@
             <tabpanel id="tabPanelStudyLoad" height="100%" width="100%">
                 <!-- Учебная нагрузка -->
                 <vlayout vflex="1" style="overflow-y:auto;">
+                    <!--
                     <hbox>
                         <button id="btnPrintStudyLoadTabs" label="Печать"/>
                         <button id="btnExportStudyLoadTabs" label="Экспорт"/>
@@ -117,6 +118,7 @@
                             </hbox>
                         </groupbox>
                     </hbox>
+                    -->
                     <!-- Таблца "Учебная нагрузка" -->
                     <listbox vflex="2" hflex="1">
                         <auxhead>
@@ -313,13 +315,13 @@
                     </listbox>
                     <!-- / Таблца "Учебная нагрузка" -->
                     <hbox>
-                        <button id="bTeacher" label="Закрепить"/>
+                        <button id="btnFixTeacher" label="Закрепить"/>
                         <button id="btnDetacher" label="Открепить"/>
                     </hbox>
                     <!-- Таблца "Карточки преподавелей" -->
-                    <div style="overflow:auto" id="teacherCards">
-                        <hbox width="100%">
-                            <div width="140px" height="140px">
+                    <div style="overflow:auto">
+                        <hbox id="hbTeacherCards" width="100%">
+                            <!--<vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
                                     <image src="/imgs/man.png" width="75px"></image>
@@ -336,8 +338,8 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
                                     <image src="/imgs/man.png" width="75px"></image>
@@ -354,8 +356,8 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
                                     <image src="/imgs/man.png" width="75px"></image>
@@ -372,11 +374,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -390,11 +392,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -408,11 +410,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -426,11 +428,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -444,11 +446,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -462,11 +464,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -480,11 +482,11 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
+                            </vbox>
+                            <vbox width="140px" height="140px">
                                 <label>ФИО</label>
                                 <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
+                                    <image src="/imgs/man.png" width="75px"></image>
                                     <vbox>
                                         <label>Лек.:0</label>
                                         <label>Прак.:0</label>
@@ -498,115 +500,7 @@
                                         <label>Откл.:0</label>
                                     </hbox>
                                 </vbox>
-                            </div>
-                            <div width="140px" height="140px">
-                                <label>ФИО</label>
-                                <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
-                                    <vbox>
-                                        <label>Лек.:0</label>
-                                        <label>Прак.:0</label>
-                                        <label>Лаб.:0</label>
-                                    </vbox>
-                                </hbox>
-                                <vbox>
-                                    <label>Другое:0</label>
-                                    <hbox>
-                                        <label>Часов:0</label>
-                                        <label>Откл.:0</label>
-                                    </hbox>
-                                </vbox>
-                            </div>
-                            <div width="140px" height="140px">
-                                <label>ФИО</label>
-                                <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
-                                    <vbox>
-                                        <label>Лек.:0</label>
-                                        <label>Прак.:0</label>
-                                        <label>Лаб.:0</label>
-                                    </vbox>
-                                </hbox>
-                                <vbox>
-                                    <label>Другое:0</label>
-                                    <hbox>
-                                        <label>Часов:0</label>
-                                        <label>Откл.:0</label>
-                                    </hbox>
-                                </vbox>
-                            </div>
-                            <div width="140px" height="140px">
-                                <label>ФИО</label>
-                                <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
-                                    <vbox>
-                                        <label>Лек.:0</label>
-                                        <label>Прак.:0</label>
-                                        <label>Лаб.:0</label>
-                                    </vbox>
-                                </hbox>
-                                <vbox>
-                                    <label>Другое:0</label>
-                                    <hbox>
-                                        <label>Часов:0</label>
-                                        <label>Откл.:0</label>
-                                    </hbox>
-                                </vbox>
-                            </div>
-                            <div width="140px" height="140px">
-                                <label>ФИО</label>
-                                <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
-                                    <vbox>
-                                        <label>Лек.:0</label>
-                                        <label>Прак.:0</label>
-                                        <label>Лаб.:0</label>
-                                    </vbox>
-                                </hbox>
-                                <vbox>
-                                    <label>Другое:0</label>
-                                    <hbox>
-                                        <label>Часов:0</label>
-                                        <label>Откл.:0</label>
-                                    </hbox>
-                                </vbox>
-                            </div>
-                            <div width="140px" height="140px">
-                                <label>ФИО</label>
-                                <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
-                                    <vbox>
-                                        <label>Лек.:0</label>
-                                        <label>Прак.:0</label>
-                                        <label>Лаб.:0</label>
-                                    </vbox>
-                                </hbox>
-                                <vbox>
-                                    <label>Другое:0</label>
-                                    <hbox>
-                                        <label>Часов:0</label>
-                                        <label>Откл.:0</label>
-                                    </hbox>
-                                </vbox>
-                            </div>
-                            <div width="140px" height="140px">
-                                <label>ФИО</label>
-                                <hbox>
-                                    <image src="/imgs/woman.png" width="75px"></image>
-                                    <vbox>
-                                        <label>Лек.:0</label>
-                                        <label>Прак.:0</label>
-                                        <label>Лаб.:0</label>
-                                    </vbox>
-                                </hbox>
-                                <vbox>
-                                    <label>Другое:0</label>
-                                    <hbox>
-                                        <label>Часов:0</label>
-                                        <label>Откл.:0</label>
-                                    </hbox>
-                                </vbox>
-                            </div>
+                            </vbox>-->
                         </hbox>
                     </div>
                     <!-- / Таблца "Карточки преподавелей" -->

@@ -17,18 +17,19 @@ import java.util.stream.IntStream;
 
 public class EntityManagerStudyLoad extends DAO {
     public List<TeacherModel> getTeachers(String department) {
-        String query = "SELECT HF.family, HF.name, HF.patronymic, E.id_employee\n" +
+        String query = "SELECT HF.family, HF.name, HF.patronymic, HF.sex, E.id_employee\n" +
                 "from employee E \n" +
                 "inner join link_employee_department LED using (id_employee) \n" +
                 "inner join department D using (id_department) \n" +
                 "inner join humanface HF using (id_humanface) \n" +
                 "inner join employee_role ER using (id_employee_role)" +
                 "where D.fulltitle = '" + department + "'\n" + "and ER.group='" + 1 + "'" +
-                "group by HF.family, HF.name, HF.patronymic, E.id_employee";
+                "group by HF.family, HF.name, HF.patronymic, HF.sex, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
                 .addScalar("name")
                 .addScalar("patronymic")
+                .addScalar("sex")
                 .addScalar("id_employee", LongType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(TeacherModel.class));
         return (List<TeacherModel>) getList(q);
@@ -78,8 +79,28 @@ public class EntityManagerStudyLoad extends DAO {
         return (Double) getList(q).get(0);
     }
 
+    public List<SumLessonModel> getSumLesson(TeacherModel teacherModel, Long idDepartment) {
+        String query = "SELECT DS.subjectname, SUB.hourslection, SUB.hourslabor, SUB.hourspractic \n" +
+                "FROM link_employee_department \n" +
+                "INNER JOIN employee E using (id_employee) \n" +
+                "inner join humanface HF using (id_humanface) \n" +
+                "inner join link_employee_subject_group LESG using (id_employee) \n" +
+                "inner join link_group_semester_subject LGSS using (id_link_group_semester_subject) \n" +
+                "inner join link_group_semester LGS using (id_link_group_semester) \n" +
+                "inner join semester SEM using (id_semester) \n" +
+                "inner join subject SUB using (id_subject) \n" +
+                "inner join dic_subject DS using (id_dic_subject) \n" +
+                "WHERE id_department ='"+ idDepartment +"' AND HF.family = '"+ teacherModel.getFamily() +"' AND HF.name = '"+ teacherModel.getName() +"' AND HF.patronymic = '"+ teacherModel.getPatronymic() +"' AND SEM.id_semester = 56 AND SUB.is_active = 1";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("hourslection")
+                .addScalar("hourslabor")
+                .addScalar("hourspractic")
+                .setResultTransformer(Transformers.aliasToBean(SumLessonModel.class));
+        return (List<SumLessonModel>) getList(q);
+    }
+
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
-        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate\n" +
+        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate, EB.shorttitle as shorttitleByworker\n" +
                 "from link_employee_department LED \n" +
                 "inner join employee_role ER using (id_employee_role) \n" +
                 "inner join employee E using (id_employee) \n" +
@@ -95,6 +116,7 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("rolename")
                 .addScalar("wagerate")
                 .addScalar("time_wagerate")
+                .addScalar("shorttitleByworker")
                 .setResultTransformer(Transformers.aliasToBean(EmploymentModel.class));
 
         // List<EmploymentModel> employmentModels = q.list();
@@ -260,5 +282,10 @@ public class EntityManagerStudyLoad extends DAO {
         } finally {
             close();
         }
+    }
+
+    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {
+        String query = "insert into  " ;
+        executeUpdate(getSession().createSQLQuery(query));
     }
 }
