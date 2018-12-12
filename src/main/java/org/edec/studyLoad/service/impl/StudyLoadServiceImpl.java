@@ -114,5 +114,4 @@ public class StudyLoadServiceImpl implements StudyLoadService {
         return entityManagerStudyLoad.upsertRequests(idlgs,idlesg,requeststring);
     }
 
-
 }

@@ -158,10 +158,11 @@ public class EntityManagerStudyLoad extends DAO {
     public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
         String query = "SELECT HF.family || ' ' || HF.name || ' ' || HF.patronymic AS fio, DS.subjectname AS nameDiscipline,\n" +
                 "LESG.tutoringtype AS typeInstructionInt, DG.groupname AS groupname,\n" +
-                "(SELECT COUNT (*)\n" +
-                "FROM student_semester_status SSS\n" +
-                "WHERE SSS.id_link_group_semester = LGS.id_link_group_semester AND SSS.is_deducted = 0\n" +
-                "AND SSS.is_academicleave = 0) as numberStudents,\n" +
+                "(SELECT COUNT (*) \n" +
+                "FROM student_semester_status SSS \n" +
+                "inner join studentcard SC using (id_studentcard) \n" +
+                "WHERE SSS.id_link_group_semester = LGS.id_link_group_semester AND SSS.is_deducted = 0 \n" +
+                "AND SSS.is_academicleave = 0 AND SC.id_current_dic_group = DG.id_dic_group) as numberStudents,\n" +
                 "LGS.course AS course, LGS.id_link_group_semester, LESG.id_link_employee_subject_group,\n" +
                 "SUB.is_exam, SUB.is_pass, SUB.is_courseproject, SUB.is_coursework, SUB.is_practic,\n" +
                 "SUB.hoursaudcount as hourSaudCount, SUB.hourscount as hoursCount, \n" +
@@ -342,5 +343,9 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("roleName")
                 .setResultTransformer(Transformers.aliasToBean(StudyLoadModel.class));
         return (List<StudyLoadModel>) getList(q);
+    }
+
+    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher){
+
     }
 }

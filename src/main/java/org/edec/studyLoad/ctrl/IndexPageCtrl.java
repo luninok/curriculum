@@ -2,7 +2,10 @@ package org.edec.studyLoad.ctrl;
 
 
 import org.edec.main.model.DepartmentModel;
-import org.edec.studyLoad.ctrl.renderer.*;
+import org.edec.studyLoad.ctrl.renderer.AssignmentRenderer;
+import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
+import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
+import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.manager.EntityManagerStudyLoad;
 import org.edec.studyLoad.ctrl.renderer.StudyLoadRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
@@ -19,7 +22,6 @@ import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -376,22 +378,6 @@ public class IndexPageCtrl extends CabinetSelector {
 
     public void fillLbAssignment() {
         lbAssignments.getItems().clear();
-        List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
-        for (int i = 0; i < assignmentModels.size(); i++) {
-            AssignmentModel assignmentModel = assignmentModels.get(i);
-            Listitem listitem = new Listitem();
-            listitem.setValue(assignmentModel);
-            new Listcell(String.valueOf(i)).setParent(listitem);
-            new Listcell(assignmentModel.getFio()).setParent(listitem);
-            new Listcell(assignmentModel.nameDiscipline).setParent(listitem);
-            new Listcell(assignmentModel.getTypeInstructionString()).setParent(listitem);
-            new Listcell(assignmentModel.getGroupName()).setParent(listitem);
-            new Listcell(assignmentModel.getTypeControl()).setParent(listitem);
-            new Listcell(String.valueOf(assignmentModel.getCourse())).setParent(listitem);
-            new Listcell(String.valueOf(assignmentModel.getHourSaudCount())).setParent(listitem);
-            new Listcell(String.valueOf(assignmentModel.getHoursCount())).setParent(listitem);
-            lbAssignments.getItems().add(listitem);
-        }
         assignmentModels = studyLoadService.getAssignments(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
         ListModelList<AssignmentModel> assignmentModelListModelList = new ListModelList<>(assignmentModels);
         lbAssignments.setModel(assignmentModelListModelList);

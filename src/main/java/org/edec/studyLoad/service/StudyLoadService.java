@@ -48,4 +48,5 @@ public interface StudyLoadService {
     void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher);
 
     boolean upsertRequests(Long idlgs, Long idlesg, String requeststring);
+
 }
