@@ -56,7 +56,7 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
+    public List<AssignmentModel> getAssignments(Long idSem, Long idDepartment){
         return entityManagerStudyLoad.getInstructions(idSem, idDepartment);
     }
 
@@ -101,8 +101,13 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
+<<<<<<< HEAD
     public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {
         entityManagerStudyLoad.insertTeacherToTheDiscipline(selectCardTeacher);
+=======
+    public boolean upsertRequests(Long idlgs, Long idlesg, String requeststring){
+        return entityManagerStudyLoad.upsertRequests(idlgs,idlesg,requeststring);
+>>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
     }
 
 

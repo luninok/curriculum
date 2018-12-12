@@ -53,6 +53,8 @@ public class IndexPageCtrl extends CabinetSelector {
     @Wire
     private Combobox cmbSemesterForTabPeriod, cmbFormOfStudyForTabPeriod, cmbQualificationForTabPeriod, cmbCourseForTabPeriod, cmbGroupForTabPeriod;
     @Wire
+    private Datebox dbBeginPeriod, dbEndPeriod;
+
     private ComponentService componentService = new ComponentServiceESOimpl();
     private ComponentGroupService componentGroupService = new ComponentGroupServiceImpl();
     private JournalOfAttendanceService journalOfAttendanceService = new JournalOfAttendanceServiceImpl();

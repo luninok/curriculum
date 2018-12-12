@@ -2,15 +2,25 @@ package org.edec.studyLoad.ctrl;
 
 
 import org.edec.main.model.DepartmentModel;
+import org.edec.studyLoad.ctrl.renderer.AssignmentRenderer;
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
+<<<<<<< HEAD
+=======
+import org.edec.studyLoad.manager.EntityManagerStudyLoad;
+import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
+>>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
 import org.edec.studyLoad.model.*;
+import org.edec.studyLoad.report.ReportService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
 import org.edec.studyLoad.service.StudyLoadService;
+import org.edec.utility.converter.DateConverter;
+import org.edec.utility.report.model.jasperReport.JasperReport;
 import org.edec.utility.zk.CabinetSelector;
 import org.edec.utility.zk.ComponentHelper;
 import org.edec.utility.zk.PopupUtil;
+import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -51,10 +61,12 @@ public class IndexPageCtrl extends CabinetSelector {
         lbVacancy.setItemRenderer(new VacancyRenderer());
         lbTeachers.setItemRenderer(new TeachersRenderer());
         lbEmployment.setItemRenderer(new EmploymentRenderer());
+        lbAssignments.setItemRenderer(new AssignmentRenderer());
         fillLbVacancy();
     }
 
     protected void fill() {
+        EntityManagerStudyLoad ent = new EntityManagerStudyLoad();
         positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
     }
@@ -302,6 +314,33 @@ public class IndexPageCtrl extends CabinetSelector {
             PopupUtil.showError("Ошибка удаления преподавателя");
     }
 
+    @Listen("onClick = #btnShowPdfAssignmentsTabs")
+    public void showAssignmentsPDF() {
+        JasperReport jasperReport = new ReportService().getJasperForAssignments("/studyLoad/assigmentsPDF.jasper",assignmentModels,((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getFulltitle());
+        jasperReport.showPdf();
+    }
+
+    @Listen("onClick = #btnDownloadExcelAssignmentsTabs")
+    public void showAssignmentsExcel() {
+        AMedia aMedia = new AMedia("Поручения  (" + DateConverter.convertDateToString(new Date()) + ").xls",
+                "xls", "application/xls", new ReportService().getXlsxForAssignments(assignmentModels));
+        Filedownload.save(aMedia);
+    }
+
+    @Listen("onClick = #btnSaveAssignmentsTabs")
+    public void saveAssignments() {
+         List<Listitem> listitems = lbAssignments.getItems();
+         for(int i = 0; i < listitems.size(); i++){
+            Listitem listitem = listitems.get(i);
+             AssignmentModel valueListItem = listitem.getValue();
+             String assignment = ((Textbox)listitem.getChildren().get(9).getFirstChild()).getValue();
+             if (!assignment.equals("") && !assignment.equals(valueListItem.getAssignment())) {
+                 if(studyLoadService.upsertRequests(valueListItem.getId_link_group_semester().longValue(),valueListItem.getId_link_employee_subject_group().longValue(), assignment)){
+                     assignmentModels.get(i).setAssignment(assignment);
+                 }
+             }
+         }
+    }
     @Listen("onClick = #btnFillRate")
     public void fillRateClick() {
         if (lbVacancy.getSelectedItems().isEmpty()) {
@@ -328,8 +367,8 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     public void fillLbAssignment() {
-        // TODO Создать отдельный renderer, добавить семестр как текущий
         lbAssignments.getItems().clear();
+<<<<<<< HEAD
         List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
         for (int i = 0; i < assignmentModels.size(); i++) {
             AssignmentModel assignmentModel = assignmentModels.get(i);
@@ -346,6 +385,12 @@ public class IndexPageCtrl extends CabinetSelector {
             new Listcell(String.valueOf(assignmentModel.getHoursCount())).setParent(listitem);
             lbAssignments.getItems().add(listitem);
         }
+=======
+        assignmentModels = studyLoadService.getAssignments(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
+        ListModelList<AssignmentModel> assignmentModelListModelList = new ListModelList<>(assignmentModels);
+        lbAssignments.setModel(assignmentModelListModelList);
+        lbAssignments.renderAll();
+>>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
     }
-
 }
+

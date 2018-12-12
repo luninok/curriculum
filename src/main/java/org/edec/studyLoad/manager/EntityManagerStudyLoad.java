@@ -160,8 +160,17 @@ public class EntityManagerStudyLoad extends DAO {
 
     public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
         String query = "SELECT HF.family || ' ' || HF.name || ' ' || HF.patronymic AS fio, DS.subjectname AS nameDiscipline,\n" +
-                "LESG.tutoringtype AS typeInstructionInt, DG.groupname AS groupname, LGS.course AS course,\n" +
-                "SUB.is_exam, SUB.is_pass, SUB.is_courseproject, SUB.is_coursework, SUB.is_practic, SUB.hoursaudcount as hourSaudCount, SUB.hourscount as hoursCount\n" +
+                "LESG.tutoringtype AS typeInstructionInt, DG.groupname AS groupname,\n" +
+                "(SELECT COUNT (*)\n" +
+                "FROM student_semester_status SSS\n" +
+                "WHERE SSS.id_link_group_semester = LGS.id_link_group_semester AND SSS.is_deducted = 0\n" +
+                "AND SSS.is_academicleave = 0) as numberStudents,\n" +
+                "LGS.course AS course, LGS.id_link_group_semester, LESG.id_link_employee_subject_group,\n" +
+                "SUB.is_exam, SUB.is_pass, SUB.is_courseproject, SUB.is_coursework, SUB.is_practic,\n" +
+                "SUB.hoursaudcount as hourSaudCount, SUB.hourscount as hoursCount, \n" +
+                "(SELECT R.request FROM requests R\n" +
+                "WHERE R.id_link_group_semester = LGS.id_link_group_semester AND\n" +
+                "R.id_link_employee_subject_group = LESG.id_link_employee_subject_group) as assignment\n" +
                 "FROM link_employee_department\n" +
                 "INNER JOIN employee E using (id_employee) \n" +
                 "inner join humanface HF using (id_humanface)\n" +
@@ -171,13 +180,15 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join semester SEM using (id_semester)\n" +
                 "inner join dic_group DG using (id_dic_group)\n" +
                 "inner join subject SUB using (id_subject)\n" +
-                "inner join dic_subject DS using (id_dic_subject)\n" +
+                "inner join dic_subject DS using (id_dic_subject)\n"+
                 "WHERE id_department =" + idDepartment + "  AND SEM.id_semester = " + idSem + " AND SUB.is_active = 1\n" +
                 "ORDER BY fio\n";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("fio")
                 .addScalar("nameDiscipline")
                 .addScalar("groupName")
+                .addScalar("assignment")
+                .addScalar("numberStudents", IntegerType.INSTANCE)
                 .addScalar("course", IntegerType.INSTANCE)
                 .addScalar("hoursCount", IntegerType.INSTANCE)
                 .addScalar("hourSaudCount", IntegerType.INSTANCE)
@@ -187,8 +198,18 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("is_coursework", IntegerType.INSTANCE)
                 .addScalar("is_practic", IntegerType.INSTANCE)
                 .addScalar("typeInstructionInt", IntegerType.INSTANCE)
+                .addScalar("id_link_group_semester", IntegerType.INSTANCE)
+                .addScalar("id_link_employee_subject_group", IntegerType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(AssignmentModel.class));
         return (List<AssignmentModel>) getList(q);
+    }
+
+    public boolean upsertRequests(Long idlgs, Long idlesg, String requeststring) {
+        return callFunction("select request_create_or_update(" +
+                idlgs + ", " +
+                idlesg + ", " +
+                "'" + requeststring + "'" +
+                ")");
     }
 
     public List<VacancyModel> getVacancy() {
@@ -283,9 +304,13 @@ public class EntityManagerStudyLoad extends DAO {
             close();
         }
     }
+<<<<<<< HEAD
 
     public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {
         String query = "insert into  " ;
         executeUpdate(getSession().createSQLQuery(query));
     }
 }
+=======
+}
+>>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61

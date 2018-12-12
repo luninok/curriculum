@@ -511,24 +511,25 @@
                 <!-- Поручения -->
                 <vlayout vflex="1">
                     <hbox>
-                        <button id="btnPrintAssignmentsTabs" label="Печать"/>
-                        <button id="btnExportAssignmentsTabs" label="Экспорт"/>
+                        <button id="btnShowPdfAssignmentsTabs" label="Печать" image="/imgs/pdf.png" hflex="1"/>
+                        <button id="btnDownloadExcelAssignmentsTabs" label="Скачать EXCEL" image="/imgs/excel.png"/>
+                        <button id="btnSaveAssignmentsTabs" label="Сохранить пожелания"/>
                     </hbox>
                     <listbox id="lbAssignments" vflex="1" hflex="1" width="99%" mold="paging">
                         <listhead>
-                            <listheader id="lhNumber" align="center" label="Номер"/>
-                            <listheader id="lhTeacher" align="center" label="Преподаватель"/>
+                            <listheader width="50px" id="lhNumber" align="center" label="№"/>
+                            <listheader width="200px" id="lhTeacher" align="center" label="Преподаватель"/>
                             <listheader id="lhDiscipline" align="center" label="Дисциплина"/>
-                            <listheader id="lhView" align="center" label="Вид"></listheader>
+                            <listheader width="100px" id="lhView" align="center" label="Вид"></listheader>
                             <!--listheader id="lhFaculty" align="center" label="Факультет"></listheader-->
-                            <listheader id="lhGroup" align="center" label="Группа(ы)"></listheader>
-                            <!--listheader id="lhStudents" align="center" label="Студентов"></listheader-->
-                            <listheader id="lhControl" align="center" label="Контроль"></listheader>
+                            <listheader width="100px" id="lhGroup" align="center" label="Группа(ы)"></listheader>
+                            <listheader width="100px" id="lhStudents" align="center" label="Студентов"></listheader>
+                            <listheader width="100px" id="lhControl" align="center" label="Контроль"></listheader>
                             <!--listheader id="lhEducationalWeek" align="center" label="Учебных недель"></listheader-->
-                            <listheader id="lhCourse" align="center" label="Курс"></listheader>
+                            <listheader width="50px" id="lhCourse" align="center" label="Курс"></listheader>
                             <!--listheader id="lhStudyRoom" align="center" label="Аудитория"></listheader-->
-                            <listheader id="lhHourS" align="center" label="Ауд. часов" width=""></listheader>
-                            <listheader id="lhHours" align="center" label="Всего часов" width=""></listheader>
+                            <listheader width="55px" id="lhHours" align="center" label="Часов"></listheader>
+                            <listheader id="lhAssingments" align="center" label="Пожелания" width=""></listheader>
                             <!--listheader id="lhStart" align="center" label="Начало" width=""></listheader>
                             <listheader id="lhFinish" align="center" label="Конец" width=""></listheader>
                             <listheader id="lhBudget" align="center" label="Бюджет" width=""></listheader>
