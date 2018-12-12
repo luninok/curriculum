@@ -6,6 +6,7 @@ import org.edec.studyLoad.model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.BooleanType;
 import org.hibernate.type.DoubleType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
@@ -17,18 +18,19 @@ import java.util.stream.IntStream;
 
 public class EntityManagerStudyLoad extends DAO {
     public List<TeacherModel> getTeachers(String department) {
-        String query = "SELECT HF.family, HF.name, HF.patronymic, E.id_employee\n" +
+        String query = "SELECT HF.family, HF.name, HF.patronymic, HF.sex, E.id_employee\n" +
                 "from employee E \n" +
                 "inner join link_employee_department LED using (id_employee) \n" +
                 "inner join department D using (id_department) \n" +
                 "inner join humanface HF using (id_humanface) \n" +
                 "inner join employee_role ER using (id_employee_role)" +
                 "where D.fulltitle = '" + department + "'\n" + "and ER.group='" + 1 + "'" +
-                "group by HF.family, HF.name, HF.patronymic, E.id_employee";
+                "group by HF.family, HF.name, HF.patronymic, HF.sex, E.id_employee";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("family")
                 .addScalar("name")
                 .addScalar("patronymic")
+                .addScalar("sex")
                 .addScalar("id_employee", LongType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(TeacherModel.class));
         return (List<TeacherModel>) getList(q);
@@ -78,8 +80,28 @@ public class EntityManagerStudyLoad extends DAO {
         return (Double) getList(q).get(0);
     }
 
+    public List<SumLessonModel> getSumLesson(TeacherModel teacherModel, Long idDepartment) {
+        String query = "SELECT DS.subjectname, SUB.hourslection, SUB.hourslabor, SUB.hourspractic \n" +
+                "FROM link_employee_department \n" +
+                "INNER JOIN employee E using (id_employee) \n" +
+                "inner join humanface HF using (id_humanface) \n" +
+                "inner join link_employee_subject_group LESG using (id_employee) \n" +
+                "inner join link_group_semester_subject LGSS using (id_link_group_semester_subject) \n" +
+                "inner join link_group_semester LGS using (id_link_group_semester) \n" +
+                "inner join semester SEM using (id_semester) \n" +
+                "inner join subject SUB using (id_subject) \n" +
+                "inner join dic_subject DS using (id_dic_subject) \n" +
+                "WHERE id_department ='"+ idDepartment +"' AND HF.family = '"+ teacherModel.getFamily() +"' AND HF.name = '"+ teacherModel.getName() +"' AND HF.patronymic = '"+ teacherModel.getPatronymic() +"' AND SEM.id_semester = 56 AND SUB.is_active = 1";
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("hourslection")
+                .addScalar("hourslabor")
+                .addScalar("hourspractic")
+                .setResultTransformer(Transformers.aliasToBean(SumLessonModel.class));
+        return (List<SumLessonModel>) getList(q);
+    }
+
     public List<EmploymentModel> getEmployment(TeacherModel selectTeacher, String department) {
-        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate\n" +
+        String query = "SELECT  D.shorttitle, EB.byworker, ER.rolename, LED.wagerate, LED.time_wagerate, EB.shorttitle as shorttitleByworker\n" +
                 "from link_employee_department LED \n" +
                 "inner join employee_role ER using (id_employee_role) \n" +
                 "inner join employee E using (id_employee) \n" +
@@ -95,11 +117,8 @@ public class EntityManagerStudyLoad extends DAO {
                 .addScalar("rolename")
                 .addScalar("wagerate")
                 .addScalar("time_wagerate")
+                .addScalar("shorttitleByworker")
                 .setResultTransformer(Transformers.aliasToBean(EmploymentModel.class));
-
-        // List<EmploymentModel> employmentModels = q.list();
-        //  employmentModels.get(0).setMaximum_load(maxWagerate);
-        //return employmentModels;
         return (List<EmploymentModel>) getList(q);
     }
 
@@ -139,10 +158,11 @@ public class EntityManagerStudyLoad extends DAO {
     public List<AssignmentModel> getInstructions(Long idSem, Long idDepartment) {
         String query = "SELECT HF.family || ' ' || HF.name || ' ' || HF.patronymic AS fio, DS.subjectname AS nameDiscipline,\n" +
                 "LESG.tutoringtype AS typeInstructionInt, DG.groupname AS groupname,\n" +
-                "(SELECT COUNT (*)\n" +
-                "FROM student_semester_status SSS\n" +
-                "WHERE SSS.id_link_group_semester = LGS.id_link_group_semester AND SSS.is_deducted = 0\n" +
-                "AND SSS.is_academicleave = 0) as numberStudents,\n" +
+                "(SELECT COUNT (*) \n" +
+                "FROM student_semester_status SSS \n" +
+                "inner join studentcard SC using (id_studentcard) \n" +
+                "WHERE SSS.id_link_group_semester = LGS.id_link_group_semester AND SSS.is_deducted = 0 \n" +
+                "AND SSS.is_academicleave = 0 AND SC.id_current_dic_group = DG.id_dic_group) as numberStudents,\n" +
                 "LGS.course AS course, LGS.id_link_group_semester, LESG.id_link_employee_subject_group,\n" +
                 "SUB.is_exam, SUB.is_pass, SUB.is_courseproject, SUB.is_coursework, SUB.is_practic,\n" +
                 "SUB.hoursaudcount as hourSaudCount, SUB.hourscount as hoursCount, \n" +
@@ -281,5 +301,51 @@ public class EntityManagerStudyLoad extends DAO {
         } finally {
             close();
         }
+    }
+
+    public List<StudyLoadModel> getStudyLoad(Long id_department) {
+        String query = "select CU.planfilename as planFileName, I.shorttitle as instituteShortTitle, S.subjectcode as subjectCode," +
+                " DS.subjectname as subjectName, D.shorttitle as departmentShortTitle,\n" +
+                "LGS.course as course, LGS.semesternumber as semester, DG.groupname as groupName, S.is_exam as isExam," +
+                " S.is_pass as isPass, LESG.tutoringtype as tutoringType,\n" +
+                "S.hourscount as hoursCount, HF.family as family, HF.name as name, HF.patronymic as patronymic, ER.rolename as roleName\n" +
+                "from subject S\n" +
+                "inner join department D using (id_chair)\n" +
+                "left join curriculum CU using (id_curriculum)\n" +
+                "inner join schoolyear SY ON CU.created_school_year = SY.id_schoolyear\n" +
+                "inner join dic_subject DS using (id_dic_subject)\n" +
+                "inner join institute I using (id_institute)\n" +
+                "inner join link_group_semester_subject LGSS using (id_subject)\n" +
+                "inner join link_group_semester LGS using (id_link_group_semester)\n" +
+                "inner join dic_group DG using (id_dic_group)\n" +
+                "inner join link_employee_subject_group LESG using (id_link_group_semester_subject)\n" +
+                "inner join employee E using (id_employee)\n" +
+                "inner join humanface HF using (id_humanface)\n" +
+                "inner join link_employee_department LED using (id_employee)\n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "where SY.current_year = true and D.id_department = "+id_department;
+        Query q = getSession().createSQLQuery(query)
+                .addScalar("planFileName")
+                .addScalar("instituteShortTitle")
+                .addScalar("subjectCode")
+                .addScalar("subjectName")
+                .addScalar("departmentShortTitle")
+                .addScalar("course", IntegerType.INSTANCE)
+                .addScalar("semester", IntegerType.INSTANCE)
+                .addScalar("groupName")
+                .addScalar("isExam", BooleanType.INSTANCE)
+                .addScalar("isPass", BooleanType.INSTANCE)
+                .addScalar("tutoringType", IntegerType.INSTANCE)
+                .addScalar("hoursCount", IntegerType.INSTANCE)
+                .addScalar("family")
+                .addScalar("name")
+                .addScalar("patronymic")
+                .addScalar("roleName")
+                .setResultTransformer(Transformers.aliasToBean(StudyLoadModel.class));
+        return (List<StudyLoadModel>) getList(q);
+    }
+
+    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher){
+
     }
 }

@@ -1,13 +1,13 @@
 package org.edec.studyLoad.ctrl;
 
 
-import javafx.scene.control.ListCell;
 import org.edec.main.model.DepartmentModel;
 import org.edec.studyLoad.ctrl.renderer.AssignmentRenderer;
 import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
 import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
 import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
 import org.edec.studyLoad.manager.EntityManagerStudyLoad;
+import org.edec.studyLoad.ctrl.renderer.StudyLoadRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
 import org.edec.studyLoad.model.*;
 import org.edec.studyLoad.report.ReportService;
@@ -22,6 +22,7 @@ import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
@@ -30,23 +31,31 @@ import java.util.*;
 
 public class IndexPageCtrl extends CabinetSelector {
     @Wire
-    private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment;
+    private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment, lbStudyLoad;
     @Wire
     private Label labelFIO;
     @Wire
     private Combobox cmbFaculty;
+    @Wire
+    private Vbox col1;
+    @Wire
+    private Hbox hbTeacherCards;
+
+    private String selectFIO = "";
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private Combobox selectedPosition;
     private Spinner selectedRate;
     private List<VacancyModel> vacancyModels = new ArrayList<>();
     private List<TeacherModel> teacherModels = new ArrayList<>();
-    private List<EmploymentModel> employmentModels = new ArrayList<>();
     private List<AssignmentModel> assignmentModels = new ArrayList<>();
     private List<DepartmentModel> departmentModels = new ArrayList<>();
     private List<PositionModel> positionModels = new ArrayList<>();
+    private List<StudyLoadModel> studyLoadModels = new ArrayList<>();
     private DepartmentModel selectedDepartmentModel = new DepartmentModel();
     private TeacherModel selectedTeacher;
+    private TeacherModel selectCardTeacher;
+    List<EmploymentModel> employmentModels = new ArrayList<>();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -54,6 +63,7 @@ public class IndexPageCtrl extends CabinetSelector {
         lbVacancy.setItemRenderer(new VacancyRenderer());
         lbTeachers.setItemRenderer(new TeachersRenderer());
         lbEmployment.setItemRenderer(new EmploymentRenderer());
+        lbStudyLoad.setItemRenderer(new StudyLoadRenderer());
         lbAssignments.setItemRenderer(new AssignmentRenderer());
         fillLbVacancy();
     }
@@ -62,6 +72,81 @@ public class IndexPageCtrl extends CabinetSelector {
         EntityManagerStudyLoad ent = new EntityManagerStudyLoad();
         positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
+
+    }
+
+    private void teacherCardRenderer(TeacherModel teacherModel) {
+        List<EmploymentModel> employmentModels = studyLoadService.getEmployment(teacherModel, selectedDepartmentModel.getFulltitle());
+        Vbox cardVbox = new Vbox();
+        cardVbox.setClass("card");
+        cardVbox.setStyle("border: 1px solid #dcdcdc; padding: 5%;");
+        cardVbox.setWidth("170px");
+        cardVbox.setHeight("170px");
+        cardVbox.addEventListener(Events.ON_CLICK, e -> {
+            List<Vbox> divCardList = hbTeacherCards.getChildren();
+            for(Vbox vbox: divCardList){
+                vbox.setStyle("background:white;");
+            }
+            cardVbox.setStyle("background: linear-gradient(to bottom, #6C7A89 0%, #eeeeee 80%);");
+            selectCardTeacher = (TeacherModel)cardVbox.getAttribute("value");
+        });
+        Label fioLabel = new Label();
+        fioLabel.setValue(employmentModels.get(0).getShorttitleByworker() + teacherModel.toString());
+        Hbox hoursSubjectHbox = new Hbox();
+        Image genderImg = new Image();
+        if (teacherModel.getSex() == 0) {
+            genderImg.setSrc("/imgs/woman.png");
+            genderImg.setWidth("75px");
+        } else {
+            genderImg.setSrc("/imgs/man.png");
+            genderImg.setWidth("75px");
+        }
+        List<SumLessonModel> sumLessonModels = studyLoadService.getSumLesson(teacherModel, selectedDepartmentModel.getIdDepartment());
+        Vbox hoursVbox = new Vbox();
+        Label hoursLectionLabel = new Label();
+        Label hoursPracticLabel = new Label();
+        Label hoursLaborLabel = new Label();
+        Label otherHoursLabel = new Label();
+        if(sumLessonModels.size() != 0) {
+            hoursLectionLabel.setValue("Лек.: " + String.valueOf(sumLessonModels.get(0).getHourslection()));
+            hoursPracticLabel.setValue("Прак.: " + String.valueOf(sumLessonModels.get(0).getHourspractic()));
+            hoursLaborLabel.setValue("Лаб.: " + String.valueOf(sumLessonModels.get(0).getHourslabor()));
+            Double otherHours = employmentModels.get(0).getTime_wagerate() - (sumLessonModels.get(0).getHourslection() + sumLessonModels.get(0).getHourspractic() + sumLessonModels.get(0).getHourslabor());
+            otherHoursLabel.setValue("Другое: " + String.valueOf(otherHours));
+        }
+        else {
+            hoursLectionLabel.setValue("Лек.: 0");
+            hoursPracticLabel.setValue("Прак.: 0");
+            hoursLaborLabel.setValue("Лаб.: 0");
+            Double otherHours = employmentModels.get(0).getTime_wagerate();
+            otherHoursLabel.setValue("Другое: " + String.valueOf(otherHours));
+        }
+        hoursVbox.appendChild(hoursLectionLabel);
+        hoursVbox.appendChild(hoursPracticLabel);
+        hoursVbox.appendChild(hoursLaborLabel);
+        hoursSubjectHbox.appendChild(genderImg);
+        hoursSubjectHbox.appendChild(hoursVbox);
+        Vbox hoursOtherVbox = new Vbox();
+        Hbox loadHoursHbox = new Hbox();
+        Label timewagerateLabel = new Label();
+        timewagerateLabel.setValue("Часов: " + String.valueOf(employmentModels.get(0).getTime_wagerate()));
+        Label deviationLabel = new Label();
+        Double maxLoad = studyLoadService.getMaxload(teacherModel);
+        Double sumLoad = studyLoadService.getSumLoad(teacherModel);
+        double deviation = maxLoad - sumLoad;
+        if(deviation < 0){
+            deviationLabel.setStyle("background: red; color:white");
+        }
+        deviationLabel.setValue("Откл: " + String.valueOf(deviation));
+        cardVbox.setAttribute("value", teacherModel);
+        loadHoursHbox.appendChild(timewagerateLabel);
+        loadHoursHbox.appendChild(deviationLabel);
+        hoursOtherVbox.appendChild(otherHoursLabel);
+        hoursOtherVbox.appendChild(loadHoursHbox);
+        cardVbox.appendChild(fioLabel);
+        cardVbox.appendChild(hoursSubjectHbox);
+        cardVbox.appendChild(hoursOtherVbox);
+        hbTeacherCards.appendChild(cardVbox);
     }
 
     private void fillCmbFaculty() {
@@ -74,6 +159,15 @@ public class IndexPageCtrl extends CabinetSelector {
         }
     }
 
+    @Listen("onClick = #btnFixTeacher")
+    public void teacherFix() {
+        if(selectCardTeacher == null){
+            PopupUtil.showWarning("Выберите преподавателя!");
+            return;
+        }
+        //studyLoadService.insertTeacherToTheDiscipline(selectCardTeacher);
+        PopupUtil.showInfo("Преподаватель закреплён за дисциплиной!");
+    }
     @Listen("onDoubleClick = #lbTeachers")
     public void teacherRowClick() {
         labelFIO.setValue("");
@@ -88,7 +182,7 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     private void fillLbEmployment(TeacherModel selectTeacher) {
-        List<EmploymentModel> list = studyLoadService.getEmployment(selectTeacher, (String) cmbFaculty.getValue());
+        List<EmploymentModel> list = studyLoadService.getEmployment(selectTeacher, selectedDepartmentModel.getFulltitle());
         Double maxLoad = studyLoadService.getMaxload(selectTeacher);
         Double sumLoad = studyLoadService.getSumLoad(selectTeacher);
         double deviation = maxLoad - sumLoad;
@@ -100,11 +194,11 @@ public class IndexPageCtrl extends CabinetSelector {
         Listitem item = lbEmployment.getItems().get(0);
         Listcell cellDeviation = (Listcell) item.getChildren().get(5);
         if (deviation < 0) {
-            ((Doublebox)cellDeviation.getChildren().get(0)).setStyle("background: red; color:white");
+            ((Doublebox) cellDeviation.getChildren().get(0)).setStyle("background: red; color:white");
         }
-        ((Doublebox)cellDeviation.getChildren().get(0)).setValue(deviation);
+        ((Doublebox) cellDeviation.getChildren().get(0)).setValue(deviation);
         Listcell cellMaxLoad = (Listcell) item.getChildren().get(6);
-        ((Doublebox)cellMaxLoad.getChildren().get(0)).setValue(maxLoad);
+        ((Doublebox) cellMaxLoad.getChildren().get(0)).setValue(maxLoad);
     }
 
     public void fillLbVacancy() {
@@ -129,7 +223,12 @@ public class IndexPageCtrl extends CabinetSelector {
         Double doubleWagerate = ((Doublebox) cellWagerate.getChildren().get(0)).getValue();
         Listcell cellWagerateTime = (Listcell) item.getChildren().get(4);
         Double doubleWagerateTime = ((Doublebox) cellWagerateTime.getChildren().get(0)).getValue();
+        employmentModels.get(0).setTime_wagerate(doubleWagerateTime);
         studyLoadService.updateEmployment(selectedTeacher.getId_employee(), idByworker, idPosition, doubleWagerate, doubleWagerateTime, selectedDepartmentModel.getIdDepartment());
+        hbTeacherCards.getChildren().clear();
+        for (TeacherModel teacherModel : teacherModels) {
+            teacherCardRenderer(teacherModel);
+        }
         PopupUtil.showInfo("Данные успешно обновлены!");
         fillLbEmployment(selectedTeacher);
     }
@@ -147,6 +246,16 @@ public class IndexPageCtrl extends CabinetSelector {
 
     }
 
+   /* @Listen("onClick = #hbTeacherCards")
+    public void fixTeacher(Event event) {
+        Component target = event.getTarget();
+        String tt = target.getParent().getClass().getName();
+        if (target.getParent().getClass().getName() == "org.zkoss.zul.Div"){
+               ((Hbox)target).setStyle("background: red;");
+        }
+
+    } */
+
     @Listen("onChange = #cmbFaculty")
     public void updateLbTeachers() {
         selectedDepartmentModel = cmbFaculty.getSelectedItem().getValue();
@@ -157,6 +266,15 @@ public class IndexPageCtrl extends CabinetSelector {
         lbTeachers.setModel(teacherListModelList);
         lbTeachers.renderAll();
         fillLbAssignment();
+        hbTeacherCards.getChildren().clear();
+        for (TeacherModel teacherModel : teacherModels) {
+            teacherCardRenderer(teacherModel);
+        }
+
+        studyLoadModels = studyLoadService.getStudyLoad(selectedDepartmentModel.getIdDepartment());
+        ListModelList<StudyLoadModel> studyLoadListModelList = new ListModelList<>(studyLoadModels);
+        lbStudyLoad.setModel(studyLoadListModelList);
+        lbStudyLoad.renderAll();
     }
 
     @Listen("onClick = #btnAddRate")
@@ -191,8 +309,7 @@ public class IndexPageCtrl extends CabinetSelector {
     }
 
     @Listen("onClick = #btnRemoveRate")
-    public void removeRate()
-    {
+    public void removeRate() {
         if (lbTeachers.getSelectedItems().isEmpty()) {
             PopupUtil.showWarning("Выберите преподавателя, которого хотите удалить!");
             return;
@@ -201,8 +318,7 @@ public class IndexPageCtrl extends CabinetSelector {
         if (studyLoadService.removeRate(selectedTeacher.getId_employee(), selectedDepartmentModel.getIdDepartment())) {
             updateLbTeachers();
             PopupUtil.showInfo("Сотрудник был успешно удалён.");
-        }
-        else
+        } else
             PopupUtil.showError("Ошибка удаления преподавателя");
     }
 
@@ -234,8 +350,7 @@ public class IndexPageCtrl extends CabinetSelector {
          }
     }
     @Listen("onClick = #btnFillRate")
-    public void fillRateClick()
-    {
+    public void fillRateClick() {
         if (lbVacancy.getSelectedItems().isEmpty()) {
             PopupUtil.showWarning("Выберите вакансию, которую хотите заполнить!");
             return;
@@ -243,7 +358,7 @@ public class IndexPageCtrl extends CabinetSelector {
         VacancyModel selectedVacancy = lbVacancy.getSelectedItem().getValue();
         Long idPosition = null;
         for (PositionModel position : positionModels) {
-            if(selectedVacancy.getRolename().equals(position.getPositionName())) {
+            if (selectedVacancy.getRolename().equals(position.getPositionName())) {
                 idPosition = position.getIdPosition();
                 break;
             }

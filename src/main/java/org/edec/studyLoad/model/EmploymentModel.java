@@ -15,4 +15,5 @@ public class EmploymentModel {
     private double time_wagerate;
     private double deviation;
     private double maximum_load;
+    private String shorttitleByworker;
 }
