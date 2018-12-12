@@ -101,13 +101,17 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-<<<<<<< HEAD
+    public List<StudyLoadModel> getStudyLoad() {
+        return entityManagerStudyLoad.getStudyLoad();
+    }
+    @Override
     public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {
         entityManagerStudyLoad.insertTeacherToTheDiscipline(selectCardTeacher);
-=======
+    }
+
+    @Override
     public boolean upsertRequests(Long idlgs, Long idlesg, String requeststring){
         return entityManagerStudyLoad.upsertRequests(idlgs,idlesg,requeststring);
->>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
     }
 
 

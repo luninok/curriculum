@@ -2,15 +2,10 @@ package org.edec.studyLoad.ctrl;
 
 
 import org.edec.main.model.DepartmentModel;
-import org.edec.studyLoad.ctrl.renderer.AssignmentRenderer;
-import org.edec.studyLoad.ctrl.renderer.EmploymentRenderer;
-import org.edec.studyLoad.ctrl.renderer.VacancyRenderer;
-import org.edec.studyLoad.ctrl.renderer.TeachersRenderer;
-<<<<<<< HEAD
-=======
+import org.edec.studyLoad.ctrl.renderer.*;
 import org.edec.studyLoad.manager.EntityManagerStudyLoad;
+import org.edec.studyLoad.ctrl.renderer.StudyLoadRenderer;
 import org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl;
->>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
 import org.edec.studyLoad.model.*;
 import org.edec.studyLoad.report.ReportService;
 import org.edec.studyLoad.service.impl.StudyLoadServiceImpl;
@@ -25,6 +20,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
@@ -33,14 +29,17 @@ import java.util.*;
 
 public class IndexPageCtrl extends CabinetSelector {
     @Wire
-    private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment;
+    private Listbox lbTeachers, lbVacancy, lbAssignments, lbEmployment, lbStudyLoad;
     @Wire
     private Label labelFIO;
     @Wire
     private Combobox cmbFaculty;
     @Wire
+    private Vbox col1;
+    @Wire
     private Hbox hbTeacherCards;
 
+    private String selectFIO = "";
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private Combobox selectedPosition;
@@ -50,6 +49,7 @@ public class IndexPageCtrl extends CabinetSelector {
     private List<AssignmentModel> assignmentModels = new ArrayList<>();
     private List<DepartmentModel> departmentModels = new ArrayList<>();
     private List<PositionModel> positionModels = new ArrayList<>();
+    private List<StudyLoadModel> studyLoadModels = new ArrayList<>();
     private DepartmentModel selectedDepartmentModel = new DepartmentModel();
     private TeacherModel selectedTeacher;
     private TeacherModel selectCardTeacher;
@@ -61,6 +61,7 @@ public class IndexPageCtrl extends CabinetSelector {
         lbVacancy.setItemRenderer(new VacancyRenderer());
         lbTeachers.setItemRenderer(new TeachersRenderer());
         lbEmployment.setItemRenderer(new EmploymentRenderer());
+        lbStudyLoad.setItemRenderer(new StudyLoadRenderer());
         lbAssignments.setItemRenderer(new AssignmentRenderer());
         fillLbVacancy();
     }
@@ -69,6 +70,13 @@ public class IndexPageCtrl extends CabinetSelector {
         EntityManagerStudyLoad ent = new EntityManagerStudyLoad();
         positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
+        fillLbAssignment();
+        updateLbTeachers();
+
+        studyLoadModels = studyLoadService.getStudyLoad();
+        ListModelList<StudyLoadModel> studyLoadListModelList = new ListModelList<>(studyLoadModels);
+        lbStudyLoad.setModel(studyLoadListModelList);
+        lbStudyLoad.renderAll();
     }
 
     private void teacherCardRenderer(TeacherModel teacherModel) {
@@ -368,7 +376,6 @@ public class IndexPageCtrl extends CabinetSelector {
 
     public void fillLbAssignment() {
         lbAssignments.getItems().clear();
-<<<<<<< HEAD
         List<AssignmentModel> assignmentModels = studyLoadService.getInstructions(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
         for (int i = 0; i < assignmentModels.size(); i++) {
             AssignmentModel assignmentModel = assignmentModels.get(i);
@@ -385,12 +392,10 @@ public class IndexPageCtrl extends CabinetSelector {
             new Listcell(String.valueOf(assignmentModel.getHoursCount())).setParent(listitem);
             lbAssignments.getItems().add(listitem);
         }
-=======
         assignmentModels = studyLoadService.getAssignments(56L, ((DepartmentModel) cmbFaculty.getSelectedItem().getValue()).getIdDepartment());
         ListModelList<AssignmentModel> assignmentModelListModelList = new ListModelList<>(assignmentModels);
         lbAssignments.setModel(assignmentModelListModelList);
         lbAssignments.renderAll();
->>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
     }
 }
 

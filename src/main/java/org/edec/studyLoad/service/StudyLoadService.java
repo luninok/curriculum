@@ -43,9 +43,9 @@ public interface StudyLoadService {
 
     boolean removeRate(Long idEmployee, Long idDepartment);
 
-<<<<<<< HEAD
+    List<StudyLoadModel> getStudyLoad();
+
     void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher);
-=======
+
     boolean upsertRequests(Long idlgs, Long idlesg, String requeststring);
->>>>>>> ffef1e971c87350a012cb4e4453eb076f7fd6d61
 }
