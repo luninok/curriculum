@@ -101,8 +101,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<StudyLoadModel> getStudyLoad() {
-        return entityManagerStudyLoad.getStudyLoad();
+    public List<StudyLoadModel> getStudyLoad(Long idDepartment) {
+        return entityManagerStudyLoad.getStudyLoad(idDepartment);
     }
     @Override
     public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {

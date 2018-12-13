@@ -72,13 +72,7 @@ public class IndexPageCtrl extends CabinetSelector {
         EntityManagerStudyLoad ent = new EntityManagerStudyLoad();
         positionModels = studyLoadService.getPositions();
         fillCmbFaculty();
-        fillLbAssignment();
-        updateLbTeachers();
 
-        studyLoadModels = studyLoadService.getStudyLoad();
-        ListModelList<StudyLoadModel> studyLoadListModelList = new ListModelList<>(studyLoadModels);
-        lbStudyLoad.setModel(studyLoadListModelList);
-        lbStudyLoad.renderAll();
     }
 
     private void teacherCardRenderer(TeacherModel teacherModel) {
@@ -277,6 +271,10 @@ public class IndexPageCtrl extends CabinetSelector {
             teacherCardRenderer(teacherModel);
         }
 
+        studyLoadModels = studyLoadService.getStudyLoad(selectedDepartmentModel.getIdDepartment());
+        ListModelList<StudyLoadModel> studyLoadListModelList = new ListModelList<>(studyLoadModels);
+        lbStudyLoad.setModel(studyLoadListModelList);
+        lbStudyLoad.renderAll();
     }
 
     @Listen("onClick = #btnAddRate")

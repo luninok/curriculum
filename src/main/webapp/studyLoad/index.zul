@@ -117,8 +117,8 @@
                                 <checkbox id="chSummer" label="Летняя" onCheck=""/>
                             </hbox>
                         </groupbox>
-                    </hbox>
-                    <!-- Таблица "Учебная нагрузка" -->
+                    </hbox-->
+                    <!--Таблица "Учебная нагрузка" -->
                     <listbox vflex="2" hflex="1" id="lbStudyLoad">
                         <auxhead>
                             <auxheader align="center" rowspan="2">
@@ -187,7 +187,7 @@
                             <auxheader align="center" rowspan="2">
                                 <label id="labelConsultations(SPO)" value="Консультации (СПО)"/>
                             </auxheader-->
-                            <auxheader label="Нагрузка, час" align="center" colspan="4"/>
+                            <auxheader label="Нагрузка, час" align="center" colspan="2"/>
                             <auxheader align="center" rowspan="2">
                                 <label id="labelTeacher" value="Преподаватель"/>
                             </auxheader>
@@ -235,9 +235,9 @@
                             <auxheader align="center">
                                 <label id="labelEducationalRoom" value="Аудиторная"/>
                             </auxheader>
-                            <auxheader align="center" colspan="2">
+                            <!--<auxheader align="center" colspan="2">
                                 <label id="labelMore" value="Другое"/>
-                            </auxheader>
+                            </auxheader> -->
                             <auxheader align="center">
                                 <label id="labelSubtotal" value="Итого"/>
                             </auxheader>
@@ -277,7 +277,7 @@
                             <listheader align="center" width="15.5vh"/>
                             <listheader align="center" width="8vh"/>
                             <listheader align="center" width="18vh"/>
-                            <listheader align="center" width="7vh"/>
+                            <!--<listheader align="center" width="7vh"/>
                             <listheader align="center" width="28vh"/>
                             <listheader align="center" width="17vh"/>
                             <listheader align="center" width="21vh"/>
@@ -285,7 +285,7 @@
                             <listheader align="center" width="7vh"/>
                             <listheader align="center" width="6vh"/>
                             <listheader align="center" width="29vh"/>
-                            <!--listheader align="center" width="21vh"/>
+                            <listheader align="center" width="21vh"/>
                             <listheader align="center" width="14vh"/>
                             <listheader align="center" width="11vh"/>
                             <listheader align="center" width="11vh"/>
@@ -301,15 +301,13 @@
                             <listheader align="center" width="20vh"/>
                             <listheader align="center" width="15vh"/-->
                             <listheader align="center" width="15vh"/>
-                            <listheader align="center" width="15vh"/>
-                            <listheader align="center" width="19vh"/>
                             <!--listheader align="center" width="15vh"/>
                             <listheader align="center" width="25vh"/>
                             <listheader align="center" width="25vh"/>
                             <listheader align="center" width="23vh"/>
                             <listheader align="center" width="15vh"/>
                             <listheader align="center" width="23vh"/>
-                            <listheader align="center" width="22vh"/-->
+                            <listheader align="center" width="90vh"/-->
                         </listhead>
                     </listbox>
                     <!-- / Таблца "Учебная нагрузка" -->

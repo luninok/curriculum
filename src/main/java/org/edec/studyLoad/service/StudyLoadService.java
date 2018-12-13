@@ -43,7 +43,7 @@ public interface StudyLoadService {
 
     boolean removeRate(Long idEmployee, Long idDepartment);
 
-    List<StudyLoadModel> getStudyLoad();
+    List<StudyLoadModel> getStudyLoad(Long idDepartment);
 
     void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher);
 

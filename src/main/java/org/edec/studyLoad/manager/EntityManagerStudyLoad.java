@@ -303,7 +303,7 @@ public class EntityManagerStudyLoad extends DAO {
         }
     }
 
-    public List<StudyLoadModel> getStudyLoad() {
+    public List<StudyLoadModel> getStudyLoad(Long id_department) {
         String query = "select CU.planfilename as planFileName, I.shorttitle as instituteShortTitle, S.subjectcode as subjectCode," +
                 " DS.subjectname as subjectName, D.shorttitle as departmentShortTitle,\n" +
                 "LGS.course as course, LGS.semesternumber as semester, DG.groupname as groupName, S.is_exam as isExam," +
@@ -323,7 +323,7 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join humanface HF using (id_humanface)\n" +
                 "inner join link_employee_department LED using (id_employee)\n" +
                 "inner join employee_role ER using (id_employee_role)\n" +
-                "where SY.current_year = true";
+                "where SY.current_year = true and D.id_department = "+id_department;
         Query q = getSession().createSQLQuery(query)
                 .addScalar("planFileName")
                 .addScalar("instituteShortTitle")

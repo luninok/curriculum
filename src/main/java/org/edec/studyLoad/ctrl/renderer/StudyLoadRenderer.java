@@ -33,10 +33,8 @@ public class StudyLoadRenderer implements ListitemRenderer<StudyLoadModel> {
         else
             new Listcell("Зач.").setParent(listitem);
         new Listcell(String.valueOf(studyLoadModel.getHoursCount())).setParent(listitem);
-        new Listcell("").setParent(listitem);
-        new Listcell("").setParent(listitem);
         new Listcell(String.valueOf(studyLoadModel.getHoursCount())).setParent(listitem);
-        new Listcell(studyLoadModel.getFamily() + " " + studyLoadModel.getName().substring(0,0) + "." + studyLoadModel.getPatronymic().substring(0,0) + ".").setParent(listitem);
+        new Listcell(studyLoadModel.getFamily() + " " + studyLoadModel.getName().substring(0,1) + "." + studyLoadModel.getPatronymic().substring(0,1) + ".").setParent(listitem);
         listitem.setValue(studyLoadModel);
     }
 }
