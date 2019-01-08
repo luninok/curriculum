@@ -17,6 +17,9 @@ public class StudyLoadModel {
     private String departmentShortTitle;
     private Integer course;
     private Integer semester;
+    private Long idLGS;
+    private Long idSubject;
+    private Long idEmployee;
     private String groupName;
     private Boolean isExam;
     private Boolean isPass;

@@ -1,20 +1,20 @@
 package org.edec.studyLoad.manager;
 
-import org.edec.main.model.DepartmentModel;
-import org.edec.dao.DAO;
-import org.edec.studyLoad.model.*;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.transform.Transformers;
-import org.hibernate.type.BooleanType;
-import org.hibernate.type.DoubleType;
-import org.hibernate.type.IntegerType;
-import org.hibernate.type.LongType;
+        import org.edec.main.model.DepartmentModel;
+        import org.edec.dao.DAO;
+        import org.edec.studyLoad.model.*;
+        import org.hibernate.HibernateException;
+        import org.hibernate.Query;
+        import org.hibernate.transform.Transformers;
+        import org.hibernate.type.BooleanType;
+        import org.hibernate.type.DoubleType;
+        import org.hibernate.type.IntegerType;
+        import org.hibernate.type.LongType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
+        import java.util.ArrayList;
+        import java.util.List;
+        import java.util.stream.DoubleStream;
+        import java.util.stream.IntStream;
 
 public class EntityManagerStudyLoad extends DAO {
     public List<TeacherModel> getTeachers(String department) {
@@ -210,13 +210,15 @@ public class EntityManagerStudyLoad extends DAO {
                 ")");
     }
 
-    public List<VacancyModel> getVacancy() {
-        String query = "SELECT id_vacancy, ER.rolename, wagerate FROM public.vacancies  \n" +
-                "inner join employee_role ER using (id_employee_role)";
+    public List<VacancyModel> getVacancy(Long id_department) {
+        String query = "SELECT id_vacancy, ER.rolename, wagerate, id_department FROM vacancies V \n" +
+                "inner join employee_role ER using (id_employee_role)\n" +
+                "where V.id_department="+id_department+" and ER.group=1";
         Query q = getSession().createSQLQuery(query)
                 .addScalar("id_vacancy", LongType.INSTANCE)
                 .addScalar("rolename")
                 .addScalar("wagerate", DoubleType.INSTANCE)
+                .addScalar("id_department", LongType.INSTANCE)
                 .setResultTransformer(Transformers.aliasToBean(VacancyModel.class));
         return (List<VacancyModel>) getList(q);
     }
@@ -226,8 +228,8 @@ public class EntityManagerStudyLoad extends DAO {
         executeUpdate(getSession().createSQLQuery(query));
     }
 
-    public void createVacancy(Long id_employee_role, String wagerate) {
-        String query = "insert into vacancies (id_employee_role, wagerate) values (" + id_employee_role + ", " + wagerate + ")";
+    public void createVacancy(Long id_employee_role, String wagerate, Long id_department) {
+        String query = "insert into vacancies (id_employee_role, wagerate, id_department) values (" + id_employee_role + ", " + wagerate + ", "+id_department+")";
 
         executeUpdate(getSession().createSQLQuery(query));
     }
@@ -248,7 +250,7 @@ public class EntityManagerStudyLoad extends DAO {
         try {
             begin();
             String query = "INSERT INTO link_employee_department(id_employee, id_department, id_employee_role, wagerate, " +
-                    "is_permanency, employee_position, is_hide)\n" +
+            "is_permanency, employee_position, is_hide)\n" +
                     "VALUES (" + id_employee + ", " + id_department + ", " + id_position + ", '0', NULL, NULL, false)";
 
             Query q = getSession().createSQLQuery(query);
@@ -305,8 +307,8 @@ public class EntityManagerStudyLoad extends DAO {
 
     public List<StudyLoadModel> getStudyLoad(Long id_department) {
         String query = "select CU.planfilename as planFileName, I.shorttitle as instituteShortTitle, S.subjectcode as subjectCode," +
-                " DS.subjectname as subjectName, D.shorttitle as departmentShortTitle,\n" +
-                "LGS.course as course, LGS.semesternumber as semester, DG.groupname as groupName, S.is_exam as isExam," +
+                " DS.subjectname as subjectName, id_employee as idEmployee, D.shorttitle as departmentShortTitle,\n" +
+                "LGS.course as course, LGS.semesternumber as semester, LGSS.id_subject AS idSubject, LGSS.id_link_group_semester AS idLGS, DG.groupname as groupName, S.is_exam as isExam," +
                 " S.is_pass as isPass, LESG.tutoringtype as tutoringType,\n" +
                 "S.hourscount as hoursCount, HF.family as family, HF.name as name, HF.patronymic as patronymic, ER.rolename as roleName\n" +
                 "from subject S\n" +
@@ -319,19 +321,22 @@ public class EntityManagerStudyLoad extends DAO {
                 "inner join link_group_semester LGS using (id_link_group_semester)\n" +
                 "inner join dic_group DG using (id_dic_group)\n" +
                 "inner join link_employee_subject_group LESG using (id_link_group_semester_subject)\n" +
-                "inner join employee E using (id_employee)\n" +
-                "inner join humanface HF using (id_humanface)\n" +
-                "inner join link_employee_department LED using (id_employee)\n" +
-                "inner join employee_role ER using (id_employee_role)\n" +
+                "left join employee E using (id_employee)\n" +
+                "left join humanface HF using (id_humanface)\n" +
+                "left join link_employee_department LED using (id_employee)\n" +
+                "left join employee_role ER using (id_employee_role)\n" +
                 "where SY.current_year = true and D.id_department = "+id_department;
         Query q = getSession().createSQLQuery(query)
                 .addScalar("planFileName")
                 .addScalar("instituteShortTitle")
                 .addScalar("subjectCode")
                 .addScalar("subjectName")
+                .addScalar("idEmployee", LongType.INSTANCE)
+                .addScalar("idSubject", LongType.INSTANCE)
                 .addScalar("departmentShortTitle")
                 .addScalar("course", IntegerType.INSTANCE)
                 .addScalar("semester", IntegerType.INSTANCE)
+                .addScalar("idLGS", LongType.INSTANCE)
                 .addScalar("groupName")
                 .addScalar("isExam", BooleanType.INSTANCE)
                 .addScalar("isPass", BooleanType.INSTANCE)
@@ -345,7 +350,21 @@ public class EntityManagerStudyLoad extends DAO {
         return (List<StudyLoadModel>) getList(q);
     }
 
-    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher){
+    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher, Long idLGS, Long idSubject){
+        String query = "UPDATE link_employee_subject_group SET id_employee='"+ selectCardTeacher.getId_employee() +"' where id_link_group_semester_subject \n" +
+                "IN (SELECT id_link_group_semester_subject FROM link_group_semester_subject\n" +
+                "WHERE id_link_group_semester = "+ idLGS +" and id_subject = "+ idSubject +")";
+        executeUpdate(getSession().createSQLQuery(query));
+    }
 
+    public void deleteTeacherToTheDiscipline(Long idEmployee, Long idLGS, Long idSubject) {
+       /* String query = "DELETE FROM link_employee_subject_group WHERE id_employee = '"+ selectCardTeacher.getId_employee() +"' AND id_link_group_semester_subject IN \n" +
+                "(SELECT id_link_group_semester_subject FROM link_group_semester_subject\n" +
+                "WHERE id_link_group_semester = "+ idLGS +" and id_subject = "+ idSubject +")\n" +
+                "";*/
+       String query = "UPDATE link_employee_subject_group SET id_employee=null where id_employee='"+ idEmployee +"'\n" +
+               "AND id_link_group_semester_subject IN (SELECT id_link_group_semester_subject \n" +
+               "FROM link_group_semester_subject WHERE id_link_group_semester = "+ idLGS +" and id_subject = "+ idSubject +")";
+        executeUpdate(getSession().createSQLQuery(query));
     }
 }

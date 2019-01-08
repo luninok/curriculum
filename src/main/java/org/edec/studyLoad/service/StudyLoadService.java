@@ -27,11 +27,11 @@ public interface StudyLoadService {
 
     List<AssignmentModel> getAssignments(Long idSem, Long idDepartment);
 
-    List<VacancyModel> getVacancy();
+    List<VacancyModel> getVacancy(Long id_department);
 
     void updateVacancy(Long id_vacancy, Long id_employee_role, String wagerate);
 
-    void createVacancy(Long id_employee_role, String wagerate);
+    void createVacancy(Long id_employee_role, String wagerate, Long id_department);
 
     void updateEmployment(Long id_employee, Long idByworker, Long idRole, Double wagerate, Double time_wagerate, Long id_department);
 
@@ -45,8 +45,9 @@ public interface StudyLoadService {
 
     List<StudyLoadModel> getStudyLoad(Long idDepartment);
 
-    void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher);
-
     boolean upsertRequests(Long idlgs, Long idlesg, String requeststring);
 
+    void deleteTeacherToTheDiscipline(Long idEmployee, Long idLGS, Long idSubject);
+
+    void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher, Long idLGS, Long idSubject);
 }

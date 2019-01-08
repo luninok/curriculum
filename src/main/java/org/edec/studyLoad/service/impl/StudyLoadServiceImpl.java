@@ -61,8 +61,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public List<VacancyModel> getVacancy() {
-        return entityManagerStudyLoad.getVacancy();
+    public List<VacancyModel> getVacancy(Long id_department) {
+        return entityManagerStudyLoad.getVacancy(id_department);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     }
 
     @Override
-    public void createVacancy(Long id_employee_role, String wagerate) {
-        entityManagerStudyLoad.createVacancy(id_employee_role, wagerate);
+    public void createVacancy(Long id_employee_role, String wagerate, Long id_department) {
+        entityManagerStudyLoad.createVacancy(id_employee_role, wagerate, id_department);
     }
 
     @Override
@@ -104,14 +104,20 @@ public class StudyLoadServiceImpl implements StudyLoadService {
     public List<StudyLoadModel> getStudyLoad(Long idDepartment) {
         return entityManagerStudyLoad.getStudyLoad(idDepartment);
     }
-    @Override
-    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher) {
-        entityManagerStudyLoad.insertTeacherToTheDiscipline(selectCardTeacher);
-    }
 
     @Override
     public boolean upsertRequests(Long idlgs, Long idlesg, String requeststring){
         return entityManagerStudyLoad.upsertRequests(idlgs,idlesg,requeststring);
+    }
+
+    @Override
+    public void deleteTeacherToTheDiscipline(Long idEmployee, Long idLGS, Long idSubject) {
+        entityManagerStudyLoad.deleteTeacherToTheDiscipline(idEmployee, idLGS, idSubject);
+    }
+
+    @Override
+    public void insertTeacherToTheDiscipline(TeacherModel selectCardTeacher, Long idLGS, Long idSubject) {
+        entityManagerStudyLoad.insertTeacherToTheDiscipline(selectCardTeacher, idLGS, idSubject);
     }
 
 }

@@ -1,9 +1,9 @@
-<window id="winVacancyDialog" closable="true" title="Добавить вакансию" style="margin:1" width="20%" height="27%"
+<window id="winVacancyDialog" closable="true" style="margin:1" width="20%" height="27%"
         apply="org.edec.studyLoad.ctrl.windowCtrl.WinVacancyDialogCtrl"> <!--org.edec.studyLoad.ctrl.windowCtrl.WinRateDialogCtrl-->
     <vbox style="margin:1%">
         <hbox width="100%" style="margin:3% 2% 0">
-            <label style="margin-right:0%" value="Количество ставок" width="50%"/>
-            <doublebox id="dbCountRate" style="text-align: center" hflex="1"/>
+            <label value="Ставка"/>
+            <doublebox id="dbCountRate" style="text-align: center; margin:0 8% 0% 10%;" hflex="1"/>
         </hbox>
         <hbox width="100%" style="margin:3% 2% 1%">
             <label value="Должность"/>

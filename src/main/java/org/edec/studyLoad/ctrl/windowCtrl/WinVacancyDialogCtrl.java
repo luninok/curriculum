@@ -27,6 +27,7 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
     private Runnable updateLbVacancy;
     private VacancyModel vacancyModel;
+    private Long idDepartment;
     private List<PositionModel> positionModels = new ArrayList<>();
 
     @Override
@@ -34,7 +35,12 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
         super.doAfterCompose(comp);
         updateLbVacancy = (Runnable) Executions.getCurrent().getArg().get("fillLbVacancy");
         vacancyModel = (VacancyModel) Executions.getCurrent().getArg().get("vacancy");
+        idDepartment = (Long) Executions.getCurrent().getArg().get("id_department");
+        if(idDepartment != null){
+            winVacancyDialog.setTitle("Добавить вакансию");
+        }
         if (vacancyModel != null) {
+            winVacancyDialog.setTitle("Изменить вакансию");
             cmbPosition.setValue(vacancyModel.getRolename());
             dbCountRate.setValue(Double.valueOf((vacancyModel.getWagerate())));
         }
@@ -62,6 +68,10 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
         String rolename = cmbPosition.getValue();
         String wagerate = dbCountRate.getValue().toString();
         Long idEmployeeRole = null;
+        if(Double.valueOf(wagerate) > 1.5 || Double.valueOf(wagerate) < 0.1) {
+            PopupUtil.showWarning("Такое значение ставки не существует!");
+            return;
+        }
         for (PositionModel position : positionModels) {
             if (position.getPositionName().equals(rolename)) {
                 idEmployeeRole = position.getIdPosition();
@@ -72,11 +82,10 @@ public class WinVacancyDialogCtrl extends CabinetSelector {
             updateLbVacancy.run();
             PopupUtil.showInfo("Вакансия успешно обновлена!");
         } else {
-            studyLoadService.createVacancy(idEmployeeRole, wagerate);
+            studyLoadService.createVacancy(idEmployeeRole, wagerate, idDepartment);
             updateLbVacancy.run();
             PopupUtil.showInfo("Вакансия успешно добавлена!");
         }
-        PopupUtil.showInfo("Вакансия была успешно добавлена.");
     }
 
 }

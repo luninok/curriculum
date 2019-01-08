@@ -25,8 +25,6 @@ public class TeacherModel {
         this.patronymic = patronymic;
         this.id_employee = id_employee;
     }
-
-
     @Override
     public String toString() {
         return family + " " + name.charAt(0) + " " + patronymic.charAt(0);
