@@ -315,6 +315,7 @@
                         <button id="btnFixTeacher" label="Закрепить"/>
                         <button id="btnDetacher" label="Открепить"/>
                     </hbox>
+                    <checkbox id="chHide" label="Скрыть" />
                     <!-- Таблца "Карточки преподавелей" -->
                     <div style="overflow:auto">
                         <hbox id="hbTeacherCards" width="100%">

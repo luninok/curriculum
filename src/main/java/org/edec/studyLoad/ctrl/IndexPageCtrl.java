@@ -40,6 +40,8 @@ public class IndexPageCtrl extends CabinetSelector {
     private Vbox col1;
     @Wire
     private Hbox hbTeacherCards;
+    @Wire
+    private Checkbox chHide;
     private String selectFIO = "";
 
     private StudyLoadService studyLoadService = new StudyLoadServiceImpl();
@@ -221,6 +223,19 @@ public class IndexPageCtrl extends CabinetSelector {
         ListModelList<StudyLoadModel> studyLoadListModelList = new ListModelList<>(studyLoadModels);
         lbStudyLoad.setModel(studyLoadListModelList);
         lbStudyLoad.renderAll();
+    }
+
+
+    @Listen("onClick = #chHide")
+    public void hide() {
+        if (chHide.isChecked()) {
+            hbTeacherCards.setStyle("display: none;");
+            lbStudyLoad.setVflex("1");
+        } else {
+            hbTeacherCards.setStyle("display: block;");
+            lbStudyLoad.setVflex("2");
+        }
+
     }
 
     @Listen("onClick = #btnFixTeacher")
